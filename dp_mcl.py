@@ -26,16 +26,17 @@ class QmdpAgent(DpPolicyAgent):
 
     def evaluation(self, action, indexes):
         """QMDP計算
-        パーティクルの存在するセルのQ値とパーティクルの重みをかけることで、パーティクルのQ値の期待値を算出。
-        今回は、パーティクルの重みは正規化されているので、単純に平均を取る
-        action_value:状態遷移確率によって算出された次状態の価値関数＋行動価値*遷移確率（MDPのやり方で計算、Q学習で計算したpolicyで計算していない）
+        actionの価値を計算するために、パーティクルの全状態（信念空間）でのactionによる行動価値を計算し、平均を取る
+        今回は、パーティクルの重みは正規化されているので、単純に平均を取ることで、Q値の計算をしたことにする（本当はパーティクルにおける信念の確率密度を掛ける）
+        action_value:状態遷移確率*(次状態の価値関数＋行動価値)
         """
         return sum([self.dp.action_value(action, i, out_penalty=False) for i in indexes])/len(indexes) # パーティクルの重みの正規化が前提の計算方法
 
     def policy(self, pose, goal=None):
         """indexesにパーティクルが属するstate spaceのindexを格納
         state spaceのQMDP値をcurrent_valueとして計算
-        すべてのactionの、QMDP値のリストを返す
+        すべてのactionの、QMDP値のリストを返す->self.evaluations
+        self.evaluationsからQMDP値が最も高いindex=actionを返す
         """
         indexes = [self.to_index(p.pose, self.pose_min, self.index_nums, self.width) for p in self.estimator.particles]
         self.current_value = sum([self.dp.value_function[i] for i in indexes])/len(indexes) # 描画用 現在のパーティクルすべての状態価値の平均
