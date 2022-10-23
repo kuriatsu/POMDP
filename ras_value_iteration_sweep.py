@@ -74,19 +74,31 @@ class MDP:
 
     def state_transition(self, action, index):
 
+        state_delta = np.zeros((len(index), len(self.actions))) 
+        state_prob = np.zeros((len(self.actions)))
+
         # vehicle transition
         ego_v = index[1] * self.ego_state_width[1] 
         ego_pose = index[0] * self.ego_state_width[0]
         risk_pose = self.risk_positions[action[1]] 
+
+        # vehicle transition if no intervention
         a_noint = -v**2 / (2 * abs(risk_pose - ego_pose - self.safety_margin))
-        ego_pose_noint = ego_pose + ego_v * self.delta_t + 0.5 * self.delta_t**2 *a_noint
-        ego_v_noint = ego_v + a_noint * self.delta_t
+        ego_pose_noint = ego_v * self.delta_t + 0.5 * self.delta_t**2 *a_noint
+        ego_v_noint = a_noint * self.delta_t
+        state_delta[0, 0] = ego_pose_noint / self.state_width[0]
+        state_delta[0, 1] = ego_v_noint / self.state_width[1]
+        
+        # vehicle transition if intervention
         a_int = 0.2*9.8 if ego_v < self.ideal_speed else -0.2*9.8
         ego_pose_int = ego_pose + ego_v * self.delta_t + 0.5 * self.delta_t**2 *a_int
         ego_v_int = ego_v + a_int * self.delta_t
+        state_delta[1, 0] = ego_pose_int / self.state_width[0]
+        state_delta[1, 1] = ego_v_int / self.state_width[1]
         
         # intervention changes risk likelihood
-        risk_likelihood = index[2+action[1]] * self.risk_likelihood_width[action[1]]
+        risk_likelihood_index = 2+action[1]
+        risk_likelihood = index[risk_likelihood_index] * self.risk_likelihood_width[action[1]]
         if action[0] == 0 or (action[0] == 1 and index[-1] == 0):
             risk_likelihood_after = risk_likelihood
         elif action[0] == 1 and index[-1] == 1:
@@ -94,11 +106,23 @@ class MDP:
         elif action[0] == 1 and index[-1] == 2:
             risk_likelihood_after = 90 
 
-        for risk_eta in index[2+len(self.risk_positions):2+len(self.risk_positions)*2]:
-            
+        state_delta[0, risk_likelihood_index] = (risk_likelihood - risk_likelihood_after) / self.state_width[risk_likelihood_index]
+        state_delta[1, risk_likelihood_index] = (risk_likelihood - risk_likelihood_after) / self.state_width[risk_likelihood_index]
+        
+        # risk eta
+        risk_eta_index = 2 + len(self.risk_positions)
+        for i, eta in enumerate(index[eta_index:eta_index+len(self.risk_positions)]):
+            if self.risk_speed[i] > 0.0:
+                eta_after = eta - self.delta_t
+            else:
+                eta_after = eta
+            state_delta[0, eta_index+i] = (eta_after - eta)/self.state_width[eta_index+i]
+            state_delta[1, eta_index+i] = (eta_after - eta)/self.state_width[eta_index+i]
+
         if action[0] == 0:
             int_prob = 0.0
         else:
             int_prob = self.int_prob[index[-1]]
 
-        
+    def int_acc(self, state):
+
