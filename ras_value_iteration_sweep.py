@@ -12,32 +12,39 @@ class MDP:
         self.ego_state_max = np.array([200.0, 60.0]).T
         self.ego_state_width = np.array([10.0, 10.0]).T
 
+        # operator state: intercept_time, intercept_acc, slope
+        self.operator_performance_min = np.array([0.0, 0.0, 0.0]).T 
+        self.operator_performance_max = np.array([6.0, 1.0, 10.0]).T 
+        self.operator_performance_width = np.array([1.0, 0.1, 1.0]).T
+
+        # intervention time
+        self.int_time_min = np.array([0.0]).T
+        self.int_time_max = np.array([6.0]).T
+        self.int_time_width = np.array([1.0]).T
+
+        # risks variables likelihood, eta 
+        self.risk_state_min = np.tile(np.array([0, 0.0]).T, (len(self.risk_positions), 1))
+        self.risk_state_max = np.tile(np.array([100, 5.0]).T, (len(self.risk_positions), 1))
+        self.risk_state_width = np.tile(np.array([10, 1.0]).T, (len(self.risk_positions), 1))
+        
+        self.state_min = np.r_[self.ego_state_min, self.operator_performance_min, self.int_time_min, self.risk_state_min]
+        self.state_max = np.r_[self.ego_state_max, self.operator_performance_max, self.int_time_max, self.risk_state_max]
+        self.state_width = np.r_[self.ego_state_width, self.operator_performance_width, self.int_time_width, self.risk_state_width]
+
         # map 
         self.risk_positions = np.array([10.0, 80.0, 180.0]).T
         self.risk_difficulty = np.array([1, 1, 1]).T # 1:middle 0:easy 2:hard
         self.risk_distance = np.array([10.0, 30.0, 5.0)].T
         self.risk_speed = np.array([1.0, 1.0, 0.0]).T 
 
-        # risks variables 
-        self.risk_likelihood_min = np.array([0]*len(self.risk_positions)).T
-        self.risk_likelihood_max = np.array([100]*len(self.risk_positions)).T
-        self.risk_likelihood_width = np.array([10]*len(self.risk_positions)).T
-        self.risk_eta_min = np.array([0.0]*len(self.risk_positions)).T
-        self.risk_eta_max = np.array([5.0]*len(self.risk_positions)).T
-        self.risk_state_width = np.array([1.0]*len(self.risk_positions)).T
-        
-        # operator state: slope of time-acc of easy, middle, hard task 
-        self.operator_performance_min = np.array([0]).T # 0:impossible to intervene 1:low acc 2:high acc
-        self.operator_performance_max = np.array([2]).T 
-        self.operator_performance_width = np.array([1]).T
-
-        self.state_min = np.r_[self.ego_state_min, self.risk_likelihood_min, self.risk_eta_min, self.operator_performance_min]
-        self.state_max = np.r_[self.ego_state_max, self.risk_likelihood_max, self.risk_eta_max, self.operator_performance_max]
-        self.state_width = np.r_[self.ego_state_width, self.risk_likelihood_width, self.risk_eta_width, self.operator_performance_width]
-
+        # indexes
         self.index_nums = ((self.state_min - self.state_max)/self.state_width).astype(int)
         self.index_matrix = tuple(range(x) for x in self.index_nums)
         self.indexes = list(itertools.product(*self.index_matrix))
+        self.ego_state_index = 0
+        self.operator_performance_index = len(self.ego_state_width)
+        self.int_time_index = len(self.ego_state_width) + len(self.operator_performance_width)
+        self.risk_state_index = len(self.ego_state_width) + len(self.operator_performance_width) + len(self.int_time_width)
 
         # 0: not request intervention, 1:request intervention
         self.actions = np.array([0, 1])
@@ -47,9 +54,9 @@ class MDP:
         self.goal_value = 100
         self.state_transition_probs = self.init_state_transition_probs(time_interval)
 
+        # other params
         self.safety_margin = 10.0
         self.ideal_speed = 50.0
-        self.int_prob = np.array([0.0, 0.5, 1.0])
 
 
     def init_value_function(self):
@@ -76,11 +83,15 @@ class MDP:
 
         state_delta = np.zeros((len(index), len(self.actions))) 
         state_prob = np.zeros((len(self.actions)))
-
+        
         # vehicle transition
         ego_v = index[1] * self.ego_state_width[1] 
         ego_pose = index[0] * self.ego_state_width[0]
-        risk_pose = self.risk_positions[action[1]] 
+        risk_pose = self.risk_positions[action[1]] # action[request, target] 
+
+        # int acc
+        deceleration_distance = ego_v**2/(2*9.8*0.2)
+        int_time = (risk_pose - ego_pose - deceleration_distance) / ego_v
 
         # vehicle transition if no intervention
         a_noint = -v**2 / (2 * abs(risk_pose - ego_pose - self.safety_margin))
@@ -120,9 +131,27 @@ class MDP:
             state_delta[1, eta_index+i] = (eta_after - eta)/self.state_width[eta_index+i]
 
         if action[0] == 0:
-            int_prob = 0.0
+            state_prob[1] = 0.0
         else:
-            int_prob = self.int_prob[index[-1]]
+            state_prob[1] = self.int_prob[index[-1]] 
+       
+        state_prob[0] = 1.0 - state_prob[1]
 
-    def int_acc(self, state):
+    def int_acc(self, state, action):
+        int_time = state[self.int_time_index] * self.int_time_width[0] 
+        min_int_time = state[self.operator_performance_index] * self.operator_performance_width[0]
+        # dist_to_target = self.risk_positions[action[1]] - self.state[self.ego_state_index] * self.ego_state_width[0]
+        # decel_dist = (state[self.ego_state_index+1]*self.ego_state_width[1])**2/(2*9.8*0.2)
+        # time_to_decel = (dist_to_target - decel_dist) / (self.state[self.ego_state_index+1] * self.ego_state_width[1])
+        # avairable_int_time = int_time + time_to_decel if time_to_decel > 0.0 else int_time 
+        if int_time < min_int_time:
+            prob = 0.0
+        else:
+            prob = 1.0
+            slope = state[self.operator_performance_index+2]*self.operator_performance_width[2]
+            intercept_acc = state[self.operator_performance_index+1]*self.operator_performance_width[1]
+            acc = intercept_acc + slope*( 
+        
+        
 
+        
