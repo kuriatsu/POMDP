@@ -8,21 +8,24 @@ import copy
 class MDP:
     def __init__(self):
         self.delta_t = 1.0
+        # map 
+        self.risk_positions = np.array([10, 80, 180]).T
+        self.risk_speed = np.array([1, 1, 0]).T 
 
         # ego_pose, ego_vel, 
         self.ego_state_min = np.array([0, 0]).T
-        self.ego_state_max = np.array([200, 60]).T
+        self.ego_state_max = np.array([100, 50]).T
         self.ego_state_width = np.array([10, 10]).T
 
         # operator state: intercept_time, intercept_acc, slope
         self.operator_performance_min = np.array([0, 0.0, 0.0]).T 
-        self.operator_performance_max = np.array([6, 1.0, 1.0).T 
-        self.operator_performance_width = np.array([1, 0.1, 0.1]).T
+        self.operator_performance_max = np.array([6, 1.0, 1.0]).T 
+        self.operator_performance_width = np.array([2, 0.2, 0.25]).T
 
         # risks state: likelihood 0:norisk, 100:risk , eta 
-        self.risk_state_min = np.tile(np.array([0.0, -5]).T, (len(self.risk_positions), 1))
-        self.risk_state_max = np.tile(np.array([1.0, 5]).T, (len(self.risk_positions), 1))
-        self.risk_state_width = np.tile(np.array([0.25, 1]).T, (len(self.risk_positions), 1))
+        self.risk_state_min = np.array([0.0, -5]*len(self.risk_positions)).T
+        self.risk_state_max = np.array([1.0, 5]*len(self.risk_positions)).T
+        self.risk_state_width = np.array([0.25, 1]*len(self.risk_positions)).T
         self.risk_state_len = len(self.risk_state_width) / len(self.risk_positions) 
         
         # intervention state: int_time, target
@@ -34,14 +37,12 @@ class MDP:
         self.state_max = np.r_[self.ego_state_max, self.operator_performance_max, self.int_state_max, self.risk_state_max]
         self.state_width = np.r_[self.ego_state_width, self.operator_performance_width, self.int_state_width, self.risk_state_width]
 
-        # map 
-        self.risk_positions = np.array([10, 80, 180]).T
-        self.risk_speed = np.array([1, 1, 0]).T 
 
         # indexes
-        self.index_nums = ((self.state_min - self.state_max)/self.state_width).astype(int)
+        self.index_nums = ((self.state_max - self.state_min)/self.state_width).astype(int)
         self.index_matrix = tuple(range(x) for x in self.index_nums)
         self.indexes = list(itertools.product(*self.index_matrix))
+        print(len(indexes))
         self.ego_state_index = 0
         self.operator_performance_index = len(self.ego_state_width)
         self.int_state_index = len(self.ego_state_width) + len(self.operator_performance_width)
@@ -51,6 +52,7 @@ class MDP:
         self.actions = np.append(np.arange(len(self.risk_positions)), -1).T
 
         self.value_function, self.final_state_flag = self.init_value_function()
+        print("finish init")
         self.policy = self.init_policy()
         self.goal_value = 100
         self.state_transition_probs = self.init_state_transition_probs(time_interval)
@@ -85,6 +87,7 @@ class MDP:
         max_delta = 0.0
         for index in self.indexes:
             if not self.final_state_flags[index]:
+                print(index)
                 max_q = -1e100
                 max_a = None
                 qs = [self.action_value(a, index) for a in self.action]
@@ -213,8 +216,8 @@ class MDP:
             else:
                 a = (10**2-current_v**2)/(2*9.8*closest_target_dist)
 
-        v = ego_v + a * self.delta_t
-        x = current_pose + ego_v * self.delta_t + 0.5 * a * self.delta_t**2
+        v = current_v + a * self.delta_t
+        x = current_pose + current_v * self.delta_t + 0.5 * a * self.delta_t**2
 
         return a, v, x
                
@@ -262,3 +265,5 @@ def trial_until_sat():
         pickle.dump(dp.value_function, f)
 
 
+if __name__ == "__main__":
+    trial_until_sat()
