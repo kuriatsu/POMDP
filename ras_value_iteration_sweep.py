@@ -262,7 +262,7 @@ def trial_until_sat():
     with open("value.pkl", "wb") as f:
         pickle.dump(dp.value_function, f)
 
-    v = dp.value_function[:, :, 1, 3, 1, 2, 1, 1, 2]
+    v = dp.value_function[:, :, 1, 3, 1, 2, 1, 1, 2, 3, 2]
     sns.heatmap(np.rot90(v), square=False)
     plt.show()
 
