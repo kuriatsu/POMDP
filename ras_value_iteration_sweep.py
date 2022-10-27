@@ -28,7 +28,7 @@ class MDP:
         # ego_pose, ego_vel, 
         self.ego_state_min = np.array([0, 0]).T
         self.ego_state_max = np.array([200, 50]).T
-        self.ego_state_width = np.array([20, 10]).T
+        self.ego_state_width = np.array([10, 10]).T
 
         # operator state: intercept_time, intercept_acc, slope
         self.operator_performance_min = np.array([0, 0.0, 0.0]).T 
@@ -63,15 +63,14 @@ class MDP:
 
         # -1: not request intervention, else:request intervention
         self.actions = np.append(np.arange(len(self.risk_positions)), -1).T
-
         self.value_function, self.final_state_flag = self.init_value_function()
         print("value_function size", self.value_function.__sizeof__())
         self.policy = self.init_policy()
         print("policy size", self.policy.__sizeof__())
 
     def init_value_function(self):
-        f = np.empty(self.index_nums)
-        v = np.zeros(self.index_nums)
+        v = np.empty(self.index_nums)
+        f = np.zeros(self.index_nums)
         for index in self.indexes:
             f[index] = self.final_state(np.array(index).T)
             v[index] = self.goal_value if f[index] else -100.0
