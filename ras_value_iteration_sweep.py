@@ -161,12 +161,12 @@ class MDP:
         if index[self.int_state_index+1] != action and index[self.int_state_index+1] != -1: 
             int_acc = self.get_int_performance(index)
             if int_acc is not None:
-                target_index = self.risk_state_index + action
+                target_index = self.risk_state_index + action * self.risk_state_width
 
                 # transition if target is judged as risk
                 int_prob = 0.5 
                 buf_state_value = copy.deepcopy(state_value)
-                buf_state_value[target_index] = int_acc 
+                buf_state_value[target_index] = (1.0 + int_acc) * 0.5 
                 _, v, x = self.ego_vehicle_transition(buf_state_value)
                 buf_state_value[self.ego_state_index] = x
                 buf_state_value[self.ego_state_index+1] = v 
@@ -175,7 +175,7 @@ class MDP:
                 # transition if target is judged as norisk
                 transition_prob = 0.5 
                 buf_state_value = copy.deepcopy(state_value)
-                buf_state_value[target_index] = 1.0 - int_acc 
+                buf_state_value[target_index] = (1.0 - int_acc) * 0.5 
                 _, v, x = self.ego_vehicle_transition(buf_state_value)
                 buf_state_value[self.ego_state_index] = x
                 buf_state_value[self.ego_state_index+1] = v 
@@ -201,7 +201,8 @@ class MDP:
         # get target for deceleration
         for i, pose in enumerate(self.risk_positions):
             dist = pose - current_pose
-            if dist > 0.0 and dist < closest_target_dist and state[self.risk_state_index] >= 0.5:
+            target_index = self.risk_state_index + self.risk_state_width * i
+            if dist > 0.0 and dist < closest_target_dist and state[target_index] >= 0.5:
                 closest_target_dist = dist
                 closest_target = i
 
