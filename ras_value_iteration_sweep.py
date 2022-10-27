@@ -12,11 +12,18 @@ class MDP:
         self.delta_t = 1.0
         # other params
         self.goal_value = 100
+        self.prediction_horizon = 200
         self.safety_margin = 10.0
         self.ideal_speed = 50.0
+        self.min_speed = 10.0
+        self.ordinary_G = 0.2
+        self.min_step_size = self.prediction_horizon*3.6/self.ideal_speed
+        self.discount_factor = self.min_step_size/(self.min_step_size+1.0)
+
         # map 
-        self.risk_positions = np.array([100,120]).T
+        self.risk_positions = np.array([80,160]).T
         self.risk_speed = np.array([1, 0]).T 
+
 
         # ego_pose, ego_vel, 
         self.ego_state_min = np.array([0, 0]).T
@@ -48,6 +55,7 @@ class MDP:
         self.index_nums = ((self.state_max - self.state_min)/self.state_width).astype(int)
         print(self.index_nums)
         self.indexes = list(itertools.product(*tuple(range(x) for x in self.index_nums)))
+        print("indexes size", self.indexes.__sizeof__())
         self.ego_state_index = 0
         self.operator_performance_index = len(self.ego_state_width)
         self.int_state_index = len(self.ego_state_width) + len(self.operator_performance_width)
@@ -57,9 +65,9 @@ class MDP:
         self.actions = np.append(np.arange(len(self.risk_positions)), -1).T
 
         self.value_function, self.final_state_flag = self.init_value_function()
-        print("finish init")
+        print("value_function size", self.value_function.__sizeof__())
         self.policy = self.init_policy()
-
+        print("policy size", self.policy.__sizeof__())
 
     def init_value_function(self):
         f = np.empty(self.index_nums)
@@ -108,7 +116,7 @@ class MDP:
             for i in range(len(self.risk_positions)):
                 target_index = self.risk_state_index + self.risk_state_len * i 
                 # when passed the target with crossing risk with 10km/h or higher
-                if self.index_value(index, self.ego_state_index) == self.risk_positions[i] and self.index_value(index, self.ego_state_index+1) >= 10:
+                if self.index_value(index, self.ego_state_index) == self.risk_positions[i] and self.index_value(index, self.ego_state_index+1) >= self.min_speed and self.index_value(index, target_index) < 0.8:
                     risk += self.index_value(index, self.risk_state_index)
 
                 # pet
@@ -118,7 +126,7 @@ class MDP:
                     collision = True
 
             # speed chenge 10km/h per delta_t
-            confort = (abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1)) > 10.0)
+            confort = (abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1))/(3.6*9.8*self.delta_t) > self.ordinary_G)
             # action reward 
             bad_int_request = False
             int_acc_reward = False
@@ -129,7 +137,7 @@ class MDP:
                 int_acc_reward = int_acc is not None and self.get_int_performance(index) < 0.5
             
             action_value = -10000*collision -100*risk -10*confort -100*bad_int_request -10*int_acc_reward -10*self.delta_t + 1000*self.final_state(index_after)
-            value += prob*action_value
+            value += prob * action_value * self.discount_factor
             
         return value
 
@@ -154,14 +162,14 @@ class MDP:
             else:
                 eta_after = eta
 
-            eta_after = max(min(eta_after, 5.0), -5)
+            eta_after = max(min(eta_after, self.risk_state_max[1]), self.risk_state_min[1])
             state_value[eta_index] = eta_after
 
         # risk_state and ego_vehicle state 
         if index[self.int_state_index+1] != action and index[self.int_state_index+1] != -1: 
             int_acc = self.get_int_performance(index)
             if int_acc is not None:
-                target_index = self.risk_state_index + action * self.risk_state_width
+                target_index = self.risk_state_index + action * self.risk_state_len
 
                 # transition if target is judged as risk
                 int_prob = 0.5 
@@ -201,19 +209,19 @@ class MDP:
         # get target for deceleration
         for i, pose in enumerate(self.risk_positions):
             dist = pose - current_pose
-            target_index = self.risk_state_index + self.risk_state_width * i
+            target_index = int(self.risk_state_index + self.risk_state_len * i)
             if dist > 0.0 and dist < closest_target_dist and state[target_index] >= 0.5:
                 closest_target_dist = dist
                 closest_target = i
 
         if closest_target is None:
-            a = 0.2*9.8 if current_v < self.ideal_speed else -0.2*9.8
+            a = self.ordinary_G*9.8 if current_v < self.ideal_speed else -self.ordinary_G*9.8
         else:
-            deceleration_distance = (10**2-current_v**2)/(2*9.8*0.3)
+            deceleration_distance = (self.min_speed**2-current_v**2)/(2*9.8*self.ordinary_G)
             if closest_target_dist > deceleration_distance:
-                a = 0.2*9.8 if current_v < self.ideal_speed else -0.2*9.8
+                a = self.ordinary_G*9.8 if current_v < self.ideal_speed else -self.ordinary_G*9.8
             else:
-                a = (10**2-current_v**2)/(2*9.8*closest_target_dist)
+                a = (self.min_speed**2-current_v**2)/(2*9.8*closest_target_dist)
 
         v = (current_v + a * self.delta_t) * 3.6
         x = current_pose + current_v * self.delta_t + 0.5 * a * self.delta_t**2
