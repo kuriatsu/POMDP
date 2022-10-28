@@ -11,7 +11,7 @@ import multiprocessing
 class MDP:
     def __init__(self):
         self.delta_t = 2.0
-        self.prediction_horizon = 200
+        self.prediction_horizon = 100
         self.safety_margin = 10.0
         self.ideal_speed = 50.0
         self.min_speed = 10.0
@@ -29,23 +29,23 @@ class MDP:
 
         # ego_pose, ego_vel, 
         self.ego_state_min = np.array([0, 0]).T
-        self.ego_state_max = np.array([200, 50]).T
+        self.ego_state_max = np.array([self.prediction_horizon, self.ideal_speed]).T
         self.ego_state_width = np.array([5, 1]).T
 
         # operator state: intercept_time, intercept_acc, slope
         self.operator_performance_min = np.array([0, 0.0, 0.0]).T 
-        self.operator_performance_max = np.array([6, 1.0, 1.0]).T 
+        self.operator_performance_max = np.array([8, 1.25, 1.25]).T 
         self.operator_performance_width = np.array([2, 0.25, 0.25]).T
 
         # risks state: likelihood 0:norisk, 100:risk , eta 
         self.risk_state_min = np.array([0.0, 0]*len(self.risk_positions)).T
-        self.risk_state_max = np.array([1.0, 5]*len(self.risk_positions)).T
+        self.risk_state_max = np.array([1.25, 6]*len(self.risk_positions)).T
         self.risk_state_width = np.array([0.25, 1]*len(self.risk_positions)).T
         self.risk_state_len = int(len(self.risk_state_width) / len(self.risk_positions))
         
         # intervention state: int_time, target
         self.int_state_min = np.array([0, -1]).T
-        self.int_state_max = np.array([6, len(self.risk_positions)]).T
+        self.int_state_max = np.array([8, len(self.risk_positions)]).T
         self.int_state_width = np.array([2, 1]).T
 
         self.state_min = np.r_[self.ego_state_min, self.operator_performance_min, self.int_state_min, self.risk_state_min]
@@ -54,7 +54,7 @@ class MDP:
 
 
         # indexes
-        self.index_nums = ((self.state_max - self.state_min)/self.state_width).astype(int) + 1
+        self.index_nums = ((self.state_max - self.state_min)/self.state_width).astype(int)
         print(self.index_nums)
         self.indexes = list(itertools.product(*tuple(range(x) for x in self.index_nums)))
         print("indexes size", self.indexes.__sizeof__())
@@ -102,9 +102,9 @@ class MDP:
             process_list = []
             for j in range(core_num):
                 if (i+j) >= len(self.indexes) and self.final_state_flag[i+j]: continue
-                process_list.append(multiprocessing.Process(target=action_value_process, args(self.indexes[i+j], max_q_list[j], max_a_list[j], delta_list[j])))
+                process_list.append(multiprocessing.Process(target=self.action_values_process, args=(self.indexes[i+j], max_q_list[j], max_a_list[j], delta_list[j])))
             
-            for j in range(core_num()):
+            for j in range(core_num):
                 if (i+j) >= len(self.indexes) and self.final_state_flag[i+j]: continue
                 process_list[j].start()
 
@@ -112,29 +112,30 @@ class MDP:
                 if (i+j) >= len(self.indexes) and self.final_state_flag[i+j]: continue
                 process_list[j].join()
 
-            itr_max_delta = max([d for d.value in delta_list])
+            itr_max_delta = max([d.value for d in delta_list])
             max_delta = max(itr_max_delta, max_delta)
 
             for j in range(core_num):
                 if (i+j) >= len(self.indexes) and self.final_state_flag[i+j]: continue
                 self.value_function[self.indexes[i+j]] = max_q_list[j].value
-                self.policy[self.indexes] = np.array(max_a_list[j].value).T
+                self.policy[self.indexes[i+j]] = np.array(max_a_list[j].value).T
 
         return max_delta
 
     def action_values_process(self, index, max_q, max_a, delta):
+        print(index)
         qs =  [self.action_value(a, index) for a in self.actions]
         max_q.value = max(qs)
         max_a.value = self.actions[np.argmax(qs)]
-        delta.value = abs(self.value_function[index] - max_q.value)
+        delta.value = abs(self.value_function[tuple(index)] - max_q.value)
 
     def action_value(self, action, index):
         value = 0.0
+        print("=======")
         for prob, index_after in self.state_transition(action, index):
             print(prob,action)
             print(index)
             print(index_after)
-            print("=======")
             collision = False
             risk = 0.0
             # state reward
@@ -164,6 +165,7 @@ class MDP:
             action_value = -10000*collision -100*risk -10*confort -100*bad_int_request -10*int_acc_reward -10*self.delta_t + self.goal_value*self.final_state(index_after)
             value += prob * action_value * self.discount_factor
             
+        print(self.value_function[index], "->", value)
         return value
 
     def state_transition(self, action, index):
@@ -296,7 +298,7 @@ def trial_until_sat():
     with open("value.pkl", "wb") as f:
         pickle.dump(dp.value_function, f)
 
-    v = dp.value_function[:, :, 1, 3, 1, 2, 1, 1, 2, 3, 2]
+    v = dp.value_function[:, :, 1, 3, 1, 2, 1, 1, 2]
     sns.heatmap(np.rot90(v), square=False)
     plt.show()
 
