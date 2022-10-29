@@ -31,22 +31,22 @@ class MDP:
         # ego_pose, ego_vel, 
         self.ego_state_min = np.array([0, 0]).T
         self.ego_state_max = np.array([self.prediction_horizon, self.ideal_speed]).T
-        self.ego_state_width = np.array([10, 10]).T
+        self.ego_state_width = np.array([3, 5]).T
 
         # operator state: intercept_time, intercept_acc, slope
         self.operator_performance_min = np.array([0, 0.0, 0.0]).T 
-        self.operator_performance_max = np.array([8, 1.25, 1.25]).T 
+        self.operator_performance_max = np.array([6, 1.0, 1.0]).T 
         self.operator_performance_width = np.array([2, 0.25, 0.25]).T
 
         # risks state: likelihood 0:norisk, 100:risk , eta 
-        self.risk_state_min = np.array([0.0, 0]*len(self.risk_positions)).T
-        self.risk_state_max = np.array([1.25, 6]*len(self.risk_positions)).T
+        self.risk_state_min = np.array([0.0, -3]*len(self.risk_positions)).T
+        self.risk_state_max = np.array([1.0, 3]*len(self.risk_positions)).T
         self.risk_state_width = np.array([0.25, 1]*len(self.risk_positions)).T
         self.risk_state_len = int(len(self.risk_state_width) / len(self.risk_positions))
         
         # intervention state: int_time, target
         self.int_state_min = np.array([0, -1]).T
-        self.int_state_max = np.array([8, len(self.risk_positions)]).T
+        self.int_state_max = np.array([6, len(self.risk_positions)-1]).T
         self.int_state_width = np.array([2, 1]).T
 
         self.state_min = np.r_[self.ego_state_min, self.operator_performance_min, self.int_state_min, self.risk_state_min]
@@ -55,7 +55,7 @@ class MDP:
 
 
         # indexes
-        self.index_nums = ((self.state_max - self.state_min)/self.state_width).astype(int)
+        self.index_nums = (1 + (self.state_max - self.state_min)/self.state_width).astype(int)
         print(self.index_nums)
         self.indexes = list(itertools.product(*tuple(range(x) for x in self.index_nums)))
         print("indexes size", self.indexes.__sizeof__())
@@ -95,16 +95,17 @@ class MDP:
     def value_iteration_sweep(self):
         max_delta = 0.0
         core_num = 16
-        buf_size = 10  
+        buf_size = 10000  
 
         for i in range(0, len(self.indexes)+core_num*buf_size, core_num*buf_size):
-            print("======", i, len(self.indexes))
+            # print("======", i, len(self.indexes))
             max_q_list = [[multiprocessing.Value("d", -1e100)] * buf_size] * core_num
             max_a_list = [[multiprocessing.Value("i", 100)] * buf_size] * core_num
             delta_list = [[multiprocessing.Value("d", 0)] * buf_size] * core_num
             process_list = []
             for j in range(core_num):
-                buf_index_start = i*core_num*buf_size+j*buf_size
+                # print(i, j, core_num, buf_size)
+                buf_index_start = i+j*buf_size
                 process_list.append(multiprocessing.Process(target=self.action_values_process, args=(buf_index_start, max_q_list[j], max_a_list[j], delta_list[j], buf_size)))
                 process_list[-1].start()
 
@@ -114,7 +115,7 @@ class MDP:
             # itr_max_delta = max(filter(None, [d.value for d in list(itertools.chain(*delta_list))]))
 
             for j in range(core_num):
-                buf_index_start = i*core_num*buf_size+j*buf_size
+                buf_index_start = i+j*buf_size
                 for buf_count in range(buf_size):
                     if (buf_index_start+buf_count) >= len(self.indexes) or self.final_state_flag[self.indexes[buf_index_start+buf_count]]: continue
                     self.value_function[self.indexes[buf_index_start+buf_count]] = max_q_list[j][buf_count].value
@@ -125,14 +126,13 @@ class MDP:
 
     def action_values_process(self, index_start, max_q, max_a, delta, buf_size):
         for buf_count in range(buf_size):
-            print(index_start+buf_count)
             if (index_start+buf_count) >= len(self.indexes): 
-                print("skipped out of range")
+                # print("skipped out of range")
                 continue
             elif self.final_state_flag[self.indexes[index_start+buf_count]]:
-                print("skipped final state")
+                # print("skipped final state")
                 continue
-            print(index_start+buf_count, self.indexes[index_start+buf_count])
+            # print(index_start+buf_count, self.indexes[index_start+buf_count])
             qs =  [self.action_value(a, self.indexes[index_start+buf_count]) for a in self.actions]
             max_q[buf_count].value = max(qs)
             max_a[buf_count].value = self.actions[np.argmax(qs)]
@@ -142,19 +142,19 @@ class MDP:
         value = 0.0
         for prob, index_after in self.state_transition(action, index):
             collision = False
-            risk = 0.0
+            risk = 0 
             # state reward
             for i in range(len(self.risk_positions)):
                 target_index = self.risk_state_index + self.risk_state_len * i 
                 # when passed the target with crossing risk with 10km/h or higher
-                if self.index_value(index_after, self.ego_state_index) == self.risk_positions[i] and self.index_value(index_after, self.ego_state_index+1) >= self.min_speed and self.index_value(index_after, target_index) < 0.8:
-                    risk += self.index_value(index_after, self.risk_state_index)
+                if self.index_value(index_after, self.ego_state_index) == self.risk_positions[i] and self.index_value(index_after, self.ego_state_index+1) > self.min_speed and self.index_value(index_after, target_index) > 0.8:
+                    collision = True
 
                 # pet
                 relative_dist = self.risk_positions[i] - self.index_value(index_after, self.ego_state_index)
                 pet = abs(relative_dist / (self.index_value(index_after, self.ego_state_index+1)+1e-100) - self.index_value(index_after, target_index+1))
-                if relative_dist > 0 and pet < 1.5:
-                    collision = True
+                if relative_dist > 0 and pet < 1.5 and self.index_value(index_after, self.ego_state_index+1) > self.min_speed:
+                    risk += 1 
 
             # speed chenge 10km/h per delta_t
             confort = (abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1))/(3.6*9.8*self.delta_t) > self.ordinary_G)
@@ -166,8 +166,11 @@ class MDP:
                 int_acc = self.get_int_performance(index)
                 bad_int_request = int_acc is None
                 int_acc_reward = int_acc is not None and self.get_int_performance(index) < 0.5
-            
-            action_value = -10000*collision -100*risk -10*confort -100*bad_int_request -10*int_acc_reward -10*self.delta_t + self.goal_value*self.final_state(index_after)
+            try:
+                action_value = self.value_function[tuple(index_after)] -10000*collision -10*risk -1*confort -100*bad_int_request -10*int_acc_reward -1*self.delta_t + self.goal_value*self.final_state(index_after)
+            except Exception as e:
+                print(e, index_after)
+
             value += prob * action_value * self.discount_factor
             
         # print(getpid(), self.value_function[index], "->", value)
@@ -264,8 +267,8 @@ class MDP:
     def to_index(self, state):
         out_index = []
         for i in range(len(state)):
-            out_index.append(int(min(max(state[i], self.state_min[i]), self.state_max[i])//self.state_width[i]))
-
+            out_index.append(int((min(max(state[i], self.state_min[i]), self.state_max[i])-self.state_min[i])//self.state_width[i])-1)
+        # print(state, out_index)
         return out_index
 
 
@@ -287,25 +290,30 @@ class MDP:
         
         return acc
         
-
 def trial_until_sat():
     dp = MDP()
     delta = 1e100
     counter = 0
-    while delta > 0.01:
-        delta = dp.value_iteration_sweep()
-        counter += 1
-        print(counter, delta)
+    try:
+        while delta > 0.01:
+            delta = dp.value_iteration_sweep()
+            counter += 1
+            print(counter, delta)
+    except Exception as e:
+        print(e)
 
-    with open("policy.pkl", "wb") as f:
-        pickle.dump(dp.policy, f)
+    finally:
+        with open("policy.pkl", "wb") as f:
+            pickle.dump(dp.policy, f)
 
-    with open("value.pkl", "wb") as f:
-        pickle.dump(dp.value_function, f)
+        with open("value.pkl", "wb") as f:
+            pickle.dump(dp.value_function, f)
 
-    v = dp.value_function[:, :, 1, 3, 1, 2, 1, 1, 2]
-    sns.heatmap(np.rot90(v), square=False)
-    plt.show()
+        v = dp.value_function[:, :, 1, 3, 1, 2, 1, 1, 2]
+        sns.heatmap(np.rot90(v), square=False)
+        plt.show()
+
+
 
 if __name__ == "__main__":
     trial_until_sat()
