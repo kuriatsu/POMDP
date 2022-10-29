@@ -7,6 +7,7 @@ import copy
 import seaborn as sns
 import matplotlib.pyplot as plt
 import multiprocessing
+from os import getpid
 
 class MDP:
     def __init__(self):
@@ -30,7 +31,7 @@ class MDP:
         # ego_pose, ego_vel, 
         self.ego_state_min = np.array([0, 0]).T
         self.ego_state_max = np.array([self.prediction_horizon, self.ideal_speed]).T
-        self.ego_state_width = np.array([5, 1]).T
+        self.ego_state_width = np.array([10, 10]).T
 
         # operator state: intercept_time, intercept_acc, slope
         self.operator_performance_min = np.array([0, 0.0, 0.0]).T 
@@ -80,7 +81,7 @@ class MDP:
         return v, f
 
     def final_state(self, index):
-        return index[0] == float(self.index_nums[0]) - 1.0
+        return index[0] == float(self.index_nums[0])
 
 
     def init_policy(self):
@@ -94,48 +95,52 @@ class MDP:
     def value_iteration_sweep(self):
         max_delta = 0.0
         core_num = 16
-        for i in range(0, len(self.indexes)+core_num, core_num):
+        buf_size = 10  
 
-            max_q_list = [multiprocessing.Value("d", -1e100)] * core_num
-            max_a_list = [multiprocessing.Value("i", 100)] * core_num
-            delta_list = [multiprocessing.Value("i", 0)] * core_num
+        for i in range(0, len(self.indexes)+core_num*buf_size, core_num*buf_size):
+            print("======", i, len(self.indexes))
+            max_q_list = [[multiprocessing.Value("d", -1e100)] * buf_size] * core_num
+            max_a_list = [[multiprocessing.Value("i", 100)] * buf_size] * core_num
+            delta_list = [[multiprocessing.Value("d", 0)] * buf_size] * core_num
             process_list = []
             for j in range(core_num):
-                if (i+j) >= len(self.indexes) and self.final_state_flag[i+j]: continue
-                process_list.append(multiprocessing.Process(target=self.action_values_process, args=(self.indexes[i+j], max_q_list[j], max_a_list[j], delta_list[j])))
-            
-            for j in range(core_num):
-                if (i+j) >= len(self.indexes) and self.final_state_flag[i+j]: continue
-                process_list[j].start()
+                buf_index_start = i*core_num*buf_size+j*buf_size
+                process_list.append(multiprocessing.Process(target=self.action_values_process, args=(buf_index_start, max_q_list[j], max_a_list[j], delta_list[j], buf_size)))
+                process_list[-1].start()
 
             for j in range(core_num):
-                if (i+j) >= len(self.indexes) and self.final_state_flag[i+j]: continue
                 process_list[j].join()
 
-            itr_max_delta = max([d.value for d in delta_list])
-            max_delta = max(itr_max_delta, max_delta)
+            # itr_max_delta = max(filter(None, [d.value for d in list(itertools.chain(*delta_list))]))
 
             for j in range(core_num):
-                if (i+j) >= len(self.indexes) and self.final_state_flag[i+j]: continue
-                self.value_function[self.indexes[i+j]] = max_q_list[j].value
-                self.policy[self.indexes[i+j]] = np.array(max_a_list[j].value).T
+                buf_index_start = i*core_num*buf_size+j*buf_size
+                for buf_count in range(buf_size):
+                    if (buf_index_start+buf_count) >= len(self.indexes) or self.final_state_flag[self.indexes[buf_index_start+buf_count]]: continue
+                    self.value_function[self.indexes[buf_index_start+buf_count]] = max_q_list[j][buf_count].value
+                    self.policy[self.indexes[buf_index_start+buf_count]] = np.array(max_a_list[j][buf_count].value).T
+                    max_delta = max(delta_list[j][buf_count].value, max_delta)
 
         return max_delta
 
-    def action_values_process(self, index, max_q, max_a, delta):
-        print(index)
-        qs =  [self.action_value(a, index) for a in self.actions]
-        max_q.value = max(qs)
-        max_a.value = self.actions[np.argmax(qs)]
-        delta.value = abs(self.value_function[tuple(index)] - max_q.value)
+    def action_values_process(self, index_start, max_q, max_a, delta, buf_size):
+        for buf_count in range(buf_size):
+            print(index_start+buf_count)
+            if (index_start+buf_count) >= len(self.indexes): 
+                print("skipped out of range")
+                continue
+            elif self.final_state_flag[self.indexes[index_start+buf_count]]:
+                print("skipped final state")
+                continue
+            print(index_start+buf_count, self.indexes[index_start+buf_count])
+            qs =  [self.action_value(a, self.indexes[index_start+buf_count]) for a in self.actions]
+            max_q[buf_count].value = max(qs)
+            max_a[buf_count].value = self.actions[np.argmax(qs)]
+            delta[buf_count].value = abs(self.value_function[self.indexes[index_start+buf_count]] - max_q[buf_count].value)
 
     def action_value(self, action, index):
         value = 0.0
-        print("=======")
         for prob, index_after in self.state_transition(action, index):
-            print(prob,action)
-            print(index)
-            print(index_after)
             collision = False
             risk = 0.0
             # state reward
@@ -165,7 +170,7 @@ class MDP:
             action_value = -10000*collision -100*risk -10*confort -100*bad_int_request -10*int_acc_reward -10*self.delta_t + self.goal_value*self.final_state(index_after)
             value += prob * action_value * self.discount_factor
             
-        print(self.value_function[index], "->", value)
+        # print(getpid(), self.value_function[index], "->", value)
         return value
 
     def state_transition(self, action, index):
