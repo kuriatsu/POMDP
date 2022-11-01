@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 class MDP:
     def __init__(self):
         self.delta_t = 2.0
-        self.prediction_horizon = 200
+        self.prediction_horizon = 100
         self.safety_margin = 10.0
         self.ideal_speed = 50.0
         self.min_speed = 10.0
@@ -28,8 +28,8 @@ class MDP:
 
         # ego_pose, ego_vel, 
         self.ego_state_min = np.array([0, 0]).T
-        self.ego_state_max = np.array([200, 50]).T
-        self.ego_state_width = np.array([5, 1]).T
+        self.ego_state_max = np.array([self.prediction_horizon, self.ideal_speed]).T
+        self.ego_state_width = np.array([10, 10]).T
 
         # operator state: intercept_time, intercept_acc, slope
         self.operator_performance_min = np.array([0, 0.0, 0.0]).T 
@@ -37,13 +37,13 @@ class MDP:
         self.operator_performance_width = np.array([2, 0.25, 0.25]).T
 
         # risks state: likelihood 0:norisk, 100:risk , eta 
-        self.risk_state_min = np.array([0.0, 0]*len(self.risk_positions)).T
-        self.risk_state_max = np.array([1.0, 5]*len(self.risk_positions)).T
-        self.risk_state_width = np.array([0.25, 1]*len(self.risk_positions)).T
+        self.risk_state_min = np.array([0.0, -6]*len(self.risk_positions)).T
+        self.risk_state_max = np.array([1.0, 6]*len(self.risk_positions)).T
+        self.risk_state_width = np.array([0.25, 2]*len(self.risk_positions)).T
         self.risk_state_len = int(len(self.risk_state_width) / len(self.risk_positions))
         
         # intervention state: int_time, target
-        self.int_state_min = np.array([0, -1]).T
+        self.int_state_min = np.array([0, 0]).T
         self.int_state_max = np.array([6, len(self.risk_positions)]).T
         self.int_state_width = np.array([2, 1]).T
 
@@ -53,7 +53,7 @@ class MDP:
 
 
         # indexes
-        self.index_nums = ((self.state_max - self.state_min)/self.state_width).astype(int) + 1
+        self.index_nums = (1+(self.state_max - self.state_min)/self.state_width).astype(int)
         print(self.index_nums)
         self.indexes = list(itertools.product(*tuple(range(x) for x in self.index_nums)))
         print("indexes size", self.indexes.__sizeof__())
@@ -62,8 +62,8 @@ class MDP:
         self.int_state_index = len(self.ego_state_width) + len(self.operator_performance_width)
         self.risk_state_index = len(self.ego_state_width) + len(self.operator_performance_width) + len(self.int_state_width)
 
-        # -1: not request intervention, else:request intervention
-        self.actions = np.append(np.arange(len(self.risk_positions)), -1).T
+        # 0: not request intervention, else:request intervention
+        self.actions = np.arange(len(self.risk_positions)+1).T
         self.value_function, self.final_state_flag = self.init_value_function()
         print("value_function size", self.value_function.__sizeof__())
         self.policy = self.init_policy()
@@ -97,6 +97,7 @@ class MDP:
                 max_q = -1e100
                 max_a = None
                 qs = [self.action_value(a, index) for a in self.actions]
+                # print(qs)
                 max_q = max(qs)
                 max_a = self.actions[np.argmax(qs)]
                 delta = abs(self.value_function[index] - max_q)
@@ -110,38 +111,37 @@ class MDP:
     def action_value(self, action, index):
         value = 0.0
         for prob, index_after in self.state_transition(action, index):
-            print(prob,action)
-            print(index)
-            print(index_after)
-            print("=======")
+            # print(prob,action)
+            # print([self.index_value(index, i) for i in range(len(self.state_width))])
+            # print([self.index_value(index_after, i) for i in range(len(self.state_width))])
             collision = False
             risk = 0.0
             # state reward
             for i in range(len(self.risk_positions)):
                 target_index = self.risk_state_index + self.risk_state_len * i 
                 # when passed the target with crossing risk with 10km/h or higher
-                if self.index_value(index_after, self.ego_state_index) == self.risk_positions[i] and self.index_value(index_after, self.ego_state_index+1) >= self.min_speed and self.index_value(index_after, target_index) < 0.8:
-                    risk += self.index_value(index_after, self.risk_state_index)
-
+                if self.index_value(index_after, self.ego_state_index) == self.risk_positions[i] and self.index_value(index_after, self.ego_state_index+1) > self.min_speed and self.index_value(index_after, target_index) > 0.8:
+                    collision = True
                 # pet
                 relative_dist = self.risk_positions[i] - self.index_value(index_after, self.ego_state_index)
                 pet = abs(relative_dist / (self.index_value(index_after, self.ego_state_index+1)+1e-100) - self.index_value(index_after, target_index+1))
-                if relative_dist > 0 and pet < 1.5:
-                    collision = True
+                if relative_dist > 0 and pet < 1.5 and self.index_value(index_after, self.ego_state_index+1) > self.min_speed:
+                    risk += 1
 
             # speed chenge 10km/h per delta_t
             confort = (abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1))/(3.6*9.8*self.delta_t) > self.ordinary_G)
             # action reward 
             bad_int_request = False
             int_acc_reward = False
+            int_reward = False if action == 0 else True
             # when change the intervention target, judge the action decision
             if index[self.int_state_index+1] != -1 and index_after[self.int_state_index+1] != index[self.int_state_index+1]:
                 int_acc = self.get_int_performance(index)
                 bad_int_request = int_acc is None
                 int_acc_reward = int_acc is not None and self.get_int_performance(index) < 0.5
             
-            action_value = -10000*collision -100*risk -10*confort -100*bad_int_request -10*int_acc_reward -10*self.delta_t + self.goal_value*self.final_state(index_after)
-            value += prob * action_value * self.discount_factor
+            action_value = -10000*collision -10*risk -1*confort -100*bad_int_request -10*int_acc_reward -1*int_reward -1*self.delta_t + self.goal_value*self.final_state(index_after)
+            value += self.value_function[tuple(index_after)] + prob * action_value * self.discount_factor
             
         return value
 
@@ -151,8 +151,8 @@ class MDP:
         out_index_list = []
 
         # intervention state transition 
-        if action == index[self.int_state_index]:
-            state_value[self.int_state_index+1] += self.delta_t
+        if action == index[self.int_state_index+1]:
+            state_value[self.int_state_index] += self.delta_t
         else:
             state_value[self.int_state_index] = 0
             state_value[self.int_state_index+1] = action
@@ -170,35 +170,35 @@ class MDP:
             state_value[eta_index] = eta_after
 
         # risk_state and ego_vehicle state 
-        if index[self.int_state_index+1] != action and index[self.int_state_index+1] != -1: 
-            int_acc = self.get_int_performance(index)
-            if int_acc is not None:
-                target_index = self.risk_state_index + action * self.risk_state_len
+        int_acc = self.get_int_performance(index)
+        #print("acc", int_acc, index[self.int_state_index+1])
+        if index[self.int_state_index+1] != action and index[self.int_state_index+1] != 0 and int_acc is not None : 
+            target_index = self.risk_state_index + action * self.risk_state_len
 
-                # transition if target is judged as risk
-                int_prob = 0.5 
-                buf_state_value = copy.deepcopy(state_value)
-                buf_state_value[target_index] = (1.0 + int_acc) * 0.5 
-                _, v, x = self.ego_vehicle_transition(buf_state_value)
-                buf_state_value[self.ego_state_index] = x
-                buf_state_value[self.ego_state_index+1] = v 
-                out_index_list.append([int_prob, self.to_index(buf_state_value)]) 
-                
-                # transition if target is judged as norisk
-                transition_prob = 0.5 
-                buf_state_value = copy.deepcopy(state_value)
-                buf_state_value[target_index] = (1.0 - int_acc) * 0.5 
-                _, v, x = self.ego_vehicle_transition(buf_state_value)
-                buf_state_value[self.ego_state_index] = x
-                buf_state_value[self.ego_state_index+1] = v 
-                out_index_list.append([int_prob, self.to_index(buf_state_value)]) 
+            # transition if target is judged as risk
+            int_prob = 0.5 
+            buf_state_value = copy.deepcopy(state_value)
+            buf_state_value[target_index] = (1.0 + int_acc) * 0.5 
+            _, v, x = self.ego_vehicle_transition(buf_state_value)
+            buf_state_value[self.ego_state_index] = x
+            buf_state_value[self.ego_state_index+1] = v 
+            out_index_list.append([int_prob, self.to_index(buf_state_value)]) 
+            
+            # transition if target is judged as norisk
+            int_prob = 0.5 
+            buf_state_value = copy.deepcopy(state_value)
+            buf_state_value[target_index] = (1.0 - int_acc) * 0.5 
+            _, v, x = self.ego_vehicle_transition(buf_state_value)
+            buf_state_value[self.ego_state_index] = x
+            buf_state_value[self.ego_state_index+1] = v 
+            out_index_list.append([int_prob, self.to_index(buf_state_value)]) 
 
         else:
-            transition_prob = 1.0
+            int_prob = 1.0
             _, v, x = self.ego_vehicle_transition(state_value)
             state_value[self.ego_state_index] = x
             state_value[self.ego_state_index+1] = v 
-            out_index_list.append([transition_prob, self.to_index(state_value)]) 
+            out_index_list.append([int_prob, self.to_index(state_value)]) 
             
         return out_index_list
 
@@ -236,13 +236,13 @@ class MDP:
     def to_index(self, state):
         out_index = []
         for i in range(len(state)):
-            out_index.append(int(min(max(state[i], self.state_min[i]), self.state_max[i])//self.state_width[i]))
+            out_index.append(int((min(max(state[i], self.state_min[i]), self.state_max[i]) - self.state_min[i]) // self.state_width[i]))
 
         return out_index
 
 
     def index_value(self, index, i):
-        return index[i] * self.state_width[i]
+        return index[i] * self.state_width[i] + self.state_min[i]
 
 
     def get_int_performance(self, index):

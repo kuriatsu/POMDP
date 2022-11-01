@@ -31,7 +31,7 @@ class MDP:
         # ego_pose, ego_vel, 
         self.ego_state_min = np.array([0, 0]).T
         self.ego_state_max = np.array([self.prediction_horizon, self.ideal_speed]).T
-        self.ego_state_width = np.array([3, 5]).T
+        self.ego_state_width = np.array([10, 10]).T
 
         # operator state: intercept_time, intercept_acc, slope
         self.operator_performance_min = np.array([0, 0.0, 0.0]).T 
@@ -167,7 +167,8 @@ class MDP:
                 bad_int_request = int_acc is None
                 int_acc_reward = int_acc is not None and self.get_int_performance(index) < 0.5
             try:
-                action_value = self.value_function[tuple(index_after)] -10000*collision -10*risk -1*confort -100*bad_int_request -10*int_acc_reward -1*self.delta_t + self.goal_value*self.final_state(index_after)
+                # action_value = self.value_function[tuple(index_after)] -10000*collision -10*risk -1*confort -100*bad_int_request -10*int_acc_reward -1*self.delta_t + self.goal_value*self.final_state(index_after)
+                action_value = -10000*collision -10*risk -1*confort -100*bad_int_request -10*int_acc_reward -1*self.delta_t + self.goal_value*self.final_state(index_after)
             except Exception as e:
                 print(e, index_after)
 
