@@ -17,8 +17,8 @@ with open("./value.pkl", "rb") as f:
     value = pickle.load(f)
 # v = value[:, :, 1, 1, 0, 2, 0, 4, 4]
 # index = [0, 0, 1, 1, 1, 2, 0, 4, 4]
-v = value[:, :, 1, 4, 0, 2, 0, 1, 6]
-index = [0, 0, 1, 1, 1, 2, 0, 1, 6]
+v = value[:, :, 1, 4, 0, 2, 0, 1, 4]
+index = [0, 0, 1, 1, 1, 2, 0, 1, 4]
 print((index + mdp.state_min) * mdp.state_width)
 sns.heatmap(v.T)
 plt.ylim(0, v.shape[0])
@@ -26,6 +26,6 @@ plt.ylim(0, v.shape[0])
 # plt.xticks(np.arange(0, 100.0/3.0, 10), np.arange(0, 100.0, 30))
 plt.show()
 
-p = policy[:, :, 1, 1, 1, 2, 0, 1, 6]
+p = policy[:, :, 1, 1, 1, 2, 0, 1, 4]
 sns.heatmap(np.rot90(p), square=False)
 plt.show()
