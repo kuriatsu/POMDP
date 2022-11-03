@@ -51,12 +51,14 @@ class MDP:
         self.state_max = np.r_[self.ego_state_max, self.operator_performance_max, self.int_state_max, self.risk_state_max]
         self.state_width = np.r_[self.ego_state_width, self.operator_performance_width, self.int_state_width, self.risk_state_width]
 
-        self.index_nums=None
+        self.index_nums = (1+(self.state_max - self.state_min)/self.state_width).astype(int)
+        print(self.index_nums)
+
         self.indexes = None
-        self.ego_state_index = None
-        self.operator_performance_index = None
-        self.int_state_index = None
-        self.risk_state_index = None
+        self.ego_state_index = 0
+        self.operator_performance_index = len(self.ego_state_width)
+        self.int_state_index = len(self.ego_state_width) + len(self.operator_performance_width)
+        self.risk_state_index = len(self.ego_state_width) + len(self.operator_performance_width) + len(self.int_state_width)
         # 0: not request intervention, else:request intervention
         self.actions = np.arange(-1, len(self.risk_positions)).T
         self.value_function = None
@@ -67,14 +69,8 @@ class MDP:
     def init_state_space(self):
 
         # indexes
-        self.index_nums = (1+(self.state_max - self.state_min)/self.state_width).astype(int)
-        print(self.index_nums)
         self.indexes = list(itertools.product(*tuple(range(x) for x in self.index_nums)))
         print("indexes size", self.indexes.__sizeof__())
-        self.ego_state_index = 0
-        self.operator_performance_index = len(self.ego_state_width)
-        self.int_state_index = len(self.ego_state_width) + len(self.operator_performance_width)
-        self.risk_state_index = len(self.ego_state_width) + len(self.operator_performance_width) + len(self.int_state_width)
 
         self.value_function, self.final_state_flag = self.init_value_function()
         print("value_function size", self.value_function.__sizeof__())
