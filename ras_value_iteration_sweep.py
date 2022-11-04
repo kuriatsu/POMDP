@@ -24,7 +24,7 @@ class MDP:
         # self.risk_positions = np.array([80,160]).T
         # self.risk_speed = np.array([1, 0]).T 
 
-        self.risk_positions = np.array([60]).T
+        self.risk_positions = np.array([80]).T
         self.risk_speed = np.array([1]).T 
 
         # ego_pose, ego_vel, 
