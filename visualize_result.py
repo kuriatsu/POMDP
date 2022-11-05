@@ -21,7 +21,7 @@ def plot(indexes, policy, plt):
 #     p = pickle.load(f)
 # with open("value.pkl", "rb") as f:
 #     v = pickle.load(f)
-p = [0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+p = [0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 
 fig, ax = plt.subplots()
 
@@ -41,7 +41,7 @@ for test in test_list:
     while not mdp.final_state(index):
         policy = p[i] 
         # policy = p[index]
-        [prob, index_after] =  mdp.state_transition(policy, index)[0]
+        [prob, index_after] =  mdp.state_transition(policy, index)[-1]
         index_list.append(index_after)
         policy_list.append(policy)
         index = tuple(index_after)

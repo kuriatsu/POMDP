@@ -9,11 +9,11 @@ import matplotlib.pyplot as plt
 
 class MDP:
     def __init__(self):
-        self.delta_t = 2.0
+        self.delta_t = 1.0
         self.prediction_horizon = 100
-        self.safety_margin = 10.0
-        self.ideal_speed = 50.0
-        self.min_speed = 10.0/3.6
+        self.safety_margin = 5.0
+        self.ideal_speed = 1.4*10 
+        self.min_speed = 2.8 
         self.ordinary_G = 0.2
         self.max_G = 1.0 
         self.min_step_size = self.prediction_horizon*3.6/self.ideal_speed
@@ -30,7 +30,7 @@ class MDP:
         # ego_pose, ego_vel, 
         self.ego_state_min = np.array([0, 0]).T
         self.ego_state_max = np.array([self.prediction_horizon, self.ideal_speed]).T
-        self.ego_state_width = np.array([5, 10]).T
+        self.ego_state_width = np.array([2, 1.4]).T
 
         # operator state: intercept_time, intercept_acc, slope
         self.operator_performance_min = np.array([0, 0.0, 0.0]).T 
@@ -138,7 +138,7 @@ class MDP:
                     risk += 1
 
             # speed chenge 10km/h per delta_t
-            confort = (abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1))/(3.6*9.8*self.delta_t) > self.ordinary_G)
+            confort = (abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1))/(self.delta_t) > 9.8*self.ordinary_G)
             # action reward 
             bad_int_request = False
             int_acc_reward = False
@@ -184,15 +184,7 @@ class MDP:
         if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
             target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1) * self.risk_state_len)
 
-            # print("transition if target is judged as risk")
-            int_prob = 0.5 
-            buf_state_value_int = copy.deepcopy(state_value)
-            buf_state_value_int[target_index] = (1.0 + int_acc) * 0.5 
-            _, v, x = self.ego_vehicle_transition(buf_state_value_int)
-            buf_state_value_int[self.ego_state_index] = x
-            buf_state_value_int[self.ego_state_index+1] = v 
-            out_index_list.append([int_prob, self.to_index(buf_state_value_int)]) 
-            # print("transition if target is judged as norisk")
+            print("transition if target is judged as norisk")
             int_prob = 0.5 
             buf_state_value_noint = copy.deepcopy(state_value)
             buf_state_value_noint[target_index] = (1.0 - int_acc) * 0.5 
@@ -200,6 +192,14 @@ class MDP:
             buf_state_value_noint[self.ego_state_index] = x
             buf_state_value_noint[self.ego_state_index+1] = v 
             out_index_list.append([int_prob, self.to_index(buf_state_value_noint)]) 
+            print("transition if target is judged as risk")
+            int_prob = 0.5 
+            buf_state_value_int = copy.deepcopy(state_value)
+            buf_state_value_int[target_index] = (1.0 + int_acc) * 0.5 
+            _, v, x = self.ego_vehicle_transition(buf_state_value_int)
+            buf_state_value_int[self.ego_state_index] = x
+            buf_state_value_int[self.ego_state_index+1] = v 
+            out_index_list.append([int_prob, self.to_index(buf_state_value_int)]) 
 
         else:
             # print("transition if no intervention")
@@ -214,9 +214,9 @@ class MDP:
 
     def ego_vehicle_transition(self, state):
         # closest object
-        closest_target_dist = self.ego_state_max[0]
+        closest_target_dist = self.prediction_horizon 
         closest_target = None
-        current_v = state[self.ego_state_index+1]/3.6
+        current_v = state[self.ego_state_index+1]
         current_pose = state[self.ego_state_index] 
         
         # get target for deceleration
@@ -227,19 +227,38 @@ class MDP:
                 closest_target_dist = dist
                 closest_target = i
 
-        deceleration_distance = (current_v**2 - self.min_speed**2)/(2*9.8*self.ordinary_G)
+        deceleration_distance = (current_v**2 - self.min_speed**2)/(2*9.8*self.ordinary_G) + self.safety_margin 
         if closest_target is None:
-            a = self.ordinary_G*9.8 if current_v < self.ideal_speed else -self.ordinary_G*9.8
-        else:
-            if closest_target_dist > deceleration_distance:
-                a = self.ordinary_G*9.8 if current_v < self.ideal_speed else -self.ordinary_G*9.8
+            if current_v < self.ideal_speed:
+                a = self.ordinary_G*9.8  
+            elif current_v == self.ideal_speed:
+                a = 0.0 
             else:
-                a = max(-self.max_G*9.8, (self.min_speed**2-current_v**2)/(2*closest_target_dist))
+                a = -self.ordinary_G*9.8
+        else:
+            if closest_target_dist > deceleration_distance+10:
+                if current_v < self.ideal_speed:
+                    a = self.ordinary_G*9.8  
+                elif current_v == self.ideal_speed:
+                    a = 0.0 
+                else:
+                    a = -self.ordinary_G*9.8
+            else:
+                a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist-self.safety_margin))
+        # print("accel, decel_dist, target", a, deceleration_distance, closest_target)
                 
-                print(a, deceleration_distance, closest_target)
-        v = min(max((current_v + a * self.delta_t), self.min_speed), self.ideal_speed) * 3.6
+
+        v = (current_v + a * self.delta_t)
+        # print("v, x, current_v, current_x", v, current_v, current_pose)
+        if v <= self.min_speed:
+            v = self.min_speed
+            a = 0.0
+        elif v >= self.ideal_speed:
+            v = self.ideal_speed
+            a = 0.0
+        # print("v, x, current_v, current_x", v, current_v, current_pose)
+
         x = current_pose + current_v * self.delta_t + 0.5 * a * self.delta_t**2
-        print(v, x, current_v, current_pose)
         return a, v, x
                
 
