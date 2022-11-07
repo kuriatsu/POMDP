@@ -4,10 +4,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import pickle
-from ras_value_iteration_sweep import MDP
+from ras_value_iteration_sweep_wo_eta import MDP
 
 
 mdp = MDP()
+mdp.init_state_space()
 def plot(indexes, policy, plt):
     plt.plot([mdp.index_value(i, 0) for i in indexes], [i[1] for i in indexes], label="speed")
 
@@ -28,9 +29,9 @@ fig, ax = plt.subplots()
 # ego_pose, ego_speed, int_min_time, int_min_acc, int_slope, int_time, int_target, risk_prob, risk_eta
     
 test_list = [
-        [0, 50, 1, 0.5, 0.25, 0, -1, 0.25, 4],
-        [0, 50, 1, 0.5, 0.25, 0, -1, 0.5, 4],
-        [0, 50, 1, 0.5, 0.25, 0, -1, 1.0, 4],
+        [0, 50, 1, 0.5, 0.25, 0, -1, 0.25],
+        [0, 50, 1, 0.5, 0.25, 0, -1, 0.5],
+        [0, 50, 1, 0.5, 0.25, 0, -1, 1.0],
         ]
 for test in test_list:
     human_intervention = True
@@ -42,6 +43,7 @@ for test in test_list:
         policy = p[i] 
         # policy = p[index]
         [prob, index_after] =  mdp.state_transition(policy, index)[-1]
+        print(mdp.action_value(policy, index))
         index_list.append(index_after)
         policy_list.append(policy)
         index = tuple(index_after)

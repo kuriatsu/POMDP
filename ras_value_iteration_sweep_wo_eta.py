@@ -59,7 +59,6 @@ class MDP:
         self.operator_performance_index = len(self.ego_state_width)
         self.int_state_index = len(self.ego_state_width) + len(self.operator_performance_width)
         self.risk_state_index = len(self.ego_state_width) + len(self.operator_performance_width) + len(self.int_state_width)
-        print(self.operator_performance_index, self.int_state_index, self.risk_state_index)
         # 0: not request intervention, else:request intervention
         self.actions = np.arange(-1, len(self.risk_positions)).T
         self.value_function = None
@@ -154,7 +153,7 @@ class MDP:
         out_index_list = []
 
         # intervention state transition 
-        print(action, self.index_value(index, self.int_state_index+1))
+        # print(action, self.index_value(index, self.int_state_index+1))
         if action == self.index_value(index, self.int_state_index+1):
             state_value[self.int_state_index] += self.delta_t
         else:
@@ -166,7 +165,7 @@ class MDP:
         if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
             target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1) * self.risk_state_len)
 
-            print("transition if target is judged as norisk")
+            # print("transition if target is judged as norisk")
             int_prob = 0.5 
             buf_state_value_noint = copy.deepcopy(state_value)
             buf_state_value_noint[target_index] = (1.0 - int_acc) * 0.5 
@@ -174,7 +173,7 @@ class MDP:
             buf_state_value_noint[self.ego_state_index] = x
             buf_state_value_noint[self.ego_state_index+1] = v 
             out_index_list.append([int_prob, self.to_index(buf_state_value_noint)]) 
-            print("transition if target is judged as risk")
+            # print("transition if target is judged as risk")
             int_prob = 0.5 
             buf_state_value_int = copy.deepcopy(state_value)
             buf_state_value_int[target_index] = (1.0 + int_acc) * 0.5 
@@ -227,7 +226,7 @@ class MDP:
                     a = -self.ordinary_G*9.8
             else:
                 a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist-self.safety_margin))
-        # print("accel, decel_dist, target", a, deceleration_distance, closest_target)
+        print("accel, decel_dist, target", a, deceleration_distance, closest_target)
                 
 
         v = (current_v + a * self.delta_t)
