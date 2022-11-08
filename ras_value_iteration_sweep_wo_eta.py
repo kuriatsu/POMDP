@@ -123,6 +123,7 @@ class MDP:
             # print(index[0], prob, [self.index_value(index_after, v) for v in range(len(index))])
             ambiguity = 0.0
             efficiency = 0.0
+            bad_int_request = False
             # state reward
             for i, risk_position in enumerate(self.risk_positions):
                 # when passed the target with crossing risk with 10km/h or higher
@@ -136,21 +137,22 @@ class MDP:
             # speed chenge 10km/h per delta_t
             # confort = (abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1))/(self.delta_t) > 9.8*self.ordinary_G+0.2)
             # action reward 
-            bad_int_request = False
             # int_acc_reward = False
             # int_reward = False if action == -1 else True
             # when change the intervention target, judge the action decision
             if self.index_value(index, self.int_state_index+1) not in  [-1, action]:
                 int_acc = self.get_int_performance(index)
-                print("int_acc, action value", int_acc)
                 bad_int_request = int_acc is None
                 # int_acc_reward = int_acc is not None and self.get_int_performance(index) < 0.5
             
+            if self.index_value(index, self.ego_state_index) >= self.risk_positions[int(self.index_value(index, self.int_state_index+1))]:
+                bad_int_request = True
+
             # action_value = -10000*collision -1*confort -100*bad_int_request -10*int_acc_reward -1*int_reward -1*self.delta_t + self.goal_value*self.final_state(index_after)
-            print("value_", efficiency, ambiguity, bad_int_request)
+            # print("value_", self.index_value(index, self.ego_state_index), efficiency, ambiguity, bad_int_request)
             action_value = -1*efficiency -10*ambiguity -10*bad_int_request -1*self.delta_t + self.goal_value*self.final_state(index_after)
-            # value += prob * (self.value_function[tuple(index_after)] + action_value) * self.discount_factor
-            value += prob * (action_value) 
+            value += prob * (self.value_function[tuple(index_after)] + action_value) * self.discount_factor
+            # value += prob * (action_value) 
             
         return value
 
@@ -169,7 +171,6 @@ class MDP:
 
         # print("risk_state and ego_vehicle state") 
         int_acc = self.get_int_performance(index)
-        print("int_acc, state tran", action, int_acc, self.index_value(index, self.int_state_index+1))
         if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
             target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1))
             # target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1) * self.risk_state_len)
@@ -236,7 +237,6 @@ class MDP:
                     a = -self.ordinary_G*9.8
             else:
                 a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist-self.safety_margin))
-        print("accel, decel_dist, target", a, deceleration_distance, closest_target)
                 
 
         v = (current_v + a * self.delta_t)
@@ -270,6 +270,7 @@ class MDP:
     def get_int_performance(self, index):
         int_time = self.index_value(index, self.int_state_index) 
         intercept_time = self.index_value(index, self.operator_performance_index)
+
         if int_time < intercept_time:
             acc = None
         else:

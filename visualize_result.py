@@ -22,7 +22,7 @@ def plot(indexes, policy, plt):
 #     p = pickle.load(f)
 # with open("value.pkl", "rb") as f:
 #     v = pickle.load(f)
-p = [-1, -1, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+p = [-1, -1, 0, 0, 0, -1, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 
 fig, ax = plt.subplots()
 
