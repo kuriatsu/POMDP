@@ -17,15 +17,15 @@ with open("./value.pkl", "rb") as f:
     value = pickle.load(f)
 # v = value[:, :, 1, 1, 0, 2, 0, 4, 4]
 # index = [0, 0, 1, 1, 1, 2, 0, 4, 4]
-v = value[:, :, 3, 2, 1, 0, 0, 2]
+v = value[:, :, 2, 3, 1, 0, 0, 2]
 index = [0, 0, 3, 2, 1, 0, 0, 2]
 # print((index + mdp.state_min) * mdp.state_width)
-sns.heatmap(v.T)
+sns.heatmap(v)
 plt.ylim(0, v.shape[0])
 # plt.yticks(np.arange(0, 55.0/5.0, 2.0), np.arange(0, 55.0, 10))
 # plt.xticks(np.arange(0, 100.0/3.0, 10), np.arange(0, 100.0, 30))
 plt.show()
 
-p = policy[:, :, 3, 2, 1, 0, 0, 2]
-sns.heatmap(p.T, square=False)
+p = policy[:, :, 2, 3, 1, 0, 0, 2]
+sns.heatmap(p, square=False)
 plt.show()
