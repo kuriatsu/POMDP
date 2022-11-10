@@ -11,23 +11,34 @@ intervention_color = ["green", "orange"]
 mdp = MDP()
 # mdp.init_state_space()
 def plot(indexes, policy, intervention):
-    ax_beav = plt.subplot(121)
+    ax = plt.subplot(121)
+    ax_right = ax.twinx()
     if intervention == 0:
-        plt.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, 1) for i in indexes], label="speed_int", alpha=0.5, c="green")
+        ax.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, 1) for i in indexes], label="speed_int", alpha=0.5, c="green")
     else:
-        plt.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, 1) for i in indexes], label="speed_no_int", alpha=0.5, c="orange")
-    print("policy", policy)
-    for int_state in range(0, len(mdp.risk_positions)):
-        int_indexes = [i for i, v in enumerate(policy) if v == int_state]
-        plt.scatter([mdp.index_value(indexes[i], 0)  for i in int_indexes], [mdp.index_value(indexes[i], 1)  for i in int_indexes], label="target", alpha=0.5, c=risk_colors[int_state])
-        print(mdp.risk_state_index, int_state, indexes[0])
-        plt.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, mdp.risk_state_index+int_state) for i in indexes], label="risk_prob", alpha=0.5, c=risk_colors[int_state])
+        ax.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, 1) for i in indexes], label="speed_no_int", alpha=0.5, c="orange")
+    
+    # plot intervention 
+    for risk_id in range(0, len(mdp.risk_positions)):
+        int_indexes = [i for i, v in enumerate(policy) if v == risk_id]
+        ax.scatter([mdp.index_value(indexes[i], 0)  for i in int_indexes], [mdp.index_value(indexes[i], 1)  for i in int_indexes], label="target", alpha=0.5, c=risk_colors[risk_id])
+        ax_right.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, mdp.risk_state_index+risk_id) for i in indexes], label="risk_prob", alpha=0.5, c=risk_colors[risk_id])
+        ax.axvspan(mdp.risk_positions[risk_id]-mdp.state_width[0], mdp.risk_positions[risk_id]+mdp.state_width[0], color=risk_colors[risk_id], alpha=0.2)
          
+    # plot no intervention 
+    int_indexes = [i for i, v in enumerate(policy) if v == -1]
+    ax.scatter([mdp.index_value(indexes[i], 0)  for i in int_indexes], [mdp.index_value(indexes[i], 1)  for i in int_indexes], label="target", alpha=0.5, c="black")
+
     # plt.plot([mdp.index_value(i, 0) for i in indexes], [mdp.get_int_performance(i) for i in indexes], label="int_acc", alpha=0.5)
     plt.legend()
+    ax.set_ylim([0, 15])
+    ax_right.set_ylim([0, 1])
+    ax.set_xlabel("travel distance [m]")
+    ax.set_ylabel("speed [m/s]")
+    ax_right.set_ylabel("crossing risk")
 
 def plot_performance(min_int_time, min_int_acc, acc_slope):
-    ax_perf = plt.subplot(122)
+    ax = plt.subplot(122)
     x_list = np.arange(mdp.operator_performance_min[0], mdp.operator_performance_max[0]+mdp.operator_performance_width[0], mdp.operator_performance_width[0])
     y = [None]*len(x_list)
     print(x_list)
@@ -35,9 +46,12 @@ def plot_performance(min_int_time, min_int_acc, acc_slope):
         if x_list[int(i)] < min_int_time: continue
         y[int(i)] = (min(max(acc_slope * (x_list[i] - min_int_time) + min_int_acc, 0.0), 1.0))
 
-    plt.plot(x_list, y, label="acc")
-    plt.xlim([0, x_list[-1]])
-    plt.ylim([0, 1.0])
+    ax.plot(x_list, y, label="acc")
+    ax.set_xlim([0, x_list[-1]])
+    ax.set_ylim([0, 1.0])
+    ax.set_xlabel("intervention time [s]")
+    ax.set_ylabel("accuracy")
+
 with open("policy.pkl", "rb") as f:
     p = pickle.load(f)
 # with open("value.pkl", "rb") as f:
