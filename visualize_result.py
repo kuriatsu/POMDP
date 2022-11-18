@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import pickle
-from ras_value_iteration_sweep_fix_perf import MDP
+from ras_value_iteration_sweep import MDP
 import sys
 
 risk_colors = ["red", "blue", "green"]
@@ -16,16 +16,16 @@ def plot(indexes, policy, intervention):
     ax_right = ax.twinx()
     ax_right2 = ax.twinx()
     if intervention == -1:
-        ax.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, 1) for i in indexes], label="speed_int", alpha=0.5, c="green")
+        ax.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, 1) for i in indexes], label="speed_no_int", alpha=0.5, c="green", linestyle="--")
     else:
-        ax.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, 1) for i in indexes], label="speed_no_int", alpha=0.5, c="orange")
+        ax.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, 1) for i in indexes], label="speed_int", alpha=0.5, c="orange")
     
     # plot intervention 
     for risk_id in range(0, len(mdp.risk_positions)):
         int_indexes = [i for i, v in enumerate(policy) if v == risk_id]
-        ax.scatter([mdp.index_value(indexes[i], 0)  for i in int_indexes], [mdp.index_value(indexes[i], 1)  for i in int_indexes], label="intervention", alpha=0.5, c=risk_colors[risk_id])
+        ax.scatter([mdp.index_value(indexes[i], 0)  for i in int_indexes], [mdp.index_value(indexes[i], 1)  for i in int_indexes], label="intervention", alpha=0.5, c=risk_colors[risk_id], linestyle="--")
         ax.axvspan(mdp.risk_positions[risk_id]-mdp.state_width[0], mdp.risk_positions[risk_id]+mdp.state_width[0], color=risk_colors[risk_id], alpha=0.2)
-        if intervention == 0:
+        if intervention == -1:
             print(intervention, [mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, mdp.risk_state_index+risk_id) for i in indexes])
             ax.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, mdp.risk_state_index+risk_id) for i in indexes], label="risk_prob_no_int", alpha=0.5, c=risk_colors[risk_id])
         else:

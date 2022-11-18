@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 class MDP:
     def __init__(self):
         self.delta_t = 1.0
-        self.prediction_horizon = 100
+        self.prediction_horizon = 200
         self.safety_margin = 5.0
         self.ideal_speed = 1.4*10 
         self.min_speed = 2.8 
@@ -24,17 +24,12 @@ class MDP:
         # self.risk_positions = np.array([80,160]).T
         # self.risk_speed = np.array([1, 0]).T 
 
-        self.risk_positions = np.array([80]).T
+        self.risk_positions = np.array([100, 120]).T
 
         # ego_pose, ego_vel, 
         self.ego_state_min = np.array([0, 0]).T
         self.ego_state_max = np.array([self.prediction_horizon, self.ideal_speed]).T
         self.ego_state_width = np.array([2, 1.4]).T
-
-        # operator state: intercept_time, intercept_acc, slope
-        self.operator_performance_min = np.array([0, 0.0, 0.0]).T 
-        self.operator_performance_max = np.array([6, 1.0, 1.0]).T 
-        self.operator_performance_width = np.array([2, 0.25, 0.5]).T
 
         # risks state: likelihood 0:norisk, 100:risk ,  
         self.risk_state_min = np.array([0.0]*len(self.risk_positions)).T
@@ -47,18 +42,17 @@ class MDP:
         self.int_state_max = np.array([6, len(self.risk_positions)-1]).T
         self.int_state_width = np.array([self.delta_t, 1]).T
 
-        self.state_min = np.r_[self.ego_state_min, self.operator_performance_min, self.int_state_min, self.risk_state_min]
-        self.state_max = np.r_[self.ego_state_max, self.operator_performance_max, self.int_state_max, self.risk_state_max]
-        self.state_width = np.r_[self.ego_state_width, self.operator_performance_width, self.int_state_width, self.risk_state_width]
+        self.state_min = np.r_[self.ego_state_min, self.int_state_min, self.risk_state_min]
+        self.state_max = np.r_[self.ego_state_max, self.int_state_max, self.risk_state_max]
+        self.state_width = np.r_[self.ego_state_width, self.int_state_width, self.risk_state_width]
 
         self.index_nums = (1+(self.state_max - self.state_min)/self.state_width).astype(int)
         print(self.index_nums)
 
         self.indexes = None
         self.ego_state_index = 0
-        self.operator_performance_index = len(self.ego_state_width)
-        self.int_state_index = len(self.ego_state_width) + len(self.operator_performance_width)
-        self.risk_state_index = len(self.ego_state_width) + len(self.operator_performance_width) + len(self.int_state_width)
+        self.int_state_index = len(self.ego_state_width) 
+        self.risk_state_index = len(self.ego_state_width) + len(self.int_state_width)
         # 0: not request intervention, else:request intervention
         self.actions = np.arange(-1, len(self.risk_positions)).T
         self.value_function = None
@@ -274,15 +268,17 @@ class MDP:
 
 
     def get_int_performance(self, index):
+        # TODO output acc distribution (acc list and probability)
+        # operator state: intercept_time, intercept_acc, slope
+        intercept_time = 3
+        intercept_acc = 0.5
+        slope = 0.25
+
         int_time = self.index_value(index, self.int_state_index) 
-        intercept_time = self.index_value(index, self.operator_performance_index)
 
         if int_time < intercept_time:
             acc = None
         else:
-            slope = self.index_value(index, self.operator_performance_index+2)
-            intercept_acc = self.index_value(index, self.operator_performance_index+1)
-            intercept_time = self.index_value(index, self.operator_performance_index)
             acc = intercept_acc + slope*(int_time-intercept_time)
             acc = min(acc, 1.0)
         
@@ -303,17 +299,17 @@ def trial_until_sat():
         print(e)
 
     finally:
-        with open("policy_50_ambig_penal.pkl", "wb") as f:
+        with open("policy_2obj.pkl", "wb") as f:
             pickle.dump(dp.policy, f)
 
-        with open("value_50_ambig_penal.pkl", "wb") as f:
+        with open("value_2obj.pkl", "wb") as f:
             pickle.dump(dp.value_function, f)
 
-        v = dp.value_function[:, :, 1, 3, 1, 2, 1, 1, 2]
+        v = dp.value_function[:, :, 2, 1, 2]
         sns.heatmap(v.T, square=False)
         plt.show()
 
-        p = dp.policy[:, :, 1, 3, 1, 2, 1, 1, 2]
+        p = dp.policy[:, :, 2, 1, 2]
         sns.heatmap(p.T, square=False)
         plt.show()
 
