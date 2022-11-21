@@ -6,7 +6,9 @@ import pickle
 import copy
 import seaborn as sns
 import matplotlib.pyplot as plt
-import multiprocessing import Process, Manager
+from  multiprocessing import Process, Manager, Value
+import ctypes
+
 class MDP:
     def __init__(self):
         self.delta_t = 1.0
@@ -60,6 +62,18 @@ class MDP:
         self.final_state_flag = None
         self.policy = None
 
+    def value2Ndarray(self, v):
+        return np.ctypeslib.as_array(v.get_obj())
+
+
+    def ndarrayToValue(self, n):
+        v = ctypes.c_uint8
+        for i in n.shape[::-1]:
+            v *= i
+
+        v = Value(v)
+        self.value2Ndarray(v)[:] = n
+        return v
 
     def init_state_space(self):
 
@@ -68,13 +82,18 @@ class MDP:
         print("indexes size", self.indexes.__sizeof__())
 
         self.value_function, self.final_state_flag = self.init_value_function()
-        print("value_function size", self.value_function.__sizeof__())
+        self.value_function = self.ndarrayToValue(self.value_function)
+        # print("value_function size", self.value_function.__sizeof__())
         self.policy = self.init_policy()
-        print("policy size", self.policy.__sizeof__())
+        self.policy = self.ndarrayToValue(self.policy)
+        # print("policy size", self.policy.__sizeof__())
+
+
 
     def init_value_function(self):
-        v = self.manager.list(np.empty(self.index_nums).tolist())
-        f = self.manager.list(np.zeros(self.index_nums).tolist())
+        v = np.empty(self.index_nums)
+        f = np.zeros(self.index_nums)
+
         for index in self.indexes:
             f[index] = self.final_state(np.array(index).T)
             v[index] = self.goal_value if f[index] else -100.0
@@ -86,7 +105,7 @@ class MDP:
 
 
     def init_policy(self):
-        p = self.manager.list(np.zeros(self.index_nums).tolist())
+        p = np.zeros(self.index_nums)
         for index in self.indexes:
             p[index] = 0
 
@@ -102,41 +121,45 @@ class MDP:
         
         while not finish_flag:
             process_list = []
-            for i in range(tale_index_num, core_num):
+            for i in range(core_num):
                 if tale_index_num + batch_size > len(self.indexes):
                     max_index_num = len(self.indexes)
                     finish_flag = True
                 else:
                     max_index_num = tale_index_num + batch_size
-                    tale_index_num = max_index_num
 
                 indexes = self.indexes[tale_index_num:max_index_num]
-                process_list.append(Process(target=self.value_iteration_process, args=(indexes, max_delta)))
+                process_list.append(Process(target=self.value_iteration_process, args=(indexes, max_delta, self.value_function, self.policy)))
+                tale_index_num = max_index_num
 
             for p in process_list:
                 p.start()
             for p in process_list:
                 p.join()
 
+        return max_delta.value
+
     
-    def value_iteration_process(self, indexes, delta):
+    def value_iteration_process(self, indexes, max_delta, value_function, policy):
         for index in indexes:
+
             if not self.final_state_flag[index]:
+                v_ndarr = self.value2Ndarray(value_function)
+                p_ndarr = self.value2Ndarray(policy)
                 max_q = -1e100
                 max_a = None
-                qs = [self.action_value(a, index) for a in self.actions]
+                qs = [self.action_value(a, index, v_ndarr) for a in self.actions]
                 # print(qs)
                 max_q = max(qs)
                 max_a = self.actions[np.argmax(qs)]
-                delta = abs(self.value_function[index] - max_q)
+                delta = abs(v_ndarr[index] - max_q)
                 max_delta.value = max(delta, max_delta.value)
 
-                self.value_function[index] = max_q
-                self.policy[index] = max_a
+                v_ndarr[index] = max_q
+                p_ndarr[index] = max_a
 
-        return max_delta
 
-    def action_value(self, action, index):
+    def action_value(self, action, index, value_function):
         value = 0.0
         # print(index[0], [self.index_value(index, v) for v in range(len(index))])
         for prob, index_after in self.state_transition(action, index):
@@ -177,7 +200,7 @@ class MDP:
             # action_value = -10000*collision -1*confort -100*bad_int_request -10*int_acc_reward -1*int_reward -1*self.delta_t + self.goal_value*self.final_state(index_after)
             # print("value_", self.index_value(index, self.ego_state_index), efficiency, ambiguity, bad_int_request)
             action_value = -1*efficiency -10*ambiguity -10*bad_int_request -1*int_request_penalty -1*self.delta_t + self.goal_value*self.final_state(index_after)
-            value += prob * (self.value_function[tuple(index_after)] + action_value) * self.discount_factor
+            value += prob * (value_function[tuple(index_after)] + action_value) * self.discount_factor
             # value += prob * (action_value) 
             
         return value
@@ -325,17 +348,17 @@ def trial_until_sat():
         print(e)
 
     finally:
-        with open("policy_2obj.pkl", "wb") as f:
-            pickle.dump(dp.policy, f)
+        with open("policy_2obj_multi.pkl", "wb") as f:
+            pickle.dump(dp.value2Ndarray(dp.policy), f)
 
-        with open("value_2obj.pkl", "wb") as f:
-            pickle.dump(dp.value_function, f)
+        with open("value_2obj_multi.pkl", "wb") as f:
+            pickle.dump(dp.value2Ndarray(dp.value_function), f)
 
-        v = dp.value_function[:, :, 2, 1, 2]
+        v = dp.value2Ndarray(dp.value_function)[:, :, 2, 1, 2]
         sns.heatmap(v.T, square=False)
         plt.show()
 
-        p = dp.policy[:, :, 2, 1, 2]
+        p = dp.value2Ndarray(dp.policy)[:, :, 2, 1, 2])
         sns.heatmap(p.T, square=False)
         plt.show()
 
