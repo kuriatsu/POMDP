@@ -119,6 +119,9 @@ class MDP:
         finish_flag = False
         tale_index_num = 0
         
+        prev_value_function = copy.deepcopy(self.value2Ndarray(self.value_function))
+        prev_policy = copy.deepcopy(self.value2Ndarray(self.policy))
+
         while not finish_flag:
             process_list = []
             for i in range(core_num):
@@ -129,7 +132,7 @@ class MDP:
                     max_index_num = tale_index_num + batch_size
 
                 indexes = self.indexes[tale_index_num:max_index_num]
-                process_list.append(Process(target=self.value_iteration_process, args=(indexes, max_delta, self.value_function, self.policy)))
+                process_list.append(Process(target=self.value_iteration_process, args=(indexes, max_delta, self.value_function, self.policy, prev_value_function, prev_policy)))
                 tale_index_num = max_index_num
 
             for p in process_list:
@@ -140,21 +143,21 @@ class MDP:
         return max_delta.value
 
     
-    def value_iteration_process(self, indexes, max_delta, value_function, policy):
+    def value_iteration_process(self, indexes, max_delta, value_function, policy, prev_value_function, prev_policy):
         for index in indexes:
 
             if not self.final_state_flag[index]:
-                v_ndarr = self.value2Ndarray(value_function)
-                p_ndarr = self.value2Ndarray(policy)
                 max_q = -1e100
                 max_a = None
-                qs = [self.action_value(a, index, v_ndarr) for a in self.actions]
+                qs = [self.action_value(a, index, prev_value_function) for a in self.actions]
                 # print(qs)
                 max_q = max(qs)
                 max_a = self.actions[np.argmax(qs)]
-                delta = abs(v_ndarr[index] - max_q)
+                delta = abs(prev_value_function[index] - max_q)
                 max_delta.value = max(delta, max_delta.value)
 
+                v_ndarr = self.value2Ndarray(value_function)
+                p_ndarr = self.value2Ndarray(policy)
                 v_ndarr[index] = max_q
                 p_ndarr[index] = max_a
 

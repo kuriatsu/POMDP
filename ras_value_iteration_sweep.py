@@ -6,36 +6,43 @@ import pickle
 import copy
 import seaborn as sns
 import matplotlib.pyplot as plt
+import yaml
 
 class MDP:
-    def __init__(self):
-        self.delta_t = 1.0
-        self.prediction_horizon = 200
-        self.safety_margin = 5.0
-        self.ideal_speed = 1.4*10 
-        self.min_speed = 2.8 
-        self.ordinary_G = 0.2
-        self.max_G = 1.0 
+    def __init__(self, param):
+        self.delta_t = param["delta_t"] #1.0
+        self.prediction_horizon = param["prediction_horizon"] # 150 
+        self.safety_margin = param["safety_margin"] # 5.0
+        self.ideal_speed = param["ideal_speed"] # 1.4*10 
+        self.min_speed = param["min_speed"] # 2.8 
+        self.ordinary_G = param["ordinary_G"] # 0.2
+        # self.max_G = 1.0 
+
+        self.p_efficiency = param["p_efficiency"] # -1
+        self.p_ambiguity = param["p_ambiguity"] # -10
+        self.p_bad_int_request = param["p_bad_int_request"] # -10
+        self.p_int_request = param["p_int_request"] # -1
+        self.p_delta_t = param["p_delta_t"] # -1
+        self.goal_value = param["goal_value"] # 100
+
+        self.operator_int_prob = param["operator_int_prob"] #0.5
+        self.operator_noint_prob = param["operator_noint_prob"] #0.5
+        
+        # map 
+        self.risk_positions = np.array(param["risk_positions"]).T # [100, 120]
+
         self.min_step_size = self.prediction_horizon*3.6/self.ideal_speed
         self.discount_factor = self.min_step_size/(self.min_step_size+1.0)
-        self.goal_value = 100
-
-        # map 
-        # self.risk_positions = np.array([80,160]).T
-        # self.risk_speed = np.array([1, 0]).T 
-
-        self.risk_positions = np.array([100, 120]).T
 
         # ego_pose, ego_vel, 
         self.ego_state_min = np.array([0, 0]).T
         self.ego_state_max = np.array([self.prediction_horizon, self.ideal_speed]).T
-        self.ego_state_width = np.array([2, 1.4]).T
+        self.ego_state_width = np.array([2, 1.4]).T # min speed=10km/h=2.8m/s, delta_t=1.0s, 1.4=5km/h
 
-        # risks state: likelihood 0:norisk, 100:risk ,  
+        # risks state: likelihood 0:norisk, 1:risk ,  
         self.risk_state_min = np.array([0.0]*len(self.risk_positions)).T
         self.risk_state_max = np.array([1.0]*len(self.risk_positions)).T
         self.risk_state_width = np.array([0.25]*len(self.risk_positions)).T
-        # self.risk_state_len = int(len(self.risk_state_width) / len(self.risk_positions))
         
         # intervention state: int_time, target
         self.int_state_min = np.array([0, -1]).T
@@ -122,35 +129,31 @@ class MDP:
             # state reward
             for i, risk_position in enumerate(self.risk_positions):
                 # when passed the target with crossing risk with 10km/h or higher
+                # evaluate efficiency, ambiguity
                 # TODO consider multiple object at the same place
                 if self.index_value(index, self.ego_state_index) <= risk_position <= self.index_value(index_after, self.ego_state_index):
                     ego_speed = self.index_value(index_after, self.ego_state_index+1) 
                     risk_prob = self.index_value(index_after, self.risk_state_index + i)
                     ambiguity = (0.5 - abs(risk_prob - 0.5))*2
                     if ego_speed < self.ideal_speed and risk_prob == 0.0: 
-                        # efficiency = self.ideal_speed - ego_speed
                         efficiency = ego_speed / self.ideal_speed 
                     
-            # speed chenge 10km/h per delta_t
-            # confort = (abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1))/(self.delta_t) > 9.8*self.ordinary_G+0.2)
-            # action reward 
-            # int_acc_reward = False
-            # int_reward = False if action == -1 else True
             # when change the intervention target, judge the action decision
             if self.index_value(index, self.int_state_index+1) not in  [-1, action]:
                 int_acc = self.get_int_performance(index)
                 bad_int_request = int_acc is None
-                # int_acc_reward = int_acc is not None and self.get_int_performance(index) < 0.5
             
+            # if intervention after passing the obstacles
             if self.index_value(index, self.ego_state_index) >= self.risk_positions[int(self.index_value(index, self.int_state_index+1))]:
                 bad_int_request = True
 
+            # intervention request penalty
             if action != -1:
                 int_request_penalty = True
 
             # action_value = -10000*collision -1*confort -100*bad_int_request -10*int_acc_reward -1*int_reward -1*self.delta_t + self.goal_value*self.final_state(index_after)
             # print("value_", self.index_value(index, self.ego_state_index), efficiency, ambiguity, bad_int_request)
-            action_value = -1*efficiency -10*ambiguity -10*bad_int_request -1*int_request_penalty -1*self.delta_t + self.goal_value*self.final_state(index_after)
+            action_value = self.p_efficiency*efficiency + self.p_ambiguity*ambiguity + self.p_bad_int_request*bad_int_request + self.p_int_request*int_request_penalty + self.p_delta_t*self.delta_t + self.goal_value*self.final_state(index_after)
             value += prob * (self.value_function[tuple(index_after)] + action_value) * self.discount_factor
             # value += prob * (action_value) 
             
@@ -173,10 +176,9 @@ class MDP:
         int_acc = self.get_int_performance(index)
         if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
             target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1))
-            # target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1) * self.risk_state_len)
 
             # print("transition if target is judged as norisk")
-            int_prob = 0.5 
+            int_prob = self.operator_int_prob
             buf_state_value_noint = copy.deepcopy(state_value)
             buf_state_value_noint[target_index] = (1.0 - int_acc) * 0.5 
             _, v, x = self.ego_vehicle_transition(buf_state_value_noint)
@@ -184,7 +186,7 @@ class MDP:
             buf_state_value_noint[self.ego_state_index+1] = v 
             out_index_list.append([int_prob, self.to_index(buf_state_value_noint)]) 
             # print("transition if target is judged as risk")
-            int_prob = 0.5 
+            int_prob = self.operator_noint_prob
             buf_state_value_int = copy.deepcopy(state_value)
             buf_state_value_int[target_index] = (1.0 + int_acc) * 0.5 
             _, v, x = self.ego_vehicle_transition(buf_state_value_int)
@@ -228,6 +230,7 @@ class MDP:
             else:
                 a = -self.ordinary_G*9.8
         else:
+            # when over the deceleration distance, acc gets higher than ordinaly Geven the car has sufficient gap
             if closest_target_dist > deceleration_distance+10:
                 if current_v < self.ideal_speed:
                     a = self.ordinary_G*9.8  
@@ -286,7 +289,10 @@ class MDP:
         
 
 def trial_until_sat():
-    dp = MDP()
+    with open(sys.argv[1]) as f:
+        param = yaml.safe_load(f)
+
+    dp = MDP(param)
     dp.init_state_space()
     delta = 1e100
     counter = 0
@@ -299,17 +305,17 @@ def trial_until_sat():
         print(e)
 
     finally:
-        with open("policy_2obj.pkl", "wb") as f:
+        with open(param["filename"]+".pkl", "wb") as f:
             pickle.dump(dp.policy, f)
 
-        with open("value_2obj.pkl", "wb") as f:
+        with open(param["filename"]+".pkl", "wb") as f:
             pickle.dump(dp.value_function, f)
 
-        v = dp.value_function[:, :, 2, 1, 2]
+        v = dp.value_function[:, :, param["visualize_elems"]]
         sns.heatmap(v.T, square=False)
         plt.show()
 
-        p = dp.policy[:, :, 2, 1, 2]
+        p = dp.policy[:, :, param["visualize_elems"]]
         sns.heatmap(p.T, square=False)
         plt.show()
 
