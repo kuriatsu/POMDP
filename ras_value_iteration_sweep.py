@@ -140,7 +140,8 @@ class MDP:
                     
             # when change the intervention target, judge the action decision
             if self.index_value(index, self.int_state_index+1) not in  [-1, action]:
-                int_acc = self.get_int_performance(index)
+                int_time = self.index_value(index, self.int_state_index) 
+                int_acc = self.get_int_performance(int_time)
                 bad_int_request = int_acc is None
             
             # if intervention after passing the obstacles
@@ -173,7 +174,8 @@ class MDP:
             state_value[self.int_state_index+1] = action
 
         # print("risk_state and ego_vehicle state") 
-        int_acc = self.get_int_performance(index)
+        int_time = self.index_value(index, self.int_state_index) 
+        int_acc = self.get_int_performance(int_time)
         if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
             target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1))
 
@@ -269,15 +271,13 @@ class MDP:
         # print("get index from", index, i)
         return index[i] * self.state_width[i] + self.state_min[i]
 
-
-    def get_int_performance(self, index):
+    @staticmethod
+    def get_int_performance(int_time):
         # TODO output acc distribution (acc list and probability)
         # operator state: intercept_time, intercept_acc, slope
         intercept_time = 3
         intercept_acc = 0.5
         slope = 0.25
-
-        int_time = self.index_value(index, self.int_state_index) 
 
         if int_time < intercept_time:
             acc = None
