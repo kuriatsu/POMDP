@@ -89,7 +89,6 @@ test_list = [
         ]
 for test in test_list:
     for intervention in [0, -1]:
-        human_intervention = True
         index = tuple(mdp.to_index(test))
         index_list = []
         policy_list = []
