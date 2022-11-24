@@ -4,12 +4,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import pickle
+import yaml
 from ras_value_iteration_sweep import MDP
 import sys
 
-def myopic_policy(mdp, int_time=4, initial_state=[0, 14, 0, -1, 0.5, 0.5]):
+def myopic_policy(mdp, int_time=4, initial_state=[0, 14, 0, -1, 0.5, 0.5], intervention=0):
 
-    index = tuple(mdp.to_index(test))
+    index = tuple(mdp.to_index(initial_state))
     index_list = []
     policy_list = []
     i = 0
@@ -47,6 +48,8 @@ def myopic_policy(mdp, int_time=4, initial_state=[0, 14, 0, -1, 0.5, 0.5]):
     return index_list, policy_list
 
 if __name__ == "__main__":
-    index_list, policy_list = myopic_policy(MDP())
+    with open(sys.argv[1]) as f:
+        param = yaml.safe_load(f)
+    index_list, policy_list = myopic_policy(MDP(param))
     print(index_list)
     print(policy_list)
