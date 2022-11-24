@@ -7,6 +7,7 @@ import copy
 import seaborn as sns
 import matplotlib.pyplot as plt
 import yaml
+import sys
 
 class MDP:
     def __init__(self, param):
@@ -175,35 +176,38 @@ class MDP:
 
         # print("risk_state and ego_vehicle state") 
         int_time = self.index_value(index, self.int_state_index) 
-        int_acc = self.get_int_performance(int_time)
-        if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
-            target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1))
+        int_acc_prob_list = self.get_int_performance(int_time)
+        for int_acc_prob in int_acc_prob_list:
+            [int_acc, acc_prob] = int_acc_prob
+            if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
+                target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1))
 
-            # print("transition if target is judged as norisk")
-            int_prob = self.operator_int_prob
-            buf_state_value_noint = copy.deepcopy(state_value)
-            buf_state_value_noint[target_index] = (1.0 - int_acc) * 0.5 
-            _, v, x = self.ego_vehicle_transition(buf_state_value_noint)
-            buf_state_value_noint[self.ego_state_index] = x
-            buf_state_value_noint[self.ego_state_index+1] = v 
-            out_index_list.append([int_prob, self.to_index(buf_state_value_noint)]) 
-            # print("transition if target is judged as risk")
-            int_prob = self.operator_noint_prob
-            buf_state_value_int = copy.deepcopy(state_value)
-            buf_state_value_int[target_index] = (1.0 + int_acc) * 0.5 
-            _, v, x = self.ego_vehicle_transition(buf_state_value_int)
-            buf_state_value_int[self.ego_state_index] = x
-            buf_state_value_int[self.ego_state_index+1] = v 
-            out_index_list.append([int_prob, self.to_index(buf_state_value_int)]) 
+                # print("transition if target is judged as norisk")
+                int_prob = self.operator_int_prob * acc_prob
+                buf_state_value_noint = copy.deepcopy(state_value)
+                buf_state_value_noint[target_index] = (1.0 - int_acc) * 0.5 
+                _, v, x = self.ego_vehicle_transition(buf_state_value_noint)
+                buf_state_value_noint[self.ego_state_index] = x
+                buf_state_value_noint[self.ego_state_index+1] = v 
+                out_index_list.append([int_prob, self.to_index(buf_state_value_noint)]) 
+                # print("transition if target is judged as risk")
+                int_prob = self.operator_noint_prob * acc_prob
+                buf_state_value_int = copy.deepcopy(state_value)
+                buf_state_value_int[target_index] = (1.0 + int_acc) * 0.5 
+                _, v, x = self.ego_vehicle_transition(buf_state_value_int)
+                buf_state_value_int[self.ego_state_index] = x
+                buf_state_value_int[self.ego_state_index+1] = v 
+                out_index_list.append([int_prob, self.to_index(buf_state_value_int)]) 
 
-        else:
-            # print("transition if no intervention")
-            int_prob = 1.0
-            _, v, x = self.ego_vehicle_transition(state_value)
-            state_value[self.ego_state_index] = x
-            state_value[self.ego_state_index+1] = v 
-            out_index_list.append([int_prob, self.to_index(state_value)]) 
+            else:
+                # print("transition if no intervention")
+                int_prob = 1.0 * acc_prob
+                _, v, x = self.ego_vehicle_transition(state_value)
+                state_value[self.ego_state_index] = x
+                state_value[self.ego_state_index+1] = v 
+                out_index_list.append([int_prob, self.to_index(state_value)]) 
             
+        # print(out_index_list)
         return out_index_list
 
 
@@ -285,7 +289,7 @@ class MDP:
             acc = intercept_acc + slope*(int_time-intercept_time)
             acc = min(acc, 1.0)
         
-        return acc
+        return [[acc, 1.0]]
         
 
 def trial_until_sat():
@@ -311,11 +315,13 @@ def trial_until_sat():
         with open(param["filename"]+".pkl", "wb") as f:
             pickle.dump(dp.value_function, f)
 
-        v = dp.value_function[:, :, param["visualize_elems"]]
+        v = eval("dp.value_function" + param["visualize_v"])
+        # v = dp.value_function[:, :, param["visualize_elems"]]
         sns.heatmap(v.T, square=False)
         plt.show()
 
-        p = dp.policy[:, :, param["visualize_elems"]]
+        p = eval("dp.policy" + param["visualize_v"])
+        # p = dp.policy[:, :, param["visualize_elems"]]
         sns.heatmap(p.T, square=False)
         plt.show()
 

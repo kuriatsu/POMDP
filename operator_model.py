@@ -9,21 +9,25 @@ def intervention_acc(int_time, min_time, min_time_var, acc_time_min, acc_time_va
     int_acc_mean = min(1.0, max(0.0, acc_time_min + acc_time_slope*(int_time-min_time))) 
     int_acc_norm = stats.norm(loc=int_acc_mean, scale=acc_time_var)
     min_time_norm = stats.norm()
-    out_acc = {}
+    acc_prob = [] 
     acc_list = [0.5, 0.75, 1.0]
     acc_for_cdf = np.linspace(acc_list[0], acc_list[-1], len(acc_list)+1)
-    for i in range(len(acc_list)):
+
+    # mid probability is whithin the area
+    for i in range(1, len(acc_list)-1):
         print(acc_for_cdf[i])
-        out_acc[acc_list[i]] = int_acc_norm.cdf(acc_for_cdf[i+1]) - int_acc_norm.cdf(acc_for_cdf[i])
+        prob = int_acc_norm.cdf(acc_for_cdf[i+1]) - int_acc_norm.cdf(acc_for_cdf[i]
+        acc_prob.append([acc_list[i], prob])
     
-    out_acc[acc_list[0]] = int_acc_norm.cdf(acc_for_cdf[1])
-    out_acc[acc_list[-1]] = 1.0 - int_acc_norm.cdf(acc_for_cdf[-2])
+    # side probability is cumulative from -inf/inf 
+    acc_prob.append([acc_list[0], int_acc_norm.cdf(acc_for_cdf[1])])
+    acc_prob.append([acc_list[-1], 1.0 - int_acc_norm.cdf(acc_for_cdf[-2])])
 
+    # no interventioon
     min_time_norm = stats.norm(loc=min_time, scale=min_time_var)
-    out_acc[0.0] = 1.0 - min_time_norm.cdf(int_time+0.5) 
+    acc_prob.append([None, 1.0 - min_time_norm.cdf(int_time+0.5)]) 
 
-
-    return out_acc
+    return acc_prob
 
 
 if __name__=="__main__":
