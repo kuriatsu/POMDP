@@ -9,8 +9,11 @@ import matplotlib.pyplot as plt
 import yaml
 import sys
 
+from operator_model import OperatorModel
+
 class MDP:
     def __init__(self, param):
+
         self.delta_t = param["delta_t"] #1.0
         self.prediction_horizon = param["prediction_horizon"] # 150 
         self.safety_margin = param["safety_margin"] # 5.0
@@ -29,6 +32,13 @@ class MDP:
         self.operator_int_prob = param["operator_int_prob"] #0.5
         self.operator_noint_prob = param["operator_noint_prob"] #0.5
         
+        self.operator_model = OperatorModel(
+                param["min_time"],
+                param["min_time_var"],
+                param["acc_time_min"],
+                param["acc_time_var"],
+                param["acc_time_slope"],
+                )
         # map 
         self.risk_positions = np.array(param["risk_positions"]).T # [100, 120]
 
@@ -142,8 +152,11 @@ class MDP:
             # when change the intervention target, judge the action decision
             if self.index_value(index, self.int_state_index+1) not in  [-1, action]:
                 int_time = self.index_value(index, self.int_state_index) 
-                int_acc = self.get_int_performance(int_time)
-                bad_int_request = int_acc is None
+                # int_acc, acc_prob = self.operator_model.int_acc(int_time)
+                # bad_int_request = int_acc is None
+                for [int_acc, acc_prob] in self.operator_model.int_acc_prob(int_time):
+                    if int_acc is None:
+                        bad_int_request = acc_prob
             
             # if intervention after passing the obstacles
             if self.index_value(index, self.ego_state_index) >= self.risk_positions[int(self.index_value(index, self.int_state_index+1))]:
@@ -153,7 +166,6 @@ class MDP:
             if action != -1:
                 int_request_penalty = True
 
-            # action_value = -10000*collision -1*confort -100*bad_int_request -10*int_acc_reward -1*int_reward -1*self.delta_t + self.goal_value*self.final_state(index_after)
             # print("value_", self.index_value(index, self.ego_state_index), efficiency, ambiguity, bad_int_request)
             action_value = self.p_efficiency*efficiency + self.p_ambiguity*ambiguity + self.p_bad_int_request*bad_int_request + self.p_int_request*int_request_penalty + self.p_delta_t*self.delta_t + self.goal_value*self.final_state(index_after)
             value += prob * (self.value_function[tuple(index_after)] + action_value) * self.discount_factor
@@ -176,9 +188,9 @@ class MDP:
 
         # print("risk_state and ego_vehicle state") 
         int_time = self.index_value(index, self.int_state_index) 
-        int_acc_prob_list = self.get_int_performance(int_time)
-        for int_acc_prob in int_acc_prob_list:
-            [int_acc, acc_prob] = int_acc_prob
+        # int_acc_prob_list = self.operator_model.int_acc(int_time)
+        int_acc_prob_list = self.operator_model.int_acc_prob(int_time)
+        for [int_acc, acc_prob] in int_acc_prob_list:
             if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
                 target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1))
 
@@ -275,24 +287,8 @@ class MDP:
         # print("get index from", index, i)
         return index[i] * self.state_width[i] + self.state_min[i]
 
-    @staticmethod
-    def get_int_performance(int_time):
-        # TODO output acc distribution (acc list and probability)
-        # operator state: intercept_time, intercept_acc, slope
-        intercept_time = 3
-        intercept_acc = 0.5
-        slope = 0.25
-
-        if int_time < intercept_time:
-            acc = None
-        else:
-            acc = intercept_acc + slope*(int_time-intercept_time)
-            acc = min(acc, 1.0)
-        
-        return [[acc, 1.0]]
-        
-
 def trial_until_sat():
+
     with open(sys.argv[1]) as f:
         param = yaml.safe_load(f)
 
@@ -309,10 +305,10 @@ def trial_until_sat():
         print(e)
 
     finally:
-        with open(param["filename"]+".pkl", "wb") as f:
+        with open(param["filename"]+"_v.pkl", "wb") as f:
             pickle.dump(dp.policy, f)
 
-        with open(param["filename"]+".pkl", "wb") as f:
+        with open(param["filename"]+"_p.pkl", "wb") as f:
             pickle.dump(dp.value_function, f)
 
         v = eval("dp.value_function" + param["visualize_v"])
