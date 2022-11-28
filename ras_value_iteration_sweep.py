@@ -152,7 +152,8 @@ class MDP:
             # when change the intervention target, judge the action decision
             if self.index_value(index, self.int_state_index+1) not in  [-1, action]:
                 int_time = self.index_value(index, self.int_state_index) 
-                # int_acc, acc_prob = self.operator_model.int_acc(int_time)
+
+                # int_acc = self.get_int_performance(int_time)
                 # bad_int_request = int_acc is None
                 for [int_acc, acc_prob] in self.operator_model.int_acc_prob(int_time):
                     if int_acc is None:
@@ -179,7 +180,6 @@ class MDP:
         out_index_list = []
 
         # intervention state transition 
-        # print(action)
         if action == self.index_value(index, self.int_state_index+1):
             state_value[self.int_state_index] += self.delta_t
         else:
@@ -187,6 +187,8 @@ class MDP:
             state_value[self.int_state_index+1] = action
 
         # print("risk_state and ego_vehicle state") 
+        # int_acc = self.get_int_performance(self.index_value(index, self.int_state_index))
+        # acc_prob = 1.0
         int_time = self.index_value(index, self.int_state_index) 
         # int_acc_prob_list = self.operator_model.int_acc(int_time)
         int_acc_prob_list = self.operator_model.int_acc_prob(int_time)
@@ -256,10 +258,13 @@ class MDP:
                     a = 0.0 
                 else:
                     a = -self.ordinary_G*9.8
+            # deceleration to the target
             else:
-                a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist-self.safety_margin))
-                
-
+                if closest_target_dist > self.safety_margin:
+                    a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist-self.safety_margin))
+                else:
+                    a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist))
+                    
         v = (current_v + a * self.delta_t)
         # print("v, x, current_v, current_x", v, current_v, current_pose)
         if v <= self.min_speed:
@@ -273,6 +278,21 @@ class MDP:
         x = current_pose + current_v * self.delta_t + 0.5 * a * self.delta_t**2
         return a, v, x
                
+    @staticmethod
+    def get_int_performance(int_time):
+        # TODO output acc distribution (acc list and probability)
+        # operator state: intercept_time, intercept_acc, slope
+        intercept_time = 3
+        intercept_acc = 0.5
+        slope = 0.25
+
+        if int_time < intercept_time:
+            acc = None
+        else:
+            acc = intercept_acc + slope*(int_time-intercept_time)
+            acc = min(acc, 1.0)
+        
+        return acc
 
     def to_index(self, state):
         # print("to_index")
@@ -305,18 +325,19 @@ def trial_until_sat():
         print(e)
 
     finally:
-        with open(param["filename"]+"_v.pkl", "wb") as f:
+        with open(param["filename"]+"_p.pkl", "wb") as f:
             pickle.dump(dp.policy, f)
 
-        with open(param["filename"]+"_p.pkl", "wb") as f:
+        with open(param["filename"]+"_v.pkl", "wb") as f:
             pickle.dump(dp.value_function, f)
 
-        v = eval("dp.value_function" + param["visualize_v"])
+        v = eval("dp.value_function" + param["visualize_elem"])
+        print("dp.value_function"+param["visualize_elem"])
         # v = dp.value_function[:, :, param["visualize_elems"]]
         sns.heatmap(v.T, square=False)
         plt.show()
 
-        p = eval("dp.policy" + param["visualize_v"])
+        p = eval("dp.policy" + param["visualize_elem"])
         # p = dp.policy[:, :, param["visualize_elems"]]
         sns.heatmap(p.T, square=False)
         plt.show()
