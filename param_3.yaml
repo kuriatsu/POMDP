@@ -14,9 +14,17 @@ goal_value: 100
 
 operator_int_prob: 0.5
 operator_noint_prob: 0.5
+min_time: 3
+min_time_var: 0.5
+acc_time_min: 0.5
+acc_time_var: 0.2
+acc_time_slope: 0.2
 
 risk_positions: [100, 120]
 
 # risk, inttime, target
-visualize_elem: "[:, :, 1, 2, 1]" 
+visualize_elem: "[:, :, 1, 2, 1, 1]"
 filename: param_3
+
+# desctiption
+# efficiency penalty high

@@ -6,43 +6,55 @@ import seaborn as sns
 import numpy as np
 
 class OperatorModel:
-    def __init__(self, min_time, min_time_var, acc_time_min, acc_time_var, acc_time_slope)
+    def __init__(self, min_time, min_time_var, acc_time_min, acc_time_var, acc_time_slope, int_time_list):
         self.min_time = min_time
         self.min_time_var = min_time_var
         self.acc_time_min = acc_time_min
         self.acc_time_var = acc_time_var
         self.acc_time_slope = acc_time_slope
         self.acc_list = [0.5, 0.75, 1.0]
+        
+        self.int_time_list = int_time_list
+        self.inttime_acc_prob_list = {}
+        
+        self.init_performance_model()
 
-    def int_acc_prob(self, int_time):
+
+    def init_performance_model(self):
+        self.inttime_acc_prob_list = {}
+        for int_time in self.int_time_list:
+            self.inttime_acc_prob_list[int_time] = self.calc_acc_prob(int_time)
+            
+    def calc_acc_prob(self, int_time):
         """return intervention acc list[[int_acc, prob],...]
         """
-        int_acc_mean = min(1.0, max(0.0, self.acc_time_min + self.acc_time_slope*(self.int_time-self.min_time))) 
-        int_acc_norm = stats.norm(loc=int_acc_mean, scale=self.acc_time_var)
-        min_time_norm = stats.norm()
-        acc_prob = [] 
-        acc_for_cdf = np.linspace(acc_list[0], acc_list[-1], len(acc_list)+1)
-
-        # mid probability is whithin the area
-        for i in range(1, len(self.acc_list)-1):
-            print(acc_for_cdf[i])
-            prob = int_acc_norm.cdf(acc_for_cdf[i+1]) - int_acc_norm.cdf(acc_for_cdf[i]
-            acc_prob.append([self.acc_list[i], prob])
-        
-        # side probability is cumulative from -inf/inf 
-        acc_prob.append([self.acc_list[0], int_acc_norm.cdf(acc_for_cdf[1])])
-        acc_prob.append([self.acc_list[-1], 1.0 - int_acc_norm.cdf(acc_for_cdf[-2])])
 
         # no interventioon
         min_time_norm = stats.norm(loc=self.min_time, scale=self.min_time_var)
-        acc_prob.append([None, 1.0 - min_time_norm.cdf(self.int_time+0.5)]) 
+        intervention_prob = min_time_norm.cdf(int_time) # NOTE: 0.5 was added to int_time
+
+        int_acc_mean = min(1.0, max(0.0, self.acc_time_min + self.acc_time_slope*(int_time-self.min_time))) 
+        int_acc_norm = stats.norm(loc=int_acc_mean, scale=self.acc_time_var)
+        acc_prob = [] # [[acc, prob]]
+        acc_for_cdf = np.linspace(self.acc_list[0], self.acc_list[-1], len(self.acc_list)+1)
+
+        # mid probability is whithin the area
+        for i in range(1, len(self.acc_list)-1):
+            prob = (int_acc_norm.cdf(acc_for_cdf[i+1]) - int_acc_norm.cdf(acc_for_cdf[i]))*intervention_prob
+            acc_prob.append([self.acc_list[i], prob])
+        
+        # side probability is cumulative from -inf/inf 
+        acc_prob.append([self.acc_list[0], int_acc_norm.cdf(acc_for_cdf[1])*intervention_prob])
+        acc_prob.append([self.acc_list[-1], (1.0 - int_acc_norm.cdf(acc_for_cdf[-2]))*intervention_prob])
+        acc_prob.append([None, 1.0 - intervention_prob]) 
+
 
         return acc_prob
 
+    def get_acc_prob(self, int_time):
+        return self.inttime_acc_prob_list[int_time]
+
     def int_acc(self, int_time):
-        intercept_time = 3
-        intercept_acc = 0.5
-        slope = 0.25
 
         if int_time < self.min_time:
             acc = None
@@ -52,21 +64,23 @@ class OperatorModel:
         
         return [[acc, 1.0]]
 
-
+    
 if __name__=="__main__":
     min_time = 3
-    min_time_var = 0.5
+    min_time_var = 0.0
     acc_time_min = 0.5
-    acc_time_var = 0.2
+    acc_time_var = 0.0
     acc_time_slope = 0.2
+    int_time_list = [0, 1, 2, 3, 4, 5, 6]
     operator_model = OperatorModel(
         min_time,
         min_time_var,
         acc_time_min,
         acc_time_var,
-        acc_time_slope
+        acc_time_slope,
+        int_time_list,
         )
-    acc = operator_model.int_acc_prob(4)
+    acc = operator_model.get_acc_prob(4)
    
     print(acc)
     data_acc = []

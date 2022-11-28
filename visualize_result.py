@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import pickle
+import yaml
 from ras_value_iteration_sweep import MDP
 from myopic_agent import myopic_policy
 import sys
@@ -30,10 +31,10 @@ def plot(indexes, policy, intervention):
 
         # risk prob change
         if intervention == -1:
-            print(intervention, [mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, mdp.risk_state_index+risk_id) for i in indexes])
+            print("intervention:", intervention, "speed:", [mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, mdp.risk_state_index+risk_id) for i in indexes])
             ax.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, mdp.risk_state_index+risk_id) for i in indexes], label="risk_prob_no_int", alpha=0.5, c=risk_colors[risk_id])
         else:
-            print(intervention, [mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, mdp.risk_state_index+risk_id) for i in indexes])
+            print("intervention:", intervention, "speed", [mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, mdp.risk_state_index+risk_id) for i in indexes])
             ax.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, mdp.risk_state_index+risk_id) for i in indexes], label="risk_prob_int", alpha=0.5, c=risk_colors[risk_id])
          
     # plot no intervention point 
@@ -41,9 +42,6 @@ def plot(indexes, policy, intervention):
     ax.scatter([mdp.index_value(indexes[i], 0)  for i in int_indexes], [mdp.index_value(indexes[i], 1)  for i in int_indexes], label="no_intervention", alpha=0.5, c="black")
 
     ax.legend()
-    ax_right.legend()
-    ax_right.set_ylim([0, 1])
-    ax_right.set_ylabel("crossing risk")
     ax.set_ylim([0, 15])
     ax.set_xlabel("travel distance [m]")
     ax.set_ylabel("speed [m/s]")
@@ -82,7 +80,9 @@ def plot_performance():
 #         [0, 50, 0, -1, 1.0, 0.5],
 #         ]
 initial_state = [0, 14, 0, -1, 0.5, 0.5]
-param_list = ["param.yaml", "param_2.yaml", "param_3.yaml"]
+egotistical_policy = [-1] * 100
+
+param_list = ["param.yaml"]
 intervention = 0 # 0:intervention -1:no_intervention
 for param in param_list:
     print(param)
@@ -104,8 +104,10 @@ for param in param_list:
         policy_list.append(int(policy))
         index = tuple(index_after)
 
+    print("policy", param, policy_list)
     plot(index_list, policy_list, intervention)
 
-index_list, policy_list = myopic_policy(mdp, int_time=4, initial_state=initial_state, intervention=intervention)
-plot([index_list], [policy_list], intervention)
+index_list, policy_list = myopic_policy(mdp, int_time=param["min_time"], initial_state=initial_state, intervention=intervention)
+print(policy_list)
+plot(index_list, policy_list, intervention)
 plt.show()

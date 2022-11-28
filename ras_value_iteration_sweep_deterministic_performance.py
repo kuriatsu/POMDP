@@ -306,17 +306,20 @@ def trial_until_sat():
         print(e)
 
     finally:
-        with open(param["filename"]+".pkl", "wb") as f:
+        with open(param["filename"]+"_p.pkl", "wb") as f:
             pickle.dump(dp.policy, f)
 
-        with open(param["filename"]+".pkl", "wb") as f:
+        with open(param["filename"]+"_v.pkl", "wb") as f:
             pickle.dump(dp.value_function, f)
 
-        v = dp.value_function[:, :, param["visualize_elems"]]
+        v = eval("dp.value_function" + param["visualize_elem"])
+        print("dp.value_function"+param["visualize_elem"])
+        # v = dp.value_function[:, :, param["visualize_elems"]]
         sns.heatmap(v.T, square=False)
         plt.show()
 
-        p = dp.policy[:, :, param["visualize_elems"]]
+        p = eval("dp.policy" + param["visualize_elem"])
+        # p = dp.policy[:, :, param["visualize_elems"]]
         sns.heatmap(p.T, square=False)
         plt.show()
 

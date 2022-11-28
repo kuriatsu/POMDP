@@ -32,13 +32,6 @@ class MDP:
         self.operator_int_prob = param["operator_int_prob"] #0.5
         self.operator_noint_prob = param["operator_noint_prob"] #0.5
         
-        self.operator_model = OperatorModel(
-                param["min_time"],
-                param["min_time_var"],
-                param["acc_time_min"],
-                param["acc_time_var"],
-                param["acc_time_slope"],
-                )
         # map 
         self.risk_positions = np.array(param["risk_positions"]).T # [100, 120]
 
@@ -65,7 +58,7 @@ class MDP:
         self.state_width = np.r_[self.ego_state_width, self.int_state_width, self.risk_state_width]
 
         self.index_nums = (1+(self.state_max - self.state_min)/self.state_width).astype(int)
-        print(self.index_nums)
+        print("index_nums", self.index_nums)
 
         self.indexes = None
         self.ego_state_index = 0
@@ -77,17 +70,26 @@ class MDP:
         self.final_state_flag = None
         self.policy = None
 
+        # operator model
+        self.operator_model = OperatorModel(
+                param["min_time"],
+                param["min_time_var"],
+                param["acc_time_min"],
+                param["acc_time_var"],
+                param["acc_time_slope"],
+                [i for i in range(int(self.state_min[self.int_state_index]), int(1 + self.state_max[self.int_state_index]), int(self.state_width[self.int_state_index]))],
+                )
 
     def init_state_space(self):
 
         # indexes
         self.indexes = list(itertools.product(*tuple(range(x) for x in self.index_nums)))
-        print("indexes size", self.indexes.__sizeof__())
+        print("indexes size [byte]", self.indexes.__sizeof__())
 
         self.value_function, self.final_state_flag = self.init_value_function()
-        print("value_function size", self.value_function.__sizeof__())
+        print("value_function size [byte]", self.value_function.__sizeof__())
         self.policy = self.init_policy()
-        print("policy size", self.policy.__sizeof__())
+        print("policy size [byte]", self.policy.__sizeof__())
 
     def init_value_function(self):
         v = np.empty(self.index_nums)
@@ -155,7 +157,7 @@ class MDP:
 
                 # int_acc = self.get_int_performance(int_time)
                 # bad_int_request = int_acc is None
-                for [int_acc, acc_prob] in self.operator_model.int_acc_prob(int_time):
+                for [int_acc, acc_prob] in self.operator_model.get_acc_prob(int_time):
                     if int_acc is None:
                         bad_int_request = acc_prob
             
@@ -191,7 +193,7 @@ class MDP:
         # acc_prob = 1.0
         int_time = self.index_value(index, self.int_state_index) 
         # int_acc_prob_list = self.operator_model.int_acc(int_time)
-        int_acc_prob_list = self.operator_model.int_acc_prob(int_time)
+        int_acc_prob_list = self.operator_model.get_acc_prob(int_time)
         for [int_acc, acc_prob] in int_acc_prob_list:
             if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
                 target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1))
@@ -262,8 +264,10 @@ class MDP:
             else:
                 if closest_target_dist > self.safety_margin:
                     a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist-self.safety_margin))
+                # if within safety margin, keep speed (expect already min_speed)
                 else:
-                    a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist))
+                    # a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist))
+                    a = 0.0
                     
         v = (current_v + a * self.delta_t)
         # print("v, x, current_v, current_x", v, current_v, current_pose)
@@ -331,16 +335,17 @@ def trial_until_sat():
         with open(param["filename"]+"_v.pkl", "wb") as f:
             pickle.dump(dp.value_function, f)
 
-        v = eval("dp.value_function" + param["visualize_elem"])
-        print("dp.value_function"+param["visualize_elem"])
-        # v = dp.value_function[:, :, param["visualize_elems"]]
-        sns.heatmap(v.T, square=False)
-        plt.show()
+            v = eval("dp.value_function" + param["visualize_elem"])
+            # v = dp.value_function[:, :, param["visualize_elems"]]
+            sns.heatmap(v.T, square=False)
+            plt.title(param["filename"]+"value")
+            plt.savefig(param["filename"]+"value.svg")
 
-        p = eval("dp.policy" + param["visualize_elem"])
-        # p = dp.policy[:, :, param["visualize_elems"]]
-        sns.heatmap(p.T, square=False)
-        plt.show()
+            p = eval("dp.policy" + param["visualize_elem"])
+            # p = dp.policy[:, :, param["visualize_elems"]]
+            sns.heatmap(p.T, square=False)
+            plt.title(param["filename"]+"policy")
+            plt.savefig(param["filename"]+"policy.svg")
 
 if __name__ == "__main__":
     trial_until_sat()
