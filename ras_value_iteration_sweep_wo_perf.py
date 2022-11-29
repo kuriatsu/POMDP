@@ -8,10 +8,12 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import yaml
 import sys
+
 from operator_model import OperatorModel
 
 class MDP:
     def __init__(self, param):
+
         self.delta_t = param["delta_t"] #1.0
         self.prediction_horizon = param["prediction_horizon"] # 150 
         self.safety_margin = param["safety_margin"] # 5.0
@@ -30,14 +32,6 @@ class MDP:
         self.operator_int_prob = param["operator_int_prob"] #0.5
         self.operator_noint_prob = param["operator_noint_prob"] #0.5
         
-        self.operator_model = OperatorModel(
-                param["min_time"],
-                param["min_time_var"],
-                param["acc_time_min"],
-                param["acc_time_var"],
-                param["acc_time_slope"],
-                )
-
         # map 
         self.risk_positions = np.array(param["risk_positions"]).T # [100, 120]
 
@@ -64,7 +58,7 @@ class MDP:
         self.state_width = np.r_[self.ego_state_width, self.int_state_width, self.risk_state_width]
 
         self.index_nums = (1+(self.state_max - self.state_min)/self.state_width).astype(int)
-        print(self.index_nums)
+        print("index_nums", self.index_nums)
 
         self.indexes = None
         self.ego_state_index = 0
@@ -76,17 +70,26 @@ class MDP:
         self.final_state_flag = None
         self.policy = None
 
+        # operator model
+        self.operator_model = OperatorModel(
+                param["min_time"],
+                param["min_time_var"],
+                param["acc_time_min"],
+                param["acc_time_var"],
+                param["acc_time_slope"],
+                [i for i in range(int(self.state_min[self.int_state_index]), int(1 + self.state_max[self.int_state_index]), int(self.state_width[self.int_state_index]))],
+                )
 
     def init_state_space(self):
 
         # indexes
         self.indexes = list(itertools.product(*tuple(range(x) for x in self.index_nums)))
-        print("indexes size", self.indexes.__sizeof__())
+        print("indexes size [byte]", self.indexes.__sizeof__())
 
         self.value_function, self.final_state_flag = self.init_value_function()
-        print("value_function size", self.value_function.__sizeof__())
+        print("value_function size [byte]", self.value_function.__sizeof__())
         self.policy = self.init_policy()
-        print("policy size", self.policy.__sizeof__())
+        print("policy size [byte]", self.policy.__sizeof__())
 
     def init_value_function(self):
         v = np.empty(self.index_nums)
@@ -151,8 +154,12 @@ class MDP:
             # when change the intervention target, judge the action decision
             if self.index_value(index, self.int_state_index+1) not in  [-1, action]:
                 int_time = self.index_value(index, self.int_state_index) 
-                int_acc, acc_prob = self.operator_model.int_acc(int_time)[0]
-                bad_int_request = int_acc is None
+
+                # int_acc = self.get_int_performance(int_time)
+                # bad_int_request = int_acc is None
+                for [int_acc, acc_prob] in self.operator_model.get_acc_prob(int_time):
+                    if int_acc is None:
+                        bad_int_request = acc_prob
             
             # if intervention after passing the obstacles
             if self.index_value(index, self.ego_state_index) >= self.risk_positions[int(self.index_value(index, self.int_state_index+1))]:
@@ -162,6 +169,7 @@ class MDP:
             if action != -1:
                 int_request_penalty = True
 
+            # print("value_", self.index_value(index, self.ego_state_index), efficiency, ambiguity, bad_int_request)
             action_value = self.p_efficiency*efficiency + self.p_ambiguity*ambiguity + self.p_bad_int_request*bad_int_request + self.p_int_request*int_request_penalty + self.p_delta_t*self.delta_t + self.goal_value*self.final_state(index_after)
             value += prob * (self.value_function[tuple(index_after)] + action_value) * self.discount_factor
             
@@ -173,7 +181,6 @@ class MDP:
         out_index_list = []
 
         # intervention state transition 
-        # print(action)
         if action == self.index_value(index, self.int_state_index+1):
             state_value[self.int_state_index] += self.delta_t
         else:
@@ -181,35 +188,39 @@ class MDP:
             state_value[self.int_state_index+1] = action
 
         # print("risk_state and ego_vehicle state") 
+        # int_acc = self.get_int_performance(self.index_value(index, self.int_state_index))
+        # acc_prob = 1.0
         int_time = self.index_value(index, self.int_state_index) 
-        int_acc, acc_prob = self.operator_model.int_acc(int_time)[0]
-        if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
-            target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1))
+        int_acc_prob_list = self.operator_model.int_acc(int_time) #NOTE: this is for w/o perf point
+        # int_acc_prob_list = self.operator_model.get_acc_prob(int_time)
+        for [int_acc, acc_prob] in int_acc_prob_list:
+            if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
+                target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1))
 
-            # print("transition if target is judged as norisk")
-            int_prob = self.operator_int_prob * acc_prob
-            buf_state_value_noint = copy.deepcopy(state_value)
-            buf_state_value_noint[target_index] = 0.0 # NOTE: this is for w/o perf point
-            _, v, x = self.ego_vehicle_transition(buf_state_value_noint)
-            buf_state_value_noint[self.ego_state_index] = x
-            buf_state_value_noint[self.ego_state_index+1] = v 
-            out_index_list.append([int_prob, self.to_index(buf_state_value_noint)]) 
-            # print("transition if target is judged as risk")
-            int_prob = self.operator_noint_prob * acc_prob
-            buf_state_value_int = copy.deepcopy(state_value)
-            buf_state_value_int[target_index] = 1.0 # NOTE: this is for w/o perf point
-            _, v, x = self.ego_vehicle_transition(buf_state_value_int)
-            buf_state_value_int[self.ego_state_index] = x
-            buf_state_value_int[self.ego_state_index+1] = v 
-            out_index_list.append([int_prob, self.to_index(buf_state_value_int)]) 
+                # print("transition if target is judged as norisk")
+                int_prob = self.operator_int_prob * acc_prob
+                buf_state_value_noint = copy.deepcopy(state_value)
+                buf_state_value_noint[target_index] = 0.0  #NOTE: this is for w/o perf point
+                _, v, x = self.ego_vehicle_transition(buf_state_value_noint)
+                buf_state_value_noint[self.ego_state_index] = x
+                buf_state_value_noint[self.ego_state_index+1] = v 
+                out_index_list.append([int_prob, self.to_index(buf_state_value_noint)]) 
+                # print("transition if target is judged as risk")
+                int_prob = self.operator_noint_prob * acc_prob
+                buf_state_value_int = copy.deepcopy(state_value)
+                buf_state_value_int[target_index] = 1.0  #NOTE: this is for w/o perf point
+                _, v, x = self.ego_vehicle_transition(buf_state_value_int)
+                buf_state_value_int[self.ego_state_index] = x
+                buf_state_value_int[self.ego_state_index+1] = v 
+                out_index_list.append([int_prob, self.to_index(buf_state_value_int)]) 
 
-        else:
-            # print("transition if no intervention")
-            int_prob = 1.0 * acc_prob
-            _, v, x = self.ego_vehicle_transition(state_value)
-            state_value[self.ego_state_index] = x
-            state_value[self.ego_state_index+1] = v 
-            out_index_list.append([int_prob, self.to_index(state_value)]) 
+            else:
+                # print("transition if no intervention")
+                int_prob = 1.0 * acc_prob
+                _, v, x = self.ego_vehicle_transition(state_value)
+                state_value[self.ego_state_index] = x
+                state_value[self.ego_state_index+1] = v 
+                out_index_list.append([int_prob, self.to_index(state_value)]) 
             
         # print(out_index_list)
         return out_index_list
@@ -248,10 +259,15 @@ class MDP:
                     a = 0.0 
                 else:
                     a = -self.ordinary_G*9.8
+            # deceleration to the target
             else:
-                a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist-self.safety_margin))
-                
-
+                if closest_target_dist > self.safety_margin:
+                    a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist-self.safety_margin))
+                # if within safety margin, keep speed (expect already min_speed)
+                else:
+                    # a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist))
+                    a = 0.0
+                    
         v = (current_v + a * self.delta_t)
         # print("v, x, current_v, current_x", v, current_v, current_pose)
         if v <= self.min_speed:
@@ -265,6 +281,21 @@ class MDP:
         x = current_pose + current_v * self.delta_t + 0.5 * a * self.delta_t**2
         return a, v, x
                
+    @staticmethod
+    def get_int_performance(int_time):
+        # TODO output acc distribution (acc list and probability)
+        # operator state: intercept_time, intercept_acc, slope
+        intercept_time = 3
+        intercept_acc = 0.5
+        slope = 0.25
+
+        if int_time < intercept_time:
+            acc = None
+        else:
+            acc = intercept_acc + slope*(int_time-intercept_time)
+            acc = min(acc, 1.0)
+        
+        return acc
 
     def to_index(self, state):
         # print("to_index")
@@ -279,8 +310,8 @@ class MDP:
         # print("get index from", index, i)
         return index[i] * self.state_width[i] + self.state_min[i]
 
-
 def trial_until_sat():
+
     with open(sys.argv[1]) as f:
         param = yaml.safe_load(f)
 
@@ -303,13 +334,17 @@ def trial_until_sat():
         with open(param["filename"]+"_v.pkl", "wb") as f:
             pickle.dump(dp.value_function, f)
 
-        v = dp.value_function[:, :, param["visualize_elem"]]
-        sns.heatmap(v.T, square=False)
-        plt.show()
+            v = eval("dp.value_function" + param["visualize_elem"])
+            # v = dp.value_function[:, :, param["visualize_elems"]]
+            sns.heatmap(v.T, square=False)
+            plt.title(param["filename"]+"value")
+            plt.savefig(param["filename"]+"value.svg")
 
-        p = dp.policy[:, :, param["visualize_elem"]]
-        sns.heatmap(p.T, square=False)
-        plt.show()
+            p = eval("dp.policy" + param["visualize_elem"])
+            # p = dp.policy[:, :, param["visualize_elems"]]
+            sns.heatmap(p.T, square=False)
+            plt.title(param["filename"]+"policy")
+            plt.savefig(param["filename"]+"policy.svg")
 
 if __name__ == "__main__":
     trial_until_sat()

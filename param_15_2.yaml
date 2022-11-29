@@ -20,11 +20,11 @@ acc_time_min: 0.5
 acc_time_var: 0.2
 acc_time_slope: 0.2
 
-risk_positions: [100, 120]
+risk_positions: [80, 90, 100, 110]
 
 # risk, inttime, target
-visualize_elem: "[:, :, 1, 2, 1, 1]" 
-filename: param_wo_perf 
+visualize_elem: "[:, :, 1, 2, 1, 2, 2, 1]"
+filename: param_15_2
 
 # desctiption
-# basic situation with decent operator performance
+# 4 targets with 10m interval
