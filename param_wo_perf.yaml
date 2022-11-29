@@ -17,7 +17,7 @@ operator_noint_prob: 0.5
 min_time: 3
 min_time_var: 0.5
 acc_time_min: 0.5
-acc_time_var: 0.2
+acc_time_var: 0.1
 acc_time_slope: 0.2
 
 risk_positions: [100, 120]

@@ -132,9 +132,7 @@ class MDP:
 
     def action_value(self, action, index):
         value = 0.0
-        # print(index[0], [self.index_value(index, v) for v in range(len(index))])
         for prob, index_after in self.state_transition(action, index):
-            # print(index[0], prob, [self.index_value(index_after, v) for v in range(len(index))])
             ambiguity = 0.0
             efficiency = 0.0
             bad_int_request = False
@@ -218,10 +216,11 @@ class MDP:
             else:
                 # print("transition if no intervention")
                 int_prob = 1.0 * acc_prob
-                _, v, x = self.ego_vehicle_transition(state_value)
-                state_value[self.ego_state_index] = x
-                state_value[self.ego_state_index+1] = v 
-                out_index_list.append([int_prob, self.to_index(state_value)]) 
+                buf_state_value = copy.deepcopy(state_value)
+                _, v, x = self.ego_vehicle_transition(buf_state_value)
+                buf_state_value[self.ego_state_index] = x
+                buf_state_value[self.ego_state_index+1] = v 
+                out_index_list.append([int_prob, self.to_index(buf_state_value)]) 
             
         # print(out_index_list)
         return out_index_list
@@ -270,16 +269,15 @@ class MDP:
                     a = 0.0
                     
         v = (current_v + a * self.delta_t)
-        # print("v, x, current_v, current_x", v, current_v, current_pose)
         if v <= self.min_speed:
             v = self.min_speed
             a = 0.0
         elif v >= self.ideal_speed:
             v = self.ideal_speed
             a = 0.0
-        # print("v, x, current_v, current_x", v, current_v, current_pose)
 
         x = current_pose + current_v * self.delta_t + 0.5 * a * self.delta_t**2
+        # print("a, v, x, current_v, current_x",a, v, x, current_v, current_pose)
         return a, v, x
                
     @staticmethod
@@ -299,7 +297,6 @@ class MDP:
         return acc
 
     def to_index(self, state):
-        # print("to_index")
         out_index = []
         for i in range(len(state)):
             out_index.append(int((min(max(state[i], self.state_min[i]), self.state_max[i]) - self.state_min[i]) // self.state_width[i]))
@@ -308,7 +305,6 @@ class MDP:
 
 
     def index_value(self, index, i):
-        # print("get index from", index, i)
         return index[i] * self.state_width[i] + self.state_min[i]
 
 def trial_until_sat():

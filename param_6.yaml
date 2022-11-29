@@ -17,7 +17,7 @@ operator_noint_prob: 0.0
 min_time: 3
 min_time_var: 0.5
 acc_time_min: 0.5
-acc_time_var: 0.2
+acc_time_var: 0.1
 acc_time_slope: 0.2
 
 risk_positions: [100, 120]
@@ -27,4 +27,4 @@ visualize_elem: "[:, :, 1, 2, 1, 1]"
 filename: param_6
 
 # desctiption
-# basic situation with decent operator performance
+# 100% intervention

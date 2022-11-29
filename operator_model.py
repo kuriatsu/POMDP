@@ -42,7 +42,6 @@ class OperatorModel:
         for i in range(1, len(self.acc_list)-1):
             prob = (int_acc_norm.cdf(acc_for_cdf[i+1]) - int_acc_norm.cdf(acc_for_cdf[i]))*intervention_prob
             acc_prob.append([self.acc_list[i], prob])
-        
         # side probability is cumulative from -inf/inf 
         acc_prob.append([self.acc_list[0], int_acc_norm.cdf(acc_for_cdf[1])*intervention_prob])
         acc_prob.append([self.acc_list[-1], (1.0 - int_acc_norm.cdf(acc_for_cdf[-2]))*intervention_prob])
@@ -67,9 +66,9 @@ class OperatorModel:
     
 if __name__=="__main__":
     min_time = 3
-    min_time_var = 0.0
+    min_time_var = 0.5
     acc_time_min = 0.5
-    acc_time_var = 0.0
+    acc_time_var = 0.1
     acc_time_slope = 0.2
     int_time_list = [0, 1, 2, 3, 4, 5, 6]
     operator_model = OperatorModel(
@@ -81,23 +80,21 @@ if __name__=="__main__":
         int_time_list,
         )
     acc = operator_model.get_acc_prob(4)
-   
     print(acc)
-    data_acc = []
-    for x in np.linspace(min_time, 6, 20):
-        int_acc_mean = min(1.0, max(0.0, acc_time_min + acc_time_slope*(x-min_time))) 
-        y_list = stats.norm.rvs(loc=int_acc_mean, scale=acc_time_var, size=100)
-        for y in y_list:
-            data_acc.append([x, y])
-
-    data_min_time = []
-    min_time_list = stats.norm.rvs(loc=min_time, scale=min_time_var, size=100)
-    for y in np.linspace(0, acc_time_min, 20):
-        for x in min_time_list:
-            data_acc.append([x, y])
-
-    data = np.array(data_acc)
-    sns.scatterplot(x=data[:, 0], y=data[:, 1])
-    plt.xlim(0.0, 6.0)
-    plt.ylim(0.0, 1.0)
+    operator_model.acc_list = np.linspace(0.1, 1.0, 10).tolist()
+    operator_model.init_performance_model()
+    
+    acc_mat = np.zeros((len(int_time_list), len(operator_model.acc_list)))
+    for int_time in int_time_list:
+        acc_prob_list = operator_model.get_acc_prob(int_time)
+        for acc_prob in acc_prob_list:
+            print(acc_prob)
+            if acc_prob[0] is None:
+                acc_mat[int_time,0] = acc_prob[1]
+            else:
+                acc_mat[int_time, int(10*acc_prob[0]-1)] = acc_prob[1]
+    sns.heatmap(np.rot90(acc_mat))
+    plt.yticks([i for i in range(10)], [round(i, 1) for i in np.linspace(1.0, 0.1, 10).tolist()])
+    plt.xlabel("intervention time [s]", fontsize=14)
+    plt.ylabel("intervention accuracy", fontsize=14)
     plt.show()
