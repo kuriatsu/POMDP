@@ -30,6 +30,7 @@ class MDP:
         self.goal_value = param["goal_value"] # 100
 
         self.operator_int_prob = param["operator_int_prob"] #0.5
+        self.operator_noint_prob = param["operator_noint_prob"] #0.5
         
         # map 
         self.risk_positions = np.array(param["risk_positions"]).T # [100, 120]
@@ -141,18 +142,15 @@ class MDP:
                 # when passed the target with crossing risk with 10km/h or higher
                 # evaluate efficiency, ambiguity
                 # TODO consider multiple object at the same place
-                if self.index_value(index, self.ego_state_index) <= risk_position <= self.index_value(index_after, self.ego_state_index) and self.index_value(index, self.ego_state_index+1) > self.min_speed:
+                if self.index_value(index, self.ego_state_index) <= risk_position <= self.index_value(index_after, self.ego_state_index):
                     ego_speed = self.index_value(index_after, self.ego_state_index+1) 
                     risk_prob = self.index_value(index_after, self.risk_state_index + i)
                     ambiguity = (0.5 - abs(risk_prob - 0.5))*2
-            
-            # alternative method to calculating jerk (it requires including acceleration into state space)
-            efficiency = min(abs(self.ideal_speed - self.index_value(index_after, self.ego_state_index)), 
-                             abs(self.index_value(index_after, self.ego_state_index) - self.min_speed)) \
-                         / self.ideal_speed 
+                    if ego_speed < self.ideal_speed and risk_prob == 0.0: 
+                        efficiency = ego_speed / self.ideal_speed 
                     
             # when change the intervention target, judge the action decision
-            if action not in  [-1, self.index_value(index, self.int_state_index+1)]:
+            if self.index_value(index, self.int_state_index+1) not in  [-1, action]:
                 int_time = self.index_value(index, self.int_state_index) 
 
                 # int_acc = self.get_int_performance(int_time)
@@ -162,7 +160,7 @@ class MDP:
                         bad_int_request = acc_prob
             
             # if intervention after passing the obstacles
-            if self.index_value(index_after, self.ego_state_index) >= self.risk_positions[int(self.index_value(index_after, self.int_state_index+1))]:
+            if self.index_value(index, self.ego_state_index) >= self.risk_positions[int(self.index_value(index, self.int_state_index+1))]:
                 bad_int_request = True
 
             # intervention request penalty
@@ -170,11 +168,11 @@ class MDP:
                 int_request_penalty = True
 
             # print("value_", self.index_value(index, self.ego_state_index), efficiency, ambiguity, bad_int_request)
-            action_value = self.p_efficiency*efficiency \
-                         + self.p_ambiguity*ambiguity \
-                         + self.p_bad_int_request*bad_int_request \
-                         + self.p_int_request*int_request_penalty \
-                         + self.p_delta_t*self.delta_t \
+            action_value = self.p_efficiency*efficiency
+                         + self.p_ambiguity*ambiguity 
+                         + self.p_bad_int_request*bad_int_request 
+                         + self.p_int_request*int_request_penalty 
+                         + self.p_delta_t*self.delta_t 
                          + self.goal_value*self.final_state(index_after)
             value += prob * (self.value_function[tuple(index_after)] + action_value) * self.discount_factor
             # value += prob * (action_value) 
@@ -212,7 +210,7 @@ class MDP:
                 buf_state_value_noint[self.ego_state_index+1] = v 
                 out_index_list.append([int_prob, self.to_index(buf_state_value_noint)]) 
                 # print("transition if target is judged as risk")
-                int_prob = (1.0 - self.operator_int_prob) * acc_prob
+                int_prob = self.operator_noint_prob * acc_prob
                 buf_state_value_int = copy.deepcopy(state_value)
                 buf_state_value_int[target_index] = (1.0 + int_acc) * 0.5 
                 _, v, x = self.ego_vehicle_transition(buf_state_value_int)
@@ -318,8 +316,7 @@ def trial_until_sat():
 
     with open(sys.argv[1]) as f:
         param = yaml.safe_load(f)
-    
-    filename = sys.argv[1].split("/")[-1].split(".")[0]
+
     dp = MDP(param)
     dp.init_state_space()
     delta = 1e100
@@ -328,28 +325,28 @@ def trial_until_sat():
         while delta > 0.01:
             delta = dp.value_iteration_sweep()
             counter += 1
-            print(filename, counter, delta)
+            print(param["filename"], counter, delta)
     except Exception as e:
         print(e)
 
     finally:
-        with open(f"{filename}_p.pkl", "wb") as f:
+        with open(param["filename"]+"_p.pkl", "wb") as f:
             pickle.dump(dp.policy, f)
 
-        with open(f"{filename}_v.pkl", "wb") as f:
+        with open(param["filename"]+"_v.pkl", "wb") as f:
             pickle.dump(dp.value_function, f)
 
             v = eval("dp.value_function" + param["visualize_elem"])
             # v = dp.value_function[:, :, param["visualize_elems"]]
             sns.heatmap(v.T, square=False)
-            plt.title(f"{filename}value")
-            plt.savefig(f"{filename}_value.svg")
+            plt.title(param["filename"]+"value")
+            plt.savefig(param["filename"]+"value.svg")
 
             p = eval("dp.policy" + param["visualize_elem"])
             # p = dp.policy[:, :, param["visualize_elems"]]
             sns.heatmap(p.T, square=False)
-            plt.title(f"{filename}_policy")
-            plt.savefig(f"{filename}_policy.svg")
+            plt.title(param["filename"]+"policy")
+            plt.savefig(param["filename"]+"policy.svg")
 
 if __name__ == "__main__":
     trial_until_sat()

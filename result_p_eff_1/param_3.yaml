@@ -5,9 +5,9 @@ ideal_speed: 14
 min_speed: 2.8
 ordinary_G: 0.2
 
-p_efficiency: -1
+p_efficiency: -10
 p_ambiguity: -10
-p_bad_int_request: -1
+p_bad_int_request: -10
 p_int_request: -1
 p_delta_t: -1
 goal_value: 100
@@ -17,13 +17,14 @@ operator_noint_prob: 0.5
 min_time: 3
 min_time_var: 0.5
 acc_time_min: 0.5
-acc_time_var: 0.2
-acc_time_slope: 0.25
+acc_time_var: 0.1
+acc_time_slope: 0.2
 
 risk_positions: [100, 120]
 
 # risk, inttime, target
 visualize_elem: "[:, :, 1, 2, 1, 1]"
+filename: param_3
 
 # desctiption
-# basic situation with decent operator performance
+# efficiency penalty high

@@ -20,7 +20,7 @@ acc_time_min: 0.5
 acc_time_var: 0.2
 acc_time_slope: 0.25
 
-risk_positions: [100, 120]
+risk_positions: [100, 140]
 
 # risk, inttime, target
 visualize_elem: "[:, :, 1, 2, 1, 1]"
