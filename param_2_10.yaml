@@ -1,7 +1,7 @@
 delta_t: 1.0
 prediction_horizon: 150
 safety_margin: 5.0
-ideal_speed: 14
+ideal_speed: 11.2
 min_speed: 2.8
 ordinary_G: 0.2
 
@@ -13,7 +13,6 @@ p_delta_t: -1
 goal_value: 100
 
 operator_int_prob: 0.5
-operator_noint_prob: 0.5
 min_time: 3
 min_time_var: 0.5
 acc_time_min: 0.5

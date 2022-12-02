@@ -9,11 +9,13 @@ from ras_value_iteration_sweep import MDP
 from myopic_agent import myopic_policy
 import sys
 
+
+
 risk_colors = ["red", "blue", "green"]
 trajectory_color = "green"
 
 # mdp.init_state_space()
-def plot(mdp, ax, indexes, policyes, intervention, risk_num, cumlative_risk, travel_time):
+def plot(mdp, ax, indexes, policyes, intervention, risk_num, cumlative_risk, travel_time, title):
     # plot vehicle speed change (state_transition index : -1=noint, 0=int)
     ax_risk = ax.twinx()
     ax_risk.set_ylim((0.0, 1.0))
@@ -41,6 +43,7 @@ def plot(mdp, ax, indexes, policyes, intervention, risk_num, cumlative_risk, tra
     ax.annotate("cumulative ambiguity: "+str(cumlative_risk), xy=(10, 3), size=10, color="red")
     ax.set_xlabel("distance [m]", fontsize=14) 
     ax.set_ylabel("speed [m/s]", fontsize=14) 
+    ax.set_title(title, fontsize=14, y=-0.25)
     ax_risk.set_ylabel("risk probability", fontsize=14) 
 
 def main():
@@ -49,22 +52,25 @@ def main():
     egotistical_policy = [-1] * 100
 
     param_list = [
-            "param_19.yaml", 
-            "param_20.yaml", 
-            # "param_3.yaml",
-            # "param_3.yaml",
-            # "param_6.yaml",
-            # "param_7.yaml",
-            # "param_8.yaml",
-            # "param_9.yaml",
-            # "param_10.yaml",
-            # "param_11.yaml",
-            # "param_12.yaml",
+            # "param_2_10.yaml",
+            # "param_2_9.yaml",
+            # "param_2_5.yaml",
+            # "param_2_6.yaml",
+            # "param_2_7.yaml",
+            # "param_2_8.yaml",
+            # "param_2_14.yaml",
+            # "param_2_1.yaml", 
+            # "param_2_2.yaml",
+            # "param_2_3.yaml",
+            "param_2_4.yaml",
+            # "param_2_11.yaml",
+            # "param_2_12.yaml",
+            "param_2_13.yaml",
+            # "param_2_15.yaml",
             ]
-    fig, axes = plt.subplots(len(param_list)+1, 1, sharex="all", tight_layout=True)
+    # fig, axes = plt.subplots(len(param_list), 2, sharex="all", tight_layout=True)
+    fig, axes = plt.subplots()
 
-    index_list = []
-    policy_list = []
     for idx, param_file in enumerate(param_list):
         print(param_file)
         with open(param_file) as f:
@@ -101,17 +107,19 @@ def main():
             index = tuple(index_after)
 
         travel_time = len(indexes)*1
-        plot(mdp, axes[idx], indexes, policyes, 0, len(mdp.risk_positions), cumlative_risk, travel_time)
+        print(filename, travel_time, cumlative_risk)
+        plot(mdp, axes[idx, 0], indexes, policyes, 0, len(mdp.risk_positions), cumlative_risk, travel_time, filename)
+        indexes, policyes, cumlative_risk, travel_time = myopic_policy(mdp, 5, initial_state, intervention_list)
+        print("myopic", travel_time, cumlative_risk)
+        plot(mdp, axes[idx, 1], indexes, policyes, 0, len(mdp.risk_positions), cumlative_risk, travel_time, "myopic")
         
-    with open(param_list[1]) as f:
+    with open(param_list[-1]) as f:
         param = yaml.safe_load(f)
     mdp = MDP(param)
-    indexes, policyes, cumlative_risk, travel_time = myopic_policy(mdp, 5, initial_state, intervention_list)
-    plot(mdp, axes[-1], indexes, policyes, 0, len(mdp.risk_positions), cumlative_risk, travel_time)
-    index_list.append(indexes)
-    policy_list.append(policyes)
+    #index_list.append(indexes)
+    #policy_list.append(policyes)
 
-        # plot(mdp, axes, [index_list], [policy_list], intervention, 2)
+    # plot(mdp, axes, [index_list], [policy_list], intervention, 2)
     plt.show()
 
 if __name__ == "__main__":

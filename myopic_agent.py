@@ -21,7 +21,7 @@ def myopic_policy(mdp, int_time, initial_state, intervention_list):
 
     while not mdp.final_state(index):
         decel_dist = (mdp.index_value(index, 1)**2 - 1.4**2)/(2*9.8*mdp.ordinary_G) + mdp.safety_margin
-        int_request_dist = decel_dist + mdp.index_value(index, 1)*int_time
+        int_request_dist = decel_dist + mdp.index_value(index, 1)*int_time + mdp.safety_margin
         intervention = intervention_list[target_list[0]] if target_list else 0
         
         if target_list and mdp.index_value(index, 2) >= int_time and mdp.index_value(index, 3) == target_list[0]:
@@ -33,6 +33,7 @@ def myopic_policy(mdp, int_time, initial_state, intervention_list):
                 policy = -1
             elif target_list:
                 policy = target_list[0]
+            print(mdp.index_value(index, 1), dist_to_target, decel_dist, int_request_dist, target_list[0], policy)
         else:
             policy = -1
         # print("closest target", policy, mdp.index_value(index, 0), int_request_dist)
@@ -70,6 +71,6 @@ def myopic_policy(mdp, int_time, initial_state, intervention_list):
 if __name__ == "__main__":
     with open(sys.argv[1]) as f:
         param = yaml.safe_load(f)
-    index_list, policy_list = myopic_policy(MDP(param))
+    index_list, policy_list, efficiency, risk = myopic_policy(MDP(param), 5, [0, 14, 0, -1, 0.75, 0.5], [-1, 0])
     print(index_list)
     print(policy_list)

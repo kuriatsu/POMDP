@@ -341,15 +341,15 @@ def trial_until_sat():
 
             v = eval("dp.value_function" + param["visualize_elem"])
             # v = dp.value_function[:, :, param["visualize_elems"]]
-            sns.heatmap(v.T, square=False)
-            plt.title(f"{filename}value")
-            plt.savefig(f"{filename}_value.svg")
+            # sns.heatmap(v.T, square=False)
+            # plt.title(f"{filename}value")
+            # plt.savefig(f"{filename}_value.svg")
 
             p = eval("dp.policy" + param["visualize_elem"])
             # p = dp.policy[:, :, param["visualize_elems"]]
-            sns.heatmap(p.T, square=False)
-            plt.title(f"{filename}_policy")
-            plt.savefig(f"{filename}_policy.svg")
+            # sns.heatmap(p.T, square=False)
+            # plt.title(f"{filename}_policy")
+            # plt.savefig(f"{filename}_policy.svg")
 
 if __name__ == "__main__":
     trial_until_sat()
