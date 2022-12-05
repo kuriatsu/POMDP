@@ -33,20 +33,11 @@ def myopic_policy(mdp, int_time, initial_state, intervention_list):
                 policy = -1
             elif target_list:
                 policy = target_list[0]
-            print(mdp.index_value(index, 1), dist_to_target, decel_dist, int_request_dist, target_list[0], policy)
+            # print(mdp.index_value(index, 1), dist_to_target, decel_dist, int_request_dist, target_list[0], policy)
+
         else:
             policy = -1
-        # print("closest target", policy, mdp.index_value(index, 0), int_request_dist)
-        # if no target or further than intervention request timing
-        # if closest_target is None or int_request_dist > min_dist:
-        #    p = -1
-        # in the intervention request distance 
-        # elif int_request_dist <= min_dist:
-        #     p = closest_target
-        # else:
-        #     p = mdp.index_value(index, 3)
-            
-        # policy = p[i] 
+
         index_after_list =  mdp.state_transition(policy, index)
         max_p = max([i[0] for i in index_after_list])
         highest_index_list = [i for i, x in enumerate(index_after_list) if x[0]==max_p]
