@@ -128,8 +128,7 @@ def main():
             "param_2_14.yaml",
             "param_2_15.yaml",
             ]
-    fig, axes = plt.subplots(len(param_list), 3, sharex="all", tight_layout=True)
-    # fig, axes = plt.subplots()
+    # fig, axes = plt.subplots(len(param_list), 3, sharex="all", tight_layout=True)
     result_list = pd.DataFrame(columns=["param", "initial_state", "intervention", "agent", "cumlative_risk", "travel_time", "request_time"])
 
     initial_states = [
@@ -170,13 +169,14 @@ def main():
     for initial_state in initial_states:
         for intervention_list in intervention_lists:
             for idx, param_file in enumerate(param_list):
-                print(initial_states, intervention_list, param_file)
+                print(initial_state, intervention_list, param_file)
                 with open(param_file) as f:
                     param = yaml.safe_load(f)
 
                 mdp = MDP(param)
                 filename = param_file.split("/")[-1].split(".")[0]
-                with open(f"/run/media/kuriatsu/KuriBuffaloPSM/pomdp_intervention_target/experiment/{filename}_p.pkl", "rb") as f:
+                # with open(f"/run/media/kuriatsu/KuriBuffaloPSM/pomdp_intervention_target/experiment/{filename}_p.pkl", "rb") as f:
+                with open(f"{filename}_p.pkl", "rb") as f:
                     p = pickle.load(f)
 
                 indexes, policies, cumlative_risk, travel_time, request_time = pomdp_agent(mdp, p, initial_state, intervention_list)
@@ -201,12 +201,12 @@ def main():
     # plt.show()
     result_list.to_csv("result.csv")
 
-    sns.lineplot(result_list, x="agent", y="cumlative_risk") 
-    plt.savefig("agent-cumlative_risk.svg")
-    sns.lineplot(result_list, x="agent", y="travel_time", hue="param") 
-    plt.savefig("agent-travel_time.svg")
-    sns.lineplot(result_list, x="agent", y="request_time", hue="param") 
-    plt.savefig("agent-request_time.svg")
+    # sns.lineplot(result_list, x="agent", y="cumlative_risk") 
+    # plt.savefig("agent-cumlative_risk.svg")
+    # sns.lineplot(result_list, x="agent", y="travel_time", hue="param") 
+    # plt.savefig("agent-travel_time.svg")
+    # sns.lineplot(result_list, x="agent", y="request_time", hue="param") 
+    # plt.savefig("agent-request_time.svg")
 
 
 if __name__ == "__main__":
