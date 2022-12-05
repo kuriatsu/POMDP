@@ -14,15 +14,15 @@ goal_value: 100
 
 operator_int_prob: 0.5
 min_time: 3
-min_time_var: 0.01
+min_time_var: 1.0
 acc_time_min: 0.5
-acc_time_var: 0.01
+acc_time_var: 0.5
 acc_time_slope: 0.25
 
-risk_positions: [130, 140]
+risk_positions: [40, 100]
 
 # risk, inttime, target
 visualize_elem: "[:, :, 1, 2, 1, 1]"
 
 # desctiption
-# basic situation with no operator performance ambiguity
+# basic situation with decent operator performance

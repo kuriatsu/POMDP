@@ -60,6 +60,7 @@ def pomdp_agent(mdp, policy, initial_state, intervention_list):
         index_after_list =  mdp.state_transition(p, index)
         max_p = max([i[0] for i in index_after_list])
         highest_index_list = [i for i, x in enumerate(index_after_list) if x[0]==max_p]
+        print(index_after_list)
         index_after = index_after_list[highest_index_list[intervention]][1]
         
         for i, risk_position in enumerate(mdp.risk_positions):
@@ -127,20 +128,20 @@ def main():
             "param_2_13.yaml",
             "param_2_14.yaml",
             "param_2_15.yaml",
-            "param_3_1.yaml",
-            "param_3_2.yaml",
-            "param_3_3.yaml",
-            "param_3_4.yaml",
-            "param_3_6.yaml",
-            "param_3_7.yaml",
-            "param_3_8.yaml",
-            "param_3_9.yaml",
-            "param_3_10.yaml",
-            "param_3_11.yaml",
-            "param_3_12.yaml",
-            "param_3_13.yaml",
-            "param_3_14.yaml",
-            "param_3_15.yaml",
+            # "param_3_1.yaml",
+            # "param_3_2.yaml",
+            # "param_3_3.yaml",
+            # "param_3_4.yaml",
+            # "param_3_6.yaml",
+            # "param_3_7.yaml",
+            # "param_3_8.yaml",
+            # "param_3_9.yaml",
+            # "param_3_10.yaml",
+            # "param_3_11.yaml",
+            # "param_3_12.yaml",
+            # "param_3_13.yaml",
+            # "param_3_14.yaml",
+            # "param_3_15.yaml",
             "param_4_1.yaml",
             "param_4_2.yaml",
             "param_4_4.yaml",
@@ -151,7 +152,7 @@ def main():
             "param_4_9.yaml",
             "param_4_10.yaml",
             "param_4_11.yaml",
-            "param_4_12.yaml",
+            # "param_4_12.yaml",
             "param_4_13.yaml",
             "param_4_14.yaml",
             "param_4_15.yaml",
@@ -213,7 +214,8 @@ def main():
             "param_8_15.yaml",
             ]
     # fig, axes = plt.subplots(len(param_list), 3, sharex="all", tight_layout=True)
-    result_list = pd.DataFrame(columns=["param", "initial_state", "intervention", "agent", "cumlative_risk", "travel_time", "request_time"])
+    # fig_eval, ax_eval = plt.subplots(1, 3, tight_layout=True)
+    result_list = pd.DataFrame(columns=["param", "scenario", "agent", "cumlative_risk", "travel_time", "request_time"])
 
     initial_states = [
             [0, 11.2, 0, -1, 0.0, 0.0],
@@ -263,34 +265,35 @@ def main():
                 with open(f"{filename}_p.pkl", "rb") as f:
                     p = pickle.load(f)
 
+                buf_list = pd.DataFrame(columns=result_list.columns)
+
                 indexes, policies, cumlative_risk, travel_time, request_time = pomdp_agent(mdp, p, initial_state, intervention_list)
-                buf_list = pd.DataFrame([[filename, str(initial_state), str(intervention_list), "pomdp", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
-                result_list = pd.concat([result_list, buf_list], ignore_index=True)
+                buf = pd.DataFrame([[filename, str(initial_state[-2:])+str(intervention_list), "pomdp", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
+                buf_list = pd.concat([buf_list, buf], ignore_index=True)
                 # print(filename, buf_list)
                 # plot(mdp, axes[idx, 0], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, filename)
 
                 indexes, policies, cumlative_risk, travel_time, request_time = myopic_policy(mdp, 5, initial_state, intervention_list)
-                buf_list = pd.DataFrame([[filename, str(initial_state), str(intervention_list), "myopic", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
+                buf = pd.DataFrame([[filename, str(initial_state[-2:])+str(intervention_list), "myopic", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
+                buf_list = pd.concat([buf_list, buf], ignore_index=True)
                 # print("myopic", buf_list)
                 result_list = pd.concat([result_list, buf_list], ignore_index=True)
                 # plot(mdp, axes[idx, 1], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, "myopic")
 
                 indexes, policies, cumlative_risk, travel_time, request_time = egotistical_agent(mdp, initial_state, intervention_list)
-                buf_list = pd.DataFrame([[filename, str(initial_state), str(intervention_list), "egostistical", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
+                buf = pd.DataFrame([[filename, str(initial_state[-2:])+str(intervention_list), "egostistical", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
+                buf_list = pd.concat([buf_list, buf], ignore_index=True)
                 # print("egostistical", buf_list)
-                result_list = pd.concat([result_list, buf_list], ignore_index=True)
                 # plot(mdp, axes[idx, 2], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, "egostistical")
-            
+
+                result_list = pd.concat([result_list, buf_list], ignore_index=True)
+                # sns.lineplot(buf_list, x="agent", y="cumlative_risk", ax=ax_eval[0], label=str(initial_state[-2:])+str(intervention_list)) 
+                # sns.lineplot(buf_list, x="agent", y="travel_time", ax=ax_eval[1], label=str(initial_state[-2:])+str(intervention_list)) 
+                # sns.lineplot(buf_list, x="agent", y="request_time", ax=ax_eval[2], label=str(initial_state[-2:])+str(intervention_list)) 
 
     # plt.show()
     result_list.to_csv("result.csv")
-
-    # sns.lineplot(result_list, x="agent", y="cumlative_risk") 
-    # plt.savefig("agent-cumlative_risk.svg")
-    # sns.lineplot(result_list, x="agent", y="travel_time", hue="param") 
-    # plt.savefig("agent-travel_time.svg")
-    # sns.lineplot(result_list, x="agent", y="request_time", hue="param") 
-    # plt.savefig("agent-request_time.svg")
+    fig_eval.savefig("result.svg")
 
 
 if __name__ == "__main__":
