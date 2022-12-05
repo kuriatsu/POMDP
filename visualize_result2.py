@@ -46,10 +46,67 @@ def plot(mdp, ax, indexes, policyes, intervention, risk_num, cumlative_risk, tra
     ax.set_title(title, fontsize=14, y=-0.25)
     ax_risk.set_ylabel("risk probability", fontsize=14) 
 
+def pomdp_agent(mdp, initial_state, intervention_list):
+    index = tuple(mdp.to_index(initial_state))
+    indexes = []
+    policies = []
+    cumlative_risk = 0
+    while not mdp.final_state(index):
+        policy = p[index]
+
+        intervention = 0 if mdp.index_value(index, mdp.int_state_index+1) == -1 else intervention_list[int(mdp.index_value(index, mdp.int_state_index+1))]
+        index_after_list =  mdp.state_transition(policy, index)
+        max_p = max([i[0] for i in index_after_list])
+        highest_index_list = [i for i, x in enumerate(index_after_list) if x[0]==max_p]
+        index_after = index_after_list[highest_index_list[intervention]][1]
+        
+        for i, risk_position in enumerate(mdp.risk_positions):
+            pos = mdp.index_value(index, 0)
+            pos_after = mdp.index_value(index_after, 0)
+            speed = mdp.index_value(index, 1)
+            if pos <= risk_position < pos_after and speed > mdp.min_speed:
+                cumlative_risk += (0.5 - abs(mdp.index_value(index_after, mdp.risk_state_index+i) - 0.5))*2
+
+        indexes.append(index_after)
+        policies.append(int(policy))
+        index = tuple(index_after)
+
+    travel_time = len(indexes)
+    request_time = len([p for p in policies if p=-1])
+    return indexes, policies, cumlative_risk, travel_time, request_time
+    
+def egotistical_agent(mdp, initial_state, intervention_list):
+    index = tuple(mdp.to_index(initial_state))
+    indexes = []
+    policies = []
+    cumlative_risk = 0
+    while not mdp.final_state(index):
+        policy = -1 
+
+        intervention = 0 if mdp.index_value(index, mdp.int_state_index+1) == -1 else intervention_list[int(mdp.index_value(index, mdp.int_state_index+1))]
+        index_after_list =  mdp.state_transition(policy, index)
+        max_p = max([i[0] for i in index_after_list])
+        highest_index_list = [i for i, x in enumerate(index_after_list) if x[0]==max_p]
+        index_after = index_after_list[highest_index_list[intervention]][1]
+        
+        for i, risk_position in enumerate(mdp.risk_positions):
+            pos = mdp.index_value(index, 0)
+            pos_after = mdp.index_value(index_after, 0)
+            speed = mdp.index_value(index, 1)
+            if pos <= risk_position < pos_after and speed > mdp.min_speed:
+                cumlative_risk += (0.5 - abs(mdp.index_value(index_after, mdp.risk_state_index+i) - 0.5))*2
+
+        indexes.append(index_after)
+        policies.append(int(policy))
+        index = tuple(index_after)
+
+    travel_time = len(indexes)
+    request_time = len([p for p in policies if p=-1])
+    return indexes, policies, cumlative_risk, travel_time, request_time
+
 def main():
     initial_state = [0, 14, 0, -1, 0.75, 0.5]
     intervention_list = [-1, 0] # -1:no intervention 0:intervention
-    egotistical_policy = [-1] * 100
 
     param_list = [
             # "param_2_10.yaml",
@@ -68,8 +125,9 @@ def main():
             "param_2_13.yaml",
             # "param_2_15.yaml",
             ]
-    # fig, axes = plt.subplots(len(param_list), 2, sharex="all", tight_layout=True)
-    fig, axes = plt.subplots()
+    fig, axes = plt.subplots(len(param_list), 3, sharex="all", tight_layout=True)
+    # fig, axes = plt.subplots()
+    result_list = pd.DataFrame(columns=["param", "agent", "cumlative_risk", "travel_time", "request_time"])
 
     for idx, param_file in enumerate(param_list):
         print(param_file)
@@ -81,46 +139,37 @@ def main():
         with open(f"{filename}_p.pkl", "rb") as f:
             p = pickle.load(f)
 
-        index = tuple(mdp.to_index(initial_state))
-        indexes = []
-        policyes = []
-        cumlative_risk = 0
-        travel_time = 0
-        while not mdp.final_state(index):
-            policy = p[index]
-
-            intervention = 0 if mdp.index_value(index, mdp.int_state_index+1) == -1 else intervention_list[int(mdp.index_value(index, mdp.int_state_index+1))]
-            index_after_list =  mdp.state_transition(policy, index)
-            max_p = max([i[0] for i in index_after_list])
-            highest_index_list = [i for i, x in enumerate(index_after_list) if x[0]==max_p]
-            index_after = index_after_list[highest_index_list[intervention]][1]
-            
-            for i, risk_position in enumerate(mdp.risk_positions):
-                pos = mdp.index_value(index, 0)
-                pos_after = mdp.index_value(index_after, 0)
-                speed = mdp.index_value(index, 1)
-                if pos <= risk_position < pos_after and speed > mdp.min_speed:
-                    cumlative_risk += (0.5 - abs(mdp.index_value(index_after, mdp.risk_state_index+i) - 0.5))*2
-
-            indexes.append(index_after)
-            policyes.append(int(policy))
-            index = tuple(index_after)
-
-        travel_time = len(indexes)*1
-        print(filename, travel_time, cumlative_risk)
+        indexes, policies, cumlative_risk, travel_time, request_time = pomdp_agent(mdp, initial_state, intervention_list)
+        print(filename, travel_time, cumlative_risk, request_time)
+        buf_list = pd.DataFrame([filename, "pomdp", cumlative_risk, travel_time, request_time], index=result_list.indexes)
+        result_list = pd.concat([result_list, buf_list], ignore_index=True)
         plot(mdp, axes[idx, 0], indexes, policyes, 0, len(mdp.risk_positions), cumlative_risk, travel_time, filename)
-        indexes, policyes, cumlative_risk, travel_time = myopic_policy(mdp, 5, initial_state, intervention_list)
-        print("myopic", travel_time, cumlative_risk)
+
+        indexes, policyes, cumlative_risk, travel_time, request_time = myopic_policy(mdp, 5, initial_state, intervention_list)
+        print("myopic", travel_time, cumlative_risk, request_time)
+        buf_list = pd.DataFrame([filename, "myopic", cumlative_risk, travel_time, request_time], index=result_list.indexes)
+        result_list = pd.concat([result_list, buf_list], ignore_index=True)
         plot(mdp, axes[idx, 1], indexes, policyes, 0, len(mdp.risk_positions), cumlative_risk, travel_time, "myopic")
+
+        indexes, policies, cumlative_risk, travel_time, request_time = egostistical_agent(mdp, initial_state, intervention_list)
+        print("egostistical", travel_time, cumlative_risk, request_time)
+        buf_list = pd.DataFrame([filename, "egostistical", cumlative_risk, travel_time, request_time], index=result_list.indexes)
+        result_list = pd.concat([result_list, buf_list], ignore_index=True)
+        plot(mdp, axes[idx, 2], indexes, policyes, 0, len(mdp.risk_positions), cumlative_risk, travel_time, "egostistical")
         
     with open(param_list[-1]) as f:
         param = yaml.safe_load(f)
-    mdp = MDP(param)
-    #index_list.append(indexes)
-    #policy_list.append(policyes)
 
-    # plot(mdp, axes, [index_list], [policy_list], intervention, 2)
     plt.show()
+    result_list.to_csv("result.csv")
+
+    sns.plot(result_list, x="agent", y="cumlative_risk", hue="param") 
+    plt.savefig("agent-cumlative_risk.svg")
+    sns.plot(result_list, x="agent", y="travel_time", hue="param") 
+    plt.savefig("agent-travel_time.svg")
+    sns.plot(result_list, x="agent", y="request_time", hue="param") 
+    plt.savefig("agent-request_time.svg")
+
 
 if __name__ == "__main__":
     main()

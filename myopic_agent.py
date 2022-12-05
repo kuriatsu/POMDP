@@ -12,7 +12,7 @@ def myopic_policy(mdp, int_time, initial_state, intervention_list):
 
     index = tuple(mdp.to_index(initial_state))
     indexes = []
-    policyes = []
+    policies = []
     buf = sorted(mdp.risk_positions)
     target_list = [mdp.risk_positions.tolist().index(v) for v in buf]
         
@@ -62,11 +62,12 @@ def myopic_policy(mdp, int_time, initial_state, intervention_list):
 
         # print(mdp.action_value(policy, index)) # need to execute init_state_space
         indexes.append(index_after)
-        policyes.append(int(policy))
+        policies.append(int(policy))
         index = tuple(index_after)
 
     travel_time = len(indexes)*1
-    return indexes, policyes, cumlative_risk, travel_time
+    request_time = len([p for p in policies if p!=-1])
+    return indexes, policies, cumlative_risk, travel_time, request_time
 
 if __name__ == "__main__":
     with open(sys.argv[1]) as f:
