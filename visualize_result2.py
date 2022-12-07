@@ -268,20 +268,20 @@ def main():
                 buf_list = pd.DataFrame(columns=result_list.columns)
 
                 indexes, policies, cumlative_risk, travel_time, request_time = pomdp_agent(mdp, p, initial_state, intervention_list)
-                buf = pd.DataFrame([[filename, str(initial_state[-2:])+str(intervention_list), "pomdp", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
+                buf = pd.DataFrame([[filename, "risk:"+str(initial_state[-2:])+" int:"+str(intervention_list), "pomdp", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
                 # print(filename, buf_list)
                 # plot(mdp, axes[idx, 0], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, filename)
 
                 indexes, policies, cumlative_risk, travel_time, request_time = myopic_policy(mdp, 5, initial_state, intervention_list)
-                buf = pd.DataFrame([[filename, str(initial_state[-2:])+str(intervention_list), "myopic", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
+                buf = pd.DataFrame([[filename, "risk:"+str(initial_state[-2:])+" int:"+str(intervention_list), "myopic", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
                 # print("myopic", buf_list)
                 result_list = pd.concat([result_list, buf_list], ignore_index=True)
                 # plot(mdp, axes[idx, 1], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, "myopic")
 
                 indexes, policies, cumlative_risk, travel_time, request_time = egotistical_agent(mdp, initial_state, intervention_list)
-                buf = pd.DataFrame([[filename, str(initial_state[-2:])+str(intervention_list), "egostistical", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
+                buf = pd.DataFrame([[filename, "risk:"+str(initial_state[-2:])+" int:"+str(intervention_list), "egostistical", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
                 # print("egostistical", buf_list)
                 # plot(mdp, axes[idx, 2], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, "egostistical")
@@ -295,6 +295,27 @@ def main():
     result_list.to_csv("result.csv")
     fig_eval.savefig("result.svg")
 
+def main_2():
+    fig, axes = plt.subplots(1, 3)
+    df = pandas.read_csv("result.csv")
+    sns.lineplot(df, x="agent", y="cumlative_risk", ax=axes[0], hue="scenario") 
+    sns.lineplot(df, x="agent", y="travel_time", ax=axes[1], hue="scenario") 
+    sns.lineplot(df, x="agent", y="request_time", ax=axes[2], hue="scenario") 
+    plt.show()
+
+    fig, axes = plt.subplots(1, 3)
+    df = pandas.read_csv("result_3.csv")
+    sns.lineplot(df, x="agent", y="cumlative_risk", ax=axes[0], hue="scenario") 
+    sns.lineplot(df, x="agent", y="travel_time", ax=axes[1], hue="scenario") 
+    sns.lineplot(df, x="agent", y="request_time", ax=axes[2], hue="scenario") 
+    plt.show()
+
+    fig, axes = plt.subplots(1, 3)
+    df = pandas.read_csv("result_4.csv")
+    sns.lineplot(df, x="agent", y="cumlative_risk", ax=axes[0], hue="scenario") 
+    sns.lineplot(df, x="agent", y="travel_time", ax=axes[1], hue="scenario") 
+    sns.lineplot(df, x="agent", y="request_time", ax=axes[2], hue="scenario") 
+    plt.show()
 
 if __name__ == "__main__":
     main()
