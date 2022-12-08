@@ -351,36 +351,23 @@ def main_2():
         target_df = target_scenario_df[(target_scenario_df.agent == agent)]
         # initial_risk = ",".join(str(target_df.scenario).split(",")[:2])
         # operator_intervention = ",".join(str(target_df.scenario).split(",")[2:])
-        if target_df.intervention.str in ["[-1, 0]", "[0, -1]"]:
-            continue
-        target_int_df = target_df[target_df.intervention == ("[0, 0]")]
-        buf = pd.DataFrame([[
-            agent, 
-            "intervention",
-            target_int_df.cumlative_risk.mean(),
-            target_int_df.cumlative_risk.std(),
-            len(target_int_df[target_int_df.cumlative_risk>0.0]),
-            target_int_df.travel_time.mean(),
-            target_int_df.travel_time.std(),
-            target_int_df.request_time.mean(),
-            target_int_df.request_time.std(),
-            ]], columns=result_df.columns)
-        result_df = pd.concat([result_df, buf], ignore_index=True)
+        # if target_df.intervention.str in ["[-1, 0]", "[0, -1]"]:
+        #     continue
+        for intervention in target_df.intervention.drop_duplicates():
+            target_int_df = target_df[target_df.intervention == intervention]
 
-        target_noint_df = target_df[target_df.intervention == ("[-1, -1]")]
-        # target_noint_df = target_df[target_df.scenario.str.endswith("int:[-1, -1]")]
-        buf = pd.DataFrame([[
-            agent, 
-            "no",
-            target_noint_df.cumlative_risk.mean(),
-            target_noint_df.cumlative_risk.std(),
-            len(target_noint_df[target_noint_df.cumlative_risk>0.0]),
-            target_noint_df.travel_time.mean(),
-            target_noint_df.travel_time.std(),
-            target_noint_df.request_time.mean(),
-            target_noint_df.request_time.std(),
-            ]], columns=result_df.columns)
-        result_df = pd.concat([result_df, buf], ignore_index=True)
+            buf = pd.DataFrame([[
+                agent, 
+                intervention,
+                target_int_df.cumlative_risk.mean(),
+                target_int_df.cumlative_risk.std(),
+                len(target_int_df[target_int_df.cumlative_risk>0.0]),
+                target_int_df.travel_time.mean(),
+                target_int_df.travel_time.std(),
+                target_int_df.request_time.mean(),
+                target_int_df.request_time.std(),
+                ]], columns=result_df.columns)
+            result_df = pd.concat([result_df, buf], ignore_index=True)
 
     result_df.to_csv("summary_13.csv")
 
@@ -391,8 +378,8 @@ def main_2():
                 target_df = target_scenario_df[(target_scenario_df.risk == risk) & (target_scenario_df.intervention == intervention) & (target_scenario_df.param == param)]
                 # initial_risk = ",".join(scenario.split(",")[:2])
                 # operator_intervention = ",".join(scenario.split(",")[2:])
-                if target_df.intervention.iloc[-1] in ["[-1, 0]", "[0, -1]"]:
-                    continue
+                # if target_df.intervention.iloc[-1] in ["[-1, 0]", "[0, -1]"]:
+                #     continue
                 cumlative_risk = target_df[target_df.agent=="pomdp"].cumlative_risk.iloc[-1] - target_df[target_df.agent=="myopic"].cumlative_risk.iloc[-1]
                 travel_time = target_df[target_df.agent=="pomdp"].travel_time.iloc[-1] - target_df[target_df.agent=="myopic"].travel_time.iloc[-1]
                 request_time = target_df[target_df.agent=="pomdp"].request_time.iloc[-1] - target_df[target_df.agent=="myopic"].request_time.iloc[-1]
