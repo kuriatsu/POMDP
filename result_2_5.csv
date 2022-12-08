@@ -1,0 +1,7 @@
+,param,risk,int,agent,cumlative_risk,travel_time,request_time
+0,param_2_1,"[0.5, 0.5]","[0, 0]",pomdp,0.0,17,11
+1,param_2_1,"[0.5, 0.5]","[0, 0]",myopic,0.0,19,12
+2,param_2_1,"[0.5, 0.5]","[0, 0]",egostistical,0,34,0
+3,param_2_5_2,"[0.5, 0.5]","[0, 0]",pomdp,0.0,17,11
+4,param_2_5_2,"[0.5, 0.5]","[0, 0]",myopic,0.0,18,12
+5,param_2_5_2,"[0.5, 0.5]","[0, 0]",egostistical,0,33,0
