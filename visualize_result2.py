@@ -17,7 +17,7 @@ risk_colors = ["red", "blue", "green"]
 trajectory_color = "green"
 
 # mdp.init_state_space()
-def plot(mdp, ax, indexes, policies, intervention, risk_num, cumlative_risk, travel_time, title):
+def plot(mdp, ax, indexes, policies, intervention, risk_num, cumlative_risk, travel_time, request_time, title):
     # plot vehicle speed change (state_transition index : -1=noint, 0=int)
     ax_risk = ax.twinx()
     ax_risk.set_ylim((0.0, 1.0))
@@ -42,6 +42,7 @@ def plot(mdp, ax, indexes, policies, intervention, risk_num, cumlative_risk, tra
 
 
     ax.annotate("travel time: "+str(travel_time), xy=(10, 5), size=10)
+    ax.annotate("request time: "+str(request_time), xy=(10, 4), size=10)
     ax.annotate("cumulative ambiguity: "+str(cumlative_risk), xy=(10, 3), size=10, color="red")
     ax.set_xlabel("distance [m]", fontsize=14) 
     ax.set_ylabel("speed [m/s]", fontsize=14) 
@@ -59,24 +60,34 @@ def pomdp_agent(mdp, policy, initial_state, intervention_list):
         # get intervention or not from list if request state is not -1
         intervention = 0 if mdp.index_value(index, mdp.int_state_index+1) == -1 else intervention_list[int(mdp.index_value(index, mdp.int_state_index+1))]
         index_after_list =  mdp.state_transition(p, index)
+        int_acc_prob_list = mdp.operator_model.get_acc_prob(mdp.index_value(index, mdp.int_state_index))
         if len(index_after_list) == 4:
             max_p = max([i[0] for i in index_after_list])
             index_after_index = [i for i, x in enumerate(index_after_list) if x[0]==max_p][0]
             index_after = index_after_list[index_after_index][1]
         else:
-            max_p = 0.0
-            index_after_index = 0
-            for i, data in enumerate(index_after_list[:-1]):
-                if intervention == -1 and i % 2 == 0:
-                    continue
-                elif intervention == 0 and i % 2 != 0:
-                    continue
-                if max_p < data[0]:
-                    max_p = data[0]
-                    index_after = data[1]
-            
-            if max_p < index_after_list[-1][0]:
+            max_p = max([i[1] for i in int_acc_prob_list])
+            index_after_index = [i[1] for i in int_acc_prob_list].index(max_p)
+            if index_after_index == len(int_acc_prob_list)-1:
                 index_after = index_after_list[-1][1]
+            elif intervention == -1:
+                index_after = index_after_list[index_after_index*2+1][1] 
+            else:
+                index_after = index_after_list[index_after_index*2][1] 
+
+            # max_p = 0.0
+            # index_after_index = 0
+            # for i, data in enumerate(index_after_list[:-1]):
+            #     if intervention == -1 and i % 2 == 0:
+            #         continue
+            #     elif intervention == 0 and i % 2 != 0:
+            #         continue
+            #     if max_p < data[0]:
+            #         max_p = data[0]
+            #         index_after = data[1]
+            
+            # if max_p < index_after_list[-1][0]:
+            #     index_after = index_after_list[-1][1]
         print(intervention, index_after_list, index_after)
         
         for i, risk_position in enumerate(mdp.risk_positions):
@@ -130,10 +141,10 @@ def main():
             # "param_2_2.yaml",
             # "param_2_3.yaml",
             # "param_2_4.yaml",
-            # "param_2_5_1.yaml",
+            "param_2_5_1.yaml",
             "param_2_5_2.yaml",
-            # "param_2_5_3.yaml",
-            # "param_2_5_4.yaml",
+            "param_2_5_3.yaml",
+            "param_2_5_4.yaml",
             # "param_2_6.yaml",
             # "param_2_7.yaml",
             # "param_2_8.yaml",
@@ -240,7 +251,7 @@ def main():
             # "param_13_10.yaml",
             # "param_13_11.yaml",
             ]
-    fig, axes = plt.subplots(len(param_list), 3, sharex="all")
+    fig, axes = plt.subplots(len(param_list), 3, sharex="all", sharey="all")
     # fig_eval, ax_eval = plt.subplots(1, 3)
 
     initial_states = [
@@ -273,9 +284,9 @@ def main():
 
     # -1:no intervention 0:intervention
     intervention_lists = [
-            [-1, -1], 
-            [-1, 0], 
-            [0, -1], 
+            # [-1, -1], 
+            # [-1, 0], 
+            # [0, -1], 
             [0, 0], 
             ]
     result_list = pd.DataFrame(columns=["param", "risk", "int", "agent", "cumlative_risk", "travel_time", "request_time"])
@@ -298,19 +309,19 @@ def main():
                 buf = pd.DataFrame([[filename, str(initial_state[-2:]), str(intervention_list), "pomdp", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
                 # print(filename, buf_list)
-                plot(mdp, axes[idx, 0], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, filename)
+                plot(mdp, axes[idx, 0], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, filename)
 
                 indexes, policies, cumlative_risk, travel_time, request_time = myopic_policy(mdp, 5, initial_state, intervention_list)
                 buf = pd.DataFrame([[filename, str(initial_state[-2:]), str(intervention_list), "myopic", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
                 # print("myopic", buf_list)
-                plot(mdp, axes[idx, 1], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, "myopic")
+                plot(mdp, axes[idx, 1], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "myopic")
 
                 indexes, policies, cumlative_risk, travel_time, request_time = egotistical_agent(mdp, initial_state, intervention_list)
                 buf = pd.DataFrame([[filename, str(initial_state[-2:]), str(intervention_list), "egostistical", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
                 # print("egostistical", buf_list)
-                plot(mdp, axes[idx, 2], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, "egostistical")
+                plot(mdp, axes[idx, 2], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "egostistical")
 
                 result_list = pd.concat([result_list, buf_list], ignore_index=True)
                 # sns.lineplot(buf_list, x="agent", y="cumlative_risk", ax=ax_eval[0], label=str(initial_state[-2:])+str(intervention_list)) 

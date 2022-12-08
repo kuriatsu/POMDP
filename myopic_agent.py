@@ -41,24 +41,20 @@ def myopic_policy(mdp, int_time, initial_state, intervention_list):
             policy = -1
    
         index_after_list =  mdp.state_transition(policy, index)
-        # max_p = max([i[0] for i in index_after_list])
-        # highest_index_list = [i for i, x in enumerate(index_after_list) if x[0]==max_p]
-        # index_after = index_after_list[highest_index_list[intervention]][1]
+        int_acc_prob_list = mdp.operator_model.get_acc_prob(mdp.index_value(index, mdp.int_state_index))
         if len(index_after_list) == 4:
             max_p = max([i[0] for i in index_after_list])
             index_after_index = [i for i, x in enumerate(index_after_list) if x[0]==max_p][0]
             index_after = index_after_list[index_after_index][1]
         else:
-            max_p = 0.0
-            index_after_index = 0
-            for i, data in enumerate(index_after_list[:-1]):
-                if intervention == -1 and i % 2 == 0:
-                    continue
-                elif intervention == 0 and i % 2 != 0:
-                    continue
-                if max_p < data[0]:
-                    max_p = data[0]
-                    index_after = data[1]
+            max_p = max([i[1] for i in int_acc_prob_list])
+            index_after_index = [i[1] for i in int_acc_prob_list].index(max_p)
+            if index_after_index == len(int_acc_prob_list)-1:
+                index_after = index_after_list[-1][1]
+            elif intervention == -1:
+                index_after = index_after_list[index_after_index*2+1][1] 
+            else:
+                index_after = index_after_list[index_after_index*2][1] 
         
 
         for i, risk_position in enumerate(mdp.risk_positions):
