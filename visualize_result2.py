@@ -252,7 +252,7 @@ def main():
             #  "param_13_11.yaml",
             # "param_13_14.yaml",
             ]
-    fig, axes = plt.subplots(len(param_list), 3, sharex="all", sharey="all")
+    # fig, axes = plt.subplots(len(param_list), 3, sharex="all", sharey="all")
     # fig_eval, ax_eval = plt.subplots(1, 3)
 
     initial_states = [
@@ -301,7 +301,8 @@ def main():
                 filename = param_file.split("/")[-1].split(".")[0]
                 print(param_file)
                 # with open(f"/run/media/kuriatsu/KuriBuffaloPSM/pomdp_intervention_target/experiment/{filename}_p.pkl", "rb") as f:
-                with open(f"{filename}_p.pkl", "rb") as f:
+                # with open(f"{filename}_p.pkl", "rb") as f:
+                with open(f"result_p_amb_10/{filename}_p.pkl", "rb") as f:
                 # with open(f"/home/kuriatsu/Dropbox/documents/pomdp/ras_value_iteration_sweep_fix_perf/{filename}_p.pkl", "rb") as f:
                     p = pickle.load(f)
                 buf_list = pd.DataFrame(columns=result_list.columns)
@@ -310,27 +311,27 @@ def main():
                 buf = pd.DataFrame([[filename, str(initial_state[-2:]), str(intervention_list), "pomdp", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
                 # print(filename, buf_list)
-                plot(mdp, axes[idx, 0], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, filename)
+                # plot(mdp, axes[idx, 0], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, filename)
 
                 indexes, policies, cumlative_risk, travel_time, request_time = myopic_policy(mdp, 5, initial_state, intervention_list)
                 buf = pd.DataFrame([[filename, str(initial_state[-2:]), str(intervention_list), "myopic", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
                 # print("myopic", buf_list)
-                plot(mdp, axes[idx, 1], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "myopic")
+                # plot(mdp, axes[idx, 1], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "myopic")
 
                 indexes, policies, cumlative_risk, travel_time, request_time = egotistical_agent(mdp, initial_state, intervention_list)
                 buf = pd.DataFrame([[filename, str(initial_state[-2:]), str(intervention_list), "egostistical", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
                 # print("egostistical", buf_list)
-                plot(mdp, axes[idx, 2], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "egostistical")
+                # plot(mdp, axes[idx, 2], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "egostistical")
 
                 result_list = pd.concat([result_list, buf_list], ignore_index=True)
                 # sns.lineplot(buf_list, x="agent", y="cumlative_risk", ax=ax_eval[0], label=str(initial_state[-2:])+str(intervention_list)) 
                 # sns.lineplot(buf_list, x="agent", y="travel_time", ax=ax_eval[1], label=str(initial_state[-2:])+str(intervention_list)) 
                 # sns.lineplot(buf_list, x="agent", y="request_time", ax=ax_eval[2], label=str(initial_state[-2:])+str(intervention_list)) 
 
-    plt.show()
-    result_list.to_csv("result_2_5.csv")
+        # plt.show()
+    result_list.to_csv("result_amb_10.csv")
     # fig_eval.savefig("result.svg")
 
 def main_2():
@@ -380,36 +381,23 @@ def main_2():
         target_df = target_scenario_df[(target_scenario_df.agent == agent)]
         # initial_risk = ",".join(str(target_df.scenario).split(",")[:2])
         # operator_intervention = ",".join(str(target_df.scenario).split(",")[2:])
-        if target_df.intervention.str in ["[-1, 0]", "[0, -1]"]:
-            continue
-        target_int_df = target_df[target_df.intervention == ("[0, 0]")]
-        buf = pd.DataFrame([[
-            agent, 
-            "intervention",
-            target_int_df.cumlative_risk.mean(),
-            target_int_df.cumlative_risk.std(),
-            len(target_int_df[target_int_df.cumlative_risk>0.0]),
-            target_int_df.travel_time.mean(),
-            target_int_df.travel_time.std(),
-            target_int_df.request_time.mean(),
-            target_int_df.request_time.std(),
-            ]], columns=result_df.columns)
-        result_df = pd.concat([result_df, buf], ignore_index=True)
+        # if target_df.intervention.str in ["[-1, 0]", "[0, -1]"]:
+        #     continue
+        for intervention in target_df.intervention.drop_duplicates():
+            target_int_df = target_df[target_df.intervention == intervention]
 
-        target_noint_df = target_df[target_df.intervention == ("[-1, -1]")]
-        # target_noint_df = target_df[target_df.scenario.str.endswith("int:[-1, -1]")]
-        buf = pd.DataFrame([[
-            agent, 
-            "no",
-            target_noint_df.cumlative_risk.mean(),
-            target_noint_df.cumlative_risk.std(),
-            len(target_noint_df[target_noint_df.cumlative_risk>0.0]),
-            target_noint_df.travel_time.mean(),
-            target_noint_df.travel_time.std(),
-            target_noint_df.request_time.mean(),
-            target_noint_df.request_time.std(),
-            ]], columns=result_df.columns)
-        result_df = pd.concat([result_df, buf], ignore_index=True)
+            buf = pd.DataFrame([[
+                agent, 
+                intervention,
+                target_int_df.cumlative_risk.mean(),
+                target_int_df.cumlative_risk.std(),
+                len(target_int_df[target_int_df.cumlative_risk>0.0]),
+                target_int_df.travel_time.mean(),
+                target_int_df.travel_time.std(),
+                target_int_df.request_time.mean(),
+                target_int_df.request_time.std(),
+                ]], columns=result_df.columns)
+            result_df = pd.concat([result_df, buf], ignore_index=True)
 
     result_df.to_csv("summary_13.csv")
 
@@ -420,8 +408,8 @@ def main_2():
                 target_df = target_scenario_df[(target_scenario_df.risk == risk) & (target_scenario_df.intervention == intervention) & (target_scenario_df.param == param)]
                 # initial_risk = ",".join(scenario.split(",")[:2])
                 # operator_intervention = ",".join(scenario.split(",")[2:])
-                if target_df.intervention.iloc[-1] in ["[-1, 0]", "[0, -1]"]:
-                    continue
+                # if target_df.intervention.iloc[-1] in ["[-1, 0]", "[0, -1]"]:
+                #     continue
                 cumlative_risk = target_df[target_df.agent=="pomdp"].cumlative_risk.iloc[-1] - target_df[target_df.agent=="myopic"].cumlative_risk.iloc[-1]
                 travel_time = target_df[target_df.agent=="pomdp"].travel_time.iloc[-1] - target_df[target_df.agent=="myopic"].travel_time.iloc[-1]
                 request_time = target_df[target_df.agent=="pomdp"].request_time.iloc[-1] - target_df[target_df.agent=="myopic"].request_time.iloc[-1]
@@ -431,11 +419,11 @@ def main_2():
     result_df.to_csv("comparison_13.csv")
     print("increase risk", result_df[result_df.cumlative_risk>0.0])
     print("degrede efficiency", result_df[(result_df.travel_time>0.0) & (result_df.request_time>0.0)])
-
+    result_df[(result_df.travel_time>0.0) & (result_df.request_time>0.0)].to_csv("degrade_efficiency_13.csv") 
     # fig, axes = plt.subplots()
-    sns.scatterplot(data=result_df, x="travel_time", y="request_time", hue="initial_risk", style="operator_intervention", s=50.0, alpha=1.0)
+    # sns.scatterplot(data=result_df, x="travel_time", y="request_time", hue="initial_risk", style="operator_intervention", s=50.0, alpha=1.0)
     # sns.lmplot(data=result_df, x="travel_time", y="request_time", hue="operator_intervention",  x_jitter=.1, y_jitter=.1, fit_reg=False)
-    plt.show()
+    # plt.show()
 
 if __name__ == "__main__":
-    main()
+    main_2()
