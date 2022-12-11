@@ -244,10 +244,16 @@ class MDP:
         for i, pose in enumerate(self.risk_positions):
             dist = pose - current_pose
             target_index = int(self.risk_state_index + i)
-            # target_index = int(self.risk_state_index + self.risk_state_len * i)
-            if dist >= 0.0 and dist < closest_target_dist and state[target_index] >= 0.5:
-                closest_target_dist = dist
-                closest_target = i
+            if dist >= 0.0 and dist < closest_target_dist:
+                is_deceleration_target = False
+                if i == state[self.int_state_index+1]:
+                    is_deceleration_target = state[target_index] > 0.0
+                else:
+                    is_deceleration_target = state[target_index] >= 0.5
+
+                if is_deceleration_target:
+                    closest_target_dist = dist
+                    closest_target = i
 
         deceleration_distance = (current_v**2 - self.min_speed**2)/(2*9.8*self.ordinary_G) + self.safety_margin 
         if closest_target is None:
