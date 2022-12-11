@@ -194,40 +194,39 @@ class MDP:
             state_value[self.int_state_index+1] = action
 
         # print("risk_state and ego_vehicle state") 
-        # int_acc = self.get_int_performance(self.index_value(index, self.int_state_index))
-        # acc_prob = 1.0
         int_time = self.index_value(index, self.int_state_index) 
         # int_acc_prob_list = self.operator_model.int_acc(int_time)
         int_acc_prob_list = self.operator_model.get_acc_prob(int_time)
+        target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1))
+
         for [int_acc, acc_prob] in int_acc_prob_list:
             if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
-                target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1))
 
                 # print("transition if target is judged as norisk")
-                int_prob = self.operator_int_prob * acc_prob
+                transition_prob = self.operator_int_prob * acc_prob
                 buf_state_value_noint = copy.deepcopy(state_value)
                 buf_state_value_noint[target_index] = (1.0 - int_acc) * 0.5 
                 _, v, x = self.ego_vehicle_transition(buf_state_value_noint)
                 buf_state_value_noint[self.ego_state_index] = x
                 buf_state_value_noint[self.ego_state_index+1] = v 
-                out_index_list.append([int_prob, self.to_index(buf_state_value_noint)]) 
+                out_index_list.append([transition_prob, self.to_index(buf_state_value_noint)]) 
                 # print("transition if target is judged as risk")
-                int_prob = (1.0 - self.operator_int_prob) * acc_prob
+                transition_prob = (1.0 - self.operator_int_prob) * acc_prob
                 buf_state_value_int = copy.deepcopy(state_value)
                 buf_state_value_int[target_index] = (1.0 + int_acc) * 0.5 
                 _, v, x = self.ego_vehicle_transition(buf_state_value_int)
                 buf_state_value_int[self.ego_state_index] = x
                 buf_state_value_int[self.ego_state_index+1] = v 
-                out_index_list.append([int_prob, self.to_index(buf_state_value_int)]) 
+                out_index_list.append([transition_prob, self.to_index(buf_state_value_int)]) 
 
             else:
                 # print("transition if no intervention")
-                int_prob = 1.0 * acc_prob
+                transition_prob = 1.0 * acc_prob
                 buf_state_value = copy.deepcopy(state_value)
                 _, v, x = self.ego_vehicle_transition(buf_state_value)
                 buf_state_value[self.ego_state_index] = x
                 buf_state_value[self.ego_state_index+1] = v 
-                out_index_list.append([int_prob, self.to_index(buf_state_value)]) 
+                out_index_list.append([transition_prob, self.to_index(buf_state_value)]) 
             
         # print(out_index_list)
         return out_index_list

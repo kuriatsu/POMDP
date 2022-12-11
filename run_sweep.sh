@@ -1,176 +1,139 @@
 #!/bin/bash
 
-# python3 ras_value_iteration_sweep.py param_2_1.yaml &
-# python3 ras_value_iteration_sweep.py param_2_2.yaml &
-# python3 ras_value_iteration_sweep.py param_2_3.yaml &
-# python3 ras_value_iteration_sweep.py param_2_4.yaml &
-# python3 ras_value_iteration_sweep.py param_2_5.yaml &
-# python3 ras_value_iteration_sweep.py param_2_6.yaml &
-# python3 ras_value_iteration_sweep.py param_2_7.yaml &
-# python3 ras_value_iteration_sweep.py param_2_8.yaml &
-# python3 ras_value_iteration_sweep.py param_2_9.yaml &
-# python3 ras_value_iteration_sweep.py param_2_10.yaml &
-# wait
-# python3 ras_value_iteration_sweep.py param_2_11.yaml &
-# python3 ras_value_iteration_sweep.py param_2_12.yaml &
-# python3 ras_value_iteration_sweep.py param_2_13.yaml &
-# python3 ras_value_iteration_sweep.py param_2_14.yaml &
-# python3 ras_value_iteration_sweep.py param_2_15.yaml &
-# python3 ras_value_iteration_sweep.py param_3_1.yaml &
-# python3 ras_value_iteration_sweep.py param_3_3.yaml &
-# python3 ras_value_iteration_sweep.py param_3_4.yaml &
-# python3 ras_value_iteration_sweep.py param_3_5.yaml &
-# python3 ras_value_iteration_sweep.py param_3_6.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_1.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_2.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_3.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_4.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_5.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_6.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_7.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_8.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_9.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_10.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_11.yaml &
 wait
-# python3 ras_value_iteration_sweep.py param_3_2.yaml &
-# python3 ras_value_iteration_sweep.py param_3_7.yaml &
-# python3 ras_value_iteration_sweep.py param_3_8.yaml &
-# python3 ras_value_iteration_sweep.py param_3_9.yaml &
-# python3 ras_value_iteration_sweep.py param_3_10.yaml &
-# python3 ras_value_iteration_sweep.py param_3_11.yaml &
-# python3 ras_value_iteration_sweep.py param_3_12.yaml &
-# python3 ras_value_iteration_sweep.py param_3_13.yaml &
-# python3 ras_value_iteration_sweep.py param_3_14.yaml &
-# python3 ras_value_iteration_sweep.py param_3_15.yaml &
-# python3 ras_value_iteration_sweep.py param_4_1.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_12.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_13.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_14.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_15.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_16.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_17.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_18.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_19.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_20.yaml &
+python3 ras_value_iteration_sweep_vias_intprob.py param_21.yaml &
 wait
-# python3 ras_value_iteration_sweep.py param_4_2.yaml &
-# python3 ras_value_iteration_sweep.py param_4_3.yaml &
-# python3 ras_value_iteration_sweep.py param_4_4.yaml &
-# python3 ras_value_iteration_sweep.py param_4_5.yaml &
-# python3 ras_value_iteration_sweep.py param_4_6.yaml &
-# python3 ras_value_iteration_sweep.py param_4_7.yaml &
-# python3 ras_value_iteration_sweep.py param_4_8.yaml &
-# python3 ras_value_iteration_sweep.py param_4_9.yaml &
-# python3 ras_value_iteration_sweep.py param_4_10.yaml &
-# python3 ras_value_iteration_sweep.py param_4_11.yaml &
-# python3 ras_value_iteration_sweep.py param_4_12.yaml &
+python3 ras_value_iteration_sweep.py param_1_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_2_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_3_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_4_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_5_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_6_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_7_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_8_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_9_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_10_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_11_ambig.yaml &
 wait
-python3 ras_value_iteration_sweep.py param_4_13.yaml &
-python3 ras_value_iteration_sweep.py param_4_14.yaml &
-python3 ras_value_iteration_sweep.py param_4_15.yaml &
+python3 ras_value_iteration_sweep.py param_12_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_13_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_14_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_15_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_16_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_17_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_18_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_19_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_20_ambig.yaml &
+python3 ras_value_iteration_sweep.py param_21_ambig.yaml &
 wait
-python3 ras_value_iteration_sweep.py param_5_1.yaml &
-python3 ras_value_iteration_sweep.py param_5_2.yaml &
-python3 ras_value_iteration_sweep.py param_5_3.yaml &
-python3 ras_value_iteration_sweep.py param_5_4.yaml &
-python3 ras_value_iteration_sweep.py param_5_5.yaml &
-python3 ras_value_iteration_sweep.py param_5_6.yaml &
-python3 ras_value_iteration_sweep.py param_5_7.yaml &
-python3 ras_value_iteration_sweep.py param_5_8.yaml &
-python3 ras_value_iteration_sweep.py param_5_9.yaml &
-python3 ras_value_iteration_sweep.py param_5_10.yaml &
-python3 ras_value_iteration_sweep.py param_5_11.yaml &
-python3 ras_value_iteration_sweep.py param_5_12.yaml &
-python3 ras_value_iteration_sweep.py param_5_13.yaml &
-python3 ras_value_iteration_sweep.py param_5_14.yaml &
-python3 ras_value_iteration_sweep.py param_5_15.yaml &
+python3 ras_value_iteration_sweep.py param_1_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_2_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_3_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_4_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_5_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_6_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_7_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_8_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_9_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_10_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_11_amb_perf.yaml &
 wait
-python3 ras_value_iteration_sweep.py param_6_1.yaml &
-python3 ras_value_iteration_sweep.py param_6_2.yaml &
-python3 ras_value_iteration_sweep.py param_6_3.yaml &
-python3 ras_value_iteration_sweep.py param_6_4.yaml &
-python3 ras_value_iteration_sweep.py param_6_5.yaml &
-python3 ras_value_iteration_sweep.py param_6_6.yaml &
-python3 ras_value_iteration_sweep.py param_6_7.yaml &
-python3 ras_value_iteration_sweep.py param_6_8.yaml &
-python3 ras_value_iteration_sweep.py param_6_9.yaml &
-python3 ras_value_iteration_sweep.py param_6_10.yaml &
-python3 ras_value_iteration_sweep.py param_6_11.yaml &
-python3 ras_value_iteration_sweep.py param_6_12.yaml &
-python3 ras_value_iteration_sweep.py param_6_13.yaml &
-python3 ras_value_iteration_sweep.py param_6_14.yaml &
-python3 ras_value_iteration_sweep.py param_6_15.yaml &
+python3 ras_value_iteration_sweep.py param_12_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_13_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_14_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_15_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_16_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_17_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_18_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_19_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_20_amb_perf.yaml &
+python3 ras_value_iteration_sweep.py param_21_amb_perf.yaml &
 wait
-python3 ras_value_iteration_sweep.py param_7_1.yaml &
-python3 ras_value_iteration_sweep.py param_7_2.yaml &
-python3 ras_value_iteration_sweep.py param_7_3.yaml &
-python3 ras_value_iteration_sweep.py param_7_4.yaml &
-python3 ras_value_iteration_sweep.py param_7_5.yaml &
-python3 ras_value_iteration_sweep.py param_7_6.yaml &
-python3 ras_value_iteration_sweep.py param_7_7.yaml &
-python3 ras_value_iteration_sweep.py param_7_8.yaml &
-python3 ras_value_iteration_sweep.py param_7_9.yaml &
-python3 ras_value_iteration_sweep.py param_7_10.yaml &
-python3 ras_value_iteration_sweep.py param_7_11.yaml &
-python3 ras_value_iteration_sweep.py param_7_12.yaml &
-python3 ras_value_iteration_sweep.py param_7_13.yaml &
-python3 ras_value_iteration_sweep.py param_7_14.yaml &
-python3 ras_value_iteration_sweep.py param_7_15.yaml &
+python3 ras_value_iteration_sweep.py param_1_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_2_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_3_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_4_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_5_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_6_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_7_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_8_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_9_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_10_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_11_bad_req.yaml &
 wait
-python3 ras_value_iteration_sweep.py param_8_1.yaml &
-python3 ras_value_iteration_sweep.py param_8_2.yaml &
-python3 ras_value_iteration_sweep.py param_8_3.yaml &
-python3 ras_value_iteration_sweep.py param_8_4.yaml &
-python3 ras_value_iteration_sweep.py param_8_5.yaml &
-python3 ras_value_iteration_sweep.py param_8_6.yaml &
-python3 ras_value_iteration_sweep.py param_8_7.yaml &
-python3 ras_value_iteration_sweep.py param_8_8.yaml &
-python3 ras_value_iteration_sweep.py param_8_9.yaml &
-python3 ras_value_iteration_sweep.py param_8_10.yaml &
-python3 ras_value_iteration_sweep.py param_8_11.yaml &
-python3 ras_value_iteration_sweep.py param_8_12.yaml &
-python3 ras_value_iteration_sweep.py param_8_13.yaml &
-python3 ras_value_iteration_sweep.py param_8_14.yaml &
-python3 ras_value_iteration_sweep.py param_8_15.yaml &
+python3 ras_value_iteration_sweep.py param_12_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_13_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_14_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_15_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_16_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_17_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_18_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_19_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_20_bad_req.yaml &
+python3 ras_value_iteration_sweep.py param_21_bad_req.yaml &
 wait
-python3 ras_value_iteration_sweep.py param_13_1.yaml &
-python3 ras_value_iteration_sweep.py param_13_2.yaml &
-python3 ras_value_iteration_sweep.py param_13_3.yaml &
-python3 ras_value_iteration_sweep.py param_13_4.yaml &
-python3 ras_value_iteration_sweep.py param_13_5.yaml &
-python3 ras_value_iteration_sweep.py param_13_6.yaml &
-python3 ras_value_iteration_sweep.py param_13_7.yaml &
-python3 ras_value_iteration_sweep.py param_13_8.yaml &
-python3 ras_value_iteration_sweep.py param_13_9.yaml &
-python3 ras_value_iteration_sweep.py param_13_10.yaml &
-python3 ras_value_iteration_sweep.py param_13_11.yaml &
-python3 ras_value_iteration_sweep.py param_13_12.yaml &
-python3 ras_value_iteration_sweep.py param_13_13.yaml &
-python3 ras_value_iteration_sweep.py param_13_14.yaml &
-python3 ras_value_iteration_sweep.py param_13_15.yaml &
+python3 ras_value_iteration_sweep.py param_1_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_2_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_3_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_4_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_5_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_6_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_7_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_8_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_9_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_10_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_11_high_perf.yaml &
 wait
-python3 ras_value_iteration_sweep.py param_12_1.yaml &
-python3 ras_value_iteration_sweep.py param_12_2.yaml &
-python3 ras_value_iteration_sweep.py param_12_3.yaml &
-python3 ras_value_iteration_sweep.py param_12_4.yaml &
-python3 ras_value_iteration_sweep.py param_12_5.yaml &
+python3 ras_value_iteration_sweep.py param_12_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_13_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_14_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_15_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_16_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_17_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_18_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_19_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_20_high_perf.yaml &
+python3 ras_value_iteration_sweep.py param_21_high_perf.yaml &
 wait
-python3 ras_value_iteration_sweep.py param_14_1.yaml &
-python3 ras_value_iteration_sweep.py param_14_2.yaml &
-python3 ras_value_iteration_sweep.py param_14_3.yaml &
-python3 ras_value_iteration_sweep.py param_14_4.yaml &
-python3 ras_value_iteration_sweep.py param_14_5.yaml &
-python3 ras_value_iteration_sweep.py param_14_6.yaml &
-python3 ras_value_iteration_sweep.py param_14_7.yaml &
-python3 ras_value_iteration_sweep.py param_14_8.yaml &
-python3 ras_value_iteration_sweep.py param_14_9.yaml &
-python3 ras_value_iteration_sweep.py param_14_10.yaml &
-python3 ras_value_iteration_sweep.py param_14_11.yaml &
-python3 ras_value_iteration_sweep.py param_14_12.yaml &
-python3 ras_value_iteration_sweep.py param_14_13.yaml &
-python3 ras_value_iteration_sweep.py param_14_14.yaml &
-python3 ras_value_iteration_sweep.py param_14_15.yaml &
+python3 ras_value_iteration_sweep.py param_1_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_2_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_3_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_4_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_5_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_6_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_7_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_8_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_9_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_10_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_11_low_perf.yaml &
 wait
-python3 ras_value_iteration_sweep.py param_15_1.yaml &
-python3 ras_value_iteration_sweep.py param_15_2.yaml &
-python3 ras_value_iteration_sweep.py param_15_3.yaml &
-python3 ras_value_iteration_sweep.py param_15_4.yaml &
-python3 ras_value_iteration_sweep.py param_15_5.yaml &
-python3 ras_value_iteration_sweep.py param_15_6.yaml &
-python3 ras_value_iteration_sweep.py param_15_7.yaml &
-python3 ras_value_iteration_sweep.py param_15_8.yaml &
-python3 ras_value_iteration_sweep.py param_15_9.yaml &
-python3 ras_value_iteration_sweep.py param_15_10.yaml &
-python3 ras_value_iteration_sweep.py param_15_11.yaml &
-python3 ras_value_iteration_sweep.py param_15_12.yaml &
-python3 ras_value_iteration_sweep.py param_15_13.yaml &
-python3 ras_value_iteration_sweep.py param_15_14.yaml &
-python3 ras_value_iteration_sweep.py param_15_15.yaml &
-wait
-python3 ras_value_iteration_sweep.py param_9_1.yaml &
-python3 ras_value_iteration_sweep.py param_9_2.yaml &
-python3 ras_value_iteration_sweep.py param_9_3.yaml &
-python3 ras_value_iteration_sweep.py param_9_4.yaml &
-python3 ras_value_iteration_sweep.py param_9_5.yaml &
-python3 ras_value_iteration_sweep.py param_9_6.yaml &
+python3 ras_value_iteration_sweep.py param_12_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_13_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_14_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_15_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_16_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_17_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_18_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_19_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_20_low_perf.yaml &
+python3 ras_value_iteration_sweep.py param_21_low_perf.yaml &

@@ -134,144 +134,169 @@ def egotistical_agent(mdp, initial_state, intervention_list):
     request_time = len([p for p in policies if p!=-1])
     return indexes, policies, cumlative_risk, travel_time, request_time
 
-def main():
+def visualize_speed(scenario_list, dir):
 
-    param_list = [
-            # "param_2_3.yaml",
-            "param_3_6.yaml",
-            "param_5_6.yaml",
-            "param_6_6.yaml",
-            "param_7_6.yaml",
-            ]
-    fig, axes = plt.subplots(len(param_list), 3, sharex="all", sharey="all")
-    # fig_eval, ax_eval = plt.subplots(1, 3)
+    # fig, axes = plt.subplots(1, 3, sharex="all", sharey="all")
+    fig, axes = plt.subplots(1, 2, sharex="all", sharey="all")
 
-    initial_states = [
-            # [0, 11.2, 0, -1, 0.0, 0.0],
-            # [0, 11.2, 0, -1, 0.25, 0.0],
-            # [0, 11.2, 0, -1, 0.5, 0.0],
-            # [0, 11.2, 0, -1, 0.75, 0.0],
-            # [0, 11.2, 0, -1, 1.0, 0.0],
-            # [0, 11.2, 0, -1, 0.0, 0.25],
-            # [0, 11.2, 0, -1, 0.25, 0.25],
-            # [0, 11.2, 0, -1, 0.5, 0.25],
-            # [0, 11.2, 0, -1, 0.75, 0.25],
-            # [0, 11.2, 0, -1, 1.0, 0.25],
-            # [0, 11.2, 0, -1, 0.0, 0.5],
-            # [0, 11.2, 0, -1, 0.25, 0.5],
-            # [0, 11.2, 0, -1, 0.5, 0.5],
-            # [0, 11.2, 0, -1, 0.75, 0.5],
-            # [0, 11.2, 0, -1, 1.0, 0.5],
-            # [0, 11.2, 0, -1, 0.0, 0.75],
-            # [0, 11.2, 0, -1, 0.25, 0.75],
-            # [0, 11.2, 0, -1, 0.5, 0.75],
-            # [0, 11.2, 0, -1, 0.75, 0.75],
-            [0, 11.2, 0, -1, 1.0, 0.75],
-            # [0, 11.2, 0, -1, 0.0, 1.0],
-            # [0, 11.2, 0, -1, 0.25, 1.0],
-            # [0, 11.2, 0, -1, 0.5, 1.0],
-            # [0, 11.2, 0, -1, 0.75, 1.0],
-            # [0, 11.2, 0, -1, 1.0, 1.0],
-            ]
+
+    for scenario in scenario_list:
+        intervention_list = scenario[2]
+        initial_state = scenario[1]
+        param_file = scenario[0]
+        with open(param_file) as f:
+            param = yaml.safe_load(f)
+
+        mdp = MDP(param)
+        filename = param_file.split("/")[-1].split(".")[0]
+        print(param_file)
+        with open(dir+f"{filename}_p.pkl", "rb") as f:
+            p = pickle.load(f)
+
+        indexes, policies, cumlative_risk, travel_time, request_time = pomdp_agent(mdp, p, initial_state, intervention_list)
+        plot(mdp, axes[0], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, filename)
+
+        indexes, policies, cumlative_risk, travel_time, request_time = myopic_policy(mdp, 5, initial_state, intervention_list)
+        plot(mdp, axes[1], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "myopic")
+
+        # indexes, policies, cumlative_risk, travel_time, request_time = egotistical_agent(mdp, initial_state, intervention_list)
+        # plot(mdp, axes[2], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "egostistical")
+
+        result_list = pd.concat([result_list, buf_list], ignore_index=True)
+        # sns.lineplot(buf_list, x="agent", y="cumlative_risk", ax=ax_eval[0], label=str(initial_state[-2:])+str(intervention_list)) 
+        # sns.lineplot(buf_list, x="agent", y="travel_time", ax=ax_eval[1], label=str(initial_state[-2:])+str(intervention_list)) 
+        # sns.lineplot(buf_list, x="agent", y="request_time", ax=ax_eval[2], label=str(initial_state[-2:])+str(intervention_list)) 
+
+        plt.savefig(dir+f"{filename}_{str(scenario)}_speed.svg")
+        # plt.show()
+
+def postprocessing(initial_states, dir, param_list, out_file):
 
     # -1:no intervention 0:intervention
     intervention_lists = [
-            # [-1, -1], 
-            # [-1, 0], 
+            [-1, -1], 
+            [-1, 0], 
             [0, -1], 
-            # [0, 0], 
+            [0, 0], 
             ]
-    result_list = pd.DataFrame(columns=["param", "risk", "int", "agent", "cumlative_risk", "travel_time", "request_time"])
+    result_list = pd.DataFrame(columns=["param", "risk", "position", "intervention", "agent", "cumlative_risk", "travel_time", "request_time"])
     for initial_state in initial_states:
         for intervention_list in intervention_lists:
             for idx, param_file in enumerate(param_list):
-                with open(param_file) as f:
+                with open(dir+param_file) as f:
                     param = yaml.safe_load(f)
 
-                mdp = MDP(param)
-                filename = param_file.split("/")[-1].split(".")[0]
                 print(param_file)
-                with open(f"/run/media/kuriatsu/KuriBuffaloPSM/pomdp_intervention_target/experiment/POMDP_ambig_100/{filename}_p.pkl", "rb") as f:
-                # with open(f"{filename}_p.pkl", "rb") as f:
-                # with open(f"result_p_amb_10/{filename}_p.pkl", "rb") as f:
-                # with open(f"/home/kuriatsu/Dropbox/documents/pomdp/ras_value_iteration_sweep_fix_perf/{filename}_p.pkl", "rb") as f:
-                    p = pickle.load(f)
-                buf_list = pd.DataFrame(columns=result_list.columns)
+                mdp = MDP(param)
 
+                filename = param_file.split("/")[-1].split(".")[0]
+                with open(dir+f"{filename}_p.pkl", "rb") as f:
+                    p = pickle.load(f)
+
+                buf_list = pd.DataFrame(columns=result_list.columns)
                 indexes, policies, cumlative_risk, travel_time, request_time = pomdp_agent(mdp, p, initial_state, intervention_list)
-                buf = pd.DataFrame([[filename, str(initial_state[-2:]), str(intervention_list), "pomdp", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
+                buf = pd.DataFrame([[
+                    filename, 
+                    str(initial_state[-2:]), 
+                    str(mdp.risk_positions), 
+                    str(intervention_list), 
+                    "pomdp", 
+                    cumlative_risk, 
+                    travel_time, 
+                    request_time
+                    ]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
-                # print(filename, buf_list)
-                plot(mdp, axes[idx, 0], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, filename)
 
                 indexes, policies, cumlative_risk, travel_time, request_time = myopic_policy(mdp, 5, initial_state, intervention_list)
-                buf = pd.DataFrame([[filename, str(initial_state[-2:]), str(intervention_list), "myopic", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
+                buf = pd.DataFrame([[
+                    filename, 
+                    str(initial_state[-2:]), 
+                    str(mdp.risk_positions), 
+                    str(intervention_list), 
+                    "myopic", 
+                    cumlative_risk, 
+                    travel_time, 
+                    request_time
+                    ]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
-                # print("myopic", buf_list)
-                plot(mdp, axes[idx, 1], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "myopic")
 
                 indexes, policies, cumlative_risk, travel_time, request_time = egotistical_agent(mdp, initial_state, intervention_list)
-                buf = pd.DataFrame([[filename, str(initial_state[-2:]), str(intervention_list), "egostistical", cumlative_risk, travel_time, request_time]], columns=result_list.columns)
+                buf = pd.DataFrame([[
+                    filename, 
+                    str(initial_state[-2:]), 
+                    str(mdp.risk_positions), 
+                    str(intervention_list), 
+                    "egostistical", 
+                    cumlative_risk, 
+                    travel_time, 
+                    request_time
+                    ]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
-                # print("egostistical", buf_list)
-                plot(mdp, axes[idx, 2], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "egostistical")
 
                 result_list = pd.concat([result_list, buf_list], ignore_index=True)
-                # sns.lineplot(buf_list, x="agent", y="cumlative_risk", ax=ax_eval[0], label=str(initial_state[-2:])+str(intervention_list)) 
-                # sns.lineplot(buf_list, x="agent", y="travel_time", ax=ax_eval[1], label=str(initial_state[-2:])+str(intervention_list)) 
-                # sns.lineplot(buf_list, x="agent", y="request_time", ax=ax_eval[2], label=str(initial_state[-2:])+str(intervention_list)) 
 
-        plt.show()
-    result_list.to_csv("result_amb_10.csv")
-    # fig_eval.savefig("result.svg")
+    result_list.to_csv(dir+out_file)
 
-def main_2():
-    df = pd.read_csv(sys.argv[1])
-    param_list = ["param_13_1",
-                "param_13_2",
-                "param_13_3",
-                "param_13_4",
-                "param_13_5",
-                "param_13_6",
-                "param_13_7",
-                "param_13_8",
-                "param_13_9",
-                "param_13_10",
-                "param_13_11",
-                "param_13_12",
-                "param_13_13",
-                "param_13_14",
-                "param_13_15",
-                ]
-    scenario_list = [
-            "risk:[0.25, 0.25],int:[0, 0]",
-            "risk:[0.5, 0.25],int:[0, 0]",
-            "risk:[0.75, 0.25],int:[0, 0]",
-            "risk:[0.25, 0.25],int:[-1, -1]",
-            "risk:[0.5, 0.25],int:[-1, -1]",
-            "risk:[0.75, 0.25],int:[-1, -1]",
-            "risk:[0.25, 0.5],int:[0, 0]",
-            "risk:[0.5, 0.5],int:[0, 0]",
-            "risk:[0.75, 0.5],int:[0, 0]",
-            "risk:[0.25, 0.5],int:[-1, -1]",
-            "risk:[0.5, 0.5],int:[-1, -1]",
-            "risk:[0.75, 0.5],int:[-1, -1]",
-            "risk:[0.25, 0.75],int:[0, 0]",
-            "risk:[0.5, 0.75],int:[0, 0]",
-            "risk:[0.75, 0.75],int:[0, 0]",
-            "risk:[0.25, 0.75],int:[-1, -1]",
-            "risk:[0.5, 0.75],int:[-1, -1]",
-            "risk:[0.75, 0.75],int:[-1, -1]",
-            ]
+def analyze(processing_target, in_file, out_name):
+    df = pd.read_csv(in_file)
 
     # target_scenario_df = df[(df["param"].isin(param_list)) & (df["scenario"].isin(scenario_list))]
-    target_scenario_df = df[(df["param"].isin(param_list))]
+    target_scenario_df = df[(df["param"].isin([key for key in processing_target.keys()]))]
 
-    result_df = pd.DataFrame(columns=["agent", "intervention", "risk-ave", "risk-var", "risk-count", "trav-ave", "trav-var", "req-ave", "req-var"])
+    # comparison
+    result_df = pd.DataFrame(columns=[
+        "param", 
+        "initial_risk", 
+        "intervention", 
+        "cumlative_risk", 
+        "travel_time", 
+        "request_time", 
+        "label"
+        ])
+    for param in target_scenario_df.param.drop_duplicates():
+        for intervention in target_scenario_df.intervention.drop_duplicates():
+            for risk in target_scenario_df.risk.drop_duplicates():
+                target_df = target_scenario_df[(target_scenario_df.risk == risk) & (target_scenario_df.intervention == intervention) & (target_scenario_df.param == param)]
+                # initial_risk = ",".join(scenario.split(",")[:2])
+                # operator_intervention = ",".join(scenario.split(",")[2:])
+                # if target_df.intervention.iloc[-1] in ["[-1, 0]", "[0, -1]"]:
+                #     continue
+                cumlative_risk = target_df[target_df.agent=="pomdp"].cumlative_risk.iloc[-1] - target_df[target_df.agent=="myopic"].cumlative_risk.iloc[-1]
+                travel_time = target_df[target_df.agent=="pomdp"].travel_time.iloc[-1] - target_df[target_df.agent=="myopic"].travel_time.iloc[-1]
+                request_time = target_df[target_df.agent=="pomdp"].request_time.iloc[-1] - target_df[target_df.agent=="myopic"].request_time.iloc[-1]
+                label = processing_target[param]
+                buf = pd.DataFrame([[
+                    param, 
+                    risk, 
+                    intervention, 
+                    cumlative_risk, 
+                    travel_time, 
+                    request_time, 
+                    label
+                    ]], columns=result_df.columns)
+                # print(target_df)
+                result_df = pd.concat([result_df, buf], ignore_index=True)
+    result_df.to_csv(f"comparison_{out_name}.csv")
+
+    # summary
+    summary_df = pd.DataFrame(columns=[
+        "agent", 
+        "intervention", 
+        "risk-mean", 
+        "risk-std", 
+        "risk-count", 
+        "trav-mean", 
+        "trav-std", 
+        "req-mean", 
+        "req-std"
+        ])
     for agent in target_scenario_df.agent.drop_duplicates():
         target_df = target_scenario_df[(target_scenario_df.agent == agent)]
+
         # initial_risk = ",".join(str(target_df.scenario).split(",")[:2])
         # operator_intervention = ",".join(str(target_df.scenario).split(",")[2:])
+
+        ## remove unnecesary intervention
         # if target_df.intervention.str in ["[-1, 0]", "[0, -1]"]:
         #     continue
         for intervention in target_df.intervention.drop_duplicates():
@@ -287,34 +312,110 @@ def main_2():
                 target_int_df.travel_time.std(),
                 target_int_df.request_time.mean(),
                 target_int_df.request_time.std(),
-                ]], columns=result_df.columns)
-            result_df = pd.concat([result_df, buf], ignore_index=True)
+                ]], columns=summary_df.columns)
+            summary_df = pd.concat([summary_df, buf], ignore_index=True)
 
-    result_df.to_csv("summary_13.csv")
+    summary_df.to_csv(f"summary_{out_name}.csv")
 
-    result_df = pd.DataFrame(columns=["param", "initial_risk", "operator_intervention", "cumlative_risk", "travel_time", "request_time"])
-    for param in target_scenario_df.param.drop_duplicates():
-        for intervention in target_scenario_df.intervention.drop_duplicates():
-            for risk in target_scenario_df.risk.drop_duplicates():
-                target_df = target_scenario_df[(target_scenario_df.risk == risk) & (target_scenario_df.intervention == intervention) & (target_scenario_df.param == param)]
-                # initial_risk = ",".join(scenario.split(",")[:2])
-                # operator_intervention = ",".join(scenario.split(",")[2:])
-                # if target_df.intervention.iloc[-1] in ["[-1, 0]", "[0, -1]"]:
-                #     continue
-                cumlative_risk = target_df[target_df.agent=="pomdp"].cumlative_risk.iloc[-1] - target_df[target_df.agent=="myopic"].cumlative_risk.iloc[-1]
-                travel_time = target_df[target_df.agent=="pomdp"].travel_time.iloc[-1] - target_df[target_df.agent=="myopic"].travel_time.iloc[-1]
-                request_time = target_df[target_df.agent=="pomdp"].request_time.iloc[-1] - target_df[target_df.agent=="myopic"].request_time.iloc[-1]
-                buf = pd.DataFrame([[param, risk, intervention, cumlative_risk, travel_time, request_time]], columns=result_df.columns)
-                print(target_df)
-                result_df = pd.concat([result_df, buf], ignore_index=True)
-    result_df.to_csv("comparison_13.csv")
-    print("increase risk", result_df[result_df.cumlative_risk>0.0])
-    print("degrede efficiency", result_df[(result_df.travel_time>0.0) & (result_df.request_time>0.0)])
-    result_df[(result_df.travel_time>0.0) & (result_df.request_time>0.0)].to_csv("degrade_efficiency_13.csv") 
     # fig, axes = plt.subplots()
     # sns.scatterplot(data=result_df, x="travel_time", y="request_time", hue="initial_risk", style="operator_intervention", s=50.0, alpha=1.0)
     # sns.lmplot(data=result_df, x="travel_time", y="request_time", hue="operator_intervention",  x_jitter=.1, y_jitter=.1, fit_reg=False)
     # plt.show()
 
 if __name__ == "__main__":
-    main()
+    ####################################
+    # postprocessing
+    ####################################
+    param_list = [
+            "param_1.yaml",
+            "param_2.yaml",
+            "param_3.yaml",
+            "param_4.yaml",
+            "param_5.yaml",
+            "param_6.yaml",
+            "param_7.yaml",
+            "param_8.yaml",
+            "param_9.yaml",
+            "param_10.yaml",
+            "param_11.yaml",
+            "param_12.yaml",
+            "param_13.yaml",
+            "param_14.yaml",
+            "param_15.yaml",
+            "param_16.yaml",
+            "param_17.yaml",
+            "param_18.yaml",
+            "param_19.yaml",
+            "param_20.yaml",
+            "param_21.yaml",
+            ]
+    initial_states = [
+            [0, 11.2, 0, -1, 0.0, 0.0],
+            [0, 11.2, 0, -1, 0.25, 0.0],
+            [0, 11.2, 0, -1, 0.0, 0.25],
+            [0, 11.2, 0, -1, 0.25, 0.25],
+            
+            [0, 11.2, 0, -1, 0.5, 0.0],
+            [0, 11.2, 0, -1, 0.5, 0.25],
+            [0, 11.2, 0, -1, 0.75, 0.0],
+            [0, 11.2, 0, -1, 0.75, 0.25],
+            [0, 11.2, 0, -1, 1.0, 0.0],
+            [0, 11.2, 0, -1, 1.0, 0.25],
+
+            [0, 11.2, 0, -1, 0.0, 0.5],
+            [0, 11.2, 0, -1, 0.0, 0.75],
+            [0, 11.2, 0, -1, 0.0, 1.0],
+            [0, 11.2, 0, -1, 0.25, 0.5],
+            [0, 11.2, 0, -1, 0.25, 0.75],
+            [0, 11.2, 0, -1, 0.25, 1.0],
+
+            [0, 11.2, 0, -1, 0.5, 0.5],
+            [0, 11.2, 0, -1, 0.5, 0.75],
+            [0, 11.2, 0, -1, 0.5, 1.0],
+            [0, 11.2, 0, -1, 0.75, 0.5],
+            [0, 11.2, 0, -1, 0.75, 0.75],
+            [0, 11.2, 0, -1, 0.75, 1.0],
+            [0, 11.2, 0, -1, 1.0, 0.5],
+            [0, 11.2, 0, -1, 1.0, 0.75],
+            [0, 11.2, 0, -1, 1.0, 1.0],
+            ]
+    # postprocessing(initial_states, "/run/media/kuriatsu/KuriBuffaloPSM/pomdp_intervention_target/experiment/POMDP_ambig_100/", param_list, "result_amb_10.csv")
+    # postprocessing("", "result.csv")
+    # postprocessing(initial_states, "/home/kuriatsu/Source/POMDP/default_deceleration_model/", param_list, "result.csv")
+
+    ####################################
+    # visualization
+    ####################################
+    # -1:judged as risk 0:no risk
+    scenario_list = [
+            ["param_3_6.yaml", [0, 11.2, 0, -1, 0.5, 0.0], [0, 0]],
+            ]
+    # visualize_speed(scenario_list, dir, 
+
+    ####################################
+    # comparison
+    ####################################
+    processing_target = {
+        "param_1": 1,
+        "param_2": 2,
+        "param_3": 3,
+        "param_4": 4,
+        "param_5": 5,
+        "param_6": 6,
+        "param_7": 6,
+        "param_8": 6,
+        "param_9": 6,
+        "param_10": 6,
+        "param_11": 6,
+        "param_12": 6,
+        "param_13": 6,
+        "param_14": 6,
+        "param_15": 6,
+        "param_16": 6,
+        "param_17": 6,
+        "param_18": 6,
+        "param_19": 6,
+        "param_20": 6,
+        "param_21": 6,
+        }
+    analyze(processing_target, "default_deceleration_model/result.csv", "relative_result.csv")
