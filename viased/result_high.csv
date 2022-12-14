@@ -1,0 +1,2401 @@
+,param,risk,position,intervention,agent,cumlative_risk,travel_time,request_time
+0,param_1_high_perf,"[0.0, 0.0]",[20 40],"[-1, -1]",pomdp,0,15,0
+1,param_1_high_perf,"[0.0, 0.0]",[20 40],"[-1, -1]",myopic,0,31,12
+2,param_1_high_perf,"[0.0, 0.0]",[20 40],"[-1, -1]",egostistical,0,15,0
+3,param_2_high_perf,"[0.0, 0.0]",[20 60],"[-1, -1]",pomdp,0,15,0
+4,param_2_high_perf,"[0.0, 0.0]",[20 60],"[-1, -1]",myopic,0,31,12
+5,param_2_high_perf,"[0.0, 0.0]",[20 60],"[-1, -1]",egostistical,0,15,0
+6,param_3_high_perf,"[0.0, 0.0]",[20 80],"[-1, -1]",pomdp,0,15,0
+7,param_3_high_perf,"[0.0, 0.0]",[20 80],"[-1, -1]",myopic,0,33,12
+8,param_3_high_perf,"[0.0, 0.0]",[20 80],"[-1, -1]",egostistical,0,15,0
+9,param_4_high_perf,"[0.0, 0.0]",[ 20 100],"[-1, -1]",pomdp,0,15,0
+10,param_4_high_perf,"[0.0, 0.0]",[ 20 100],"[-1, -1]",myopic,0,32,12
+11,param_4_high_perf,"[0.0, 0.0]",[ 20 100],"[-1, -1]",egostistical,0,15,0
+12,param_5_high_perf,"[0.0, 0.0]",[ 20 120],"[-1, -1]",pomdp,0,15,0
+13,param_5_high_perf,"[0.0, 0.0]",[ 20 120],"[-1, -1]",myopic,0,32,12
+14,param_5_high_perf,"[0.0, 0.0]",[ 20 120],"[-1, -1]",egostistical,0,15,0
+15,param_6_high_perf,"[0.0, 0.0]",[40 60],"[-1, -1]",pomdp,0,15,0
+16,param_6_high_perf,"[0.0, 0.0]",[40 60],"[-1, -1]",myopic,0,34,12
+17,param_6_high_perf,"[0.0, 0.0]",[40 60],"[-1, -1]",egostistical,0,15,0
+18,param_7_high_perf,"[0.0, 0.0]",[40 80],"[-1, -1]",pomdp,0,15,0
+19,param_7_high_perf,"[0.0, 0.0]",[40 80],"[-1, -1]",myopic,0,34,12
+20,param_7_high_perf,"[0.0, 0.0]",[40 80],"[-1, -1]",egostistical,0,15,0
+21,param_8_high_perf,"[0.0, 0.0]",[ 40 100],"[-1, -1]",pomdp,0,15,0
+22,param_8_high_perf,"[0.0, 0.0]",[ 40 100],"[-1, -1]",myopic,0,36,12
+23,param_8_high_perf,"[0.0, 0.0]",[ 40 100],"[-1, -1]",egostistical,0,15,0
+24,param_1_high_perf,"[0.0, 0.0]",[20 40],"[-1, 0]",pomdp,0,15,0
+25,param_1_high_perf,"[0.0, 0.0]",[20 40],"[-1, 0]",myopic,0,27,12
+26,param_1_high_perf,"[0.0, 0.0]",[20 40],"[-1, 0]",egostistical,0,15,0
+27,param_2_high_perf,"[0.0, 0.0]",[20 60],"[-1, 0]",pomdp,0,15,0
+28,param_2_high_perf,"[0.0, 0.0]",[20 60],"[-1, 0]",myopic,0,27,12
+29,param_2_high_perf,"[0.0, 0.0]",[20 60],"[-1, 0]",egostistical,0,15,0
+30,param_3_high_perf,"[0.0, 0.0]",[20 80],"[-1, 0]",pomdp,0,15,0
+31,param_3_high_perf,"[0.0, 0.0]",[20 80],"[-1, 0]",myopic,0,27,12
+32,param_3_high_perf,"[0.0, 0.0]",[20 80],"[-1, 0]",egostistical,0,15,0
+33,param_4_high_perf,"[0.0, 0.0]",[ 20 100],"[-1, 0]",pomdp,0,15,0
+34,param_4_high_perf,"[0.0, 0.0]",[ 20 100],"[-1, 0]",myopic,0,25,12
+35,param_4_high_perf,"[0.0, 0.0]",[ 20 100],"[-1, 0]",egostistical,0,15,0
+36,param_5_high_perf,"[0.0, 0.0]",[ 20 120],"[-1, 0]",pomdp,0,15,0
+37,param_5_high_perf,"[0.0, 0.0]",[ 20 120],"[-1, 0]",myopic,0,24,12
+38,param_5_high_perf,"[0.0, 0.0]",[ 20 120],"[-1, 0]",egostistical,0,15,0
+39,param_6_high_perf,"[0.0, 0.0]",[40 60],"[-1, 0]",pomdp,0,15,0
+40,param_6_high_perf,"[0.0, 0.0]",[40 60],"[-1, 0]",myopic,0,26,12
+41,param_6_high_perf,"[0.0, 0.0]",[40 60],"[-1, 0]",egostistical,0,15,0
+42,param_7_high_perf,"[0.0, 0.0]",[40 80],"[-1, 0]",pomdp,0,15,0
+43,param_7_high_perf,"[0.0, 0.0]",[40 80],"[-1, 0]",myopic,0,30,12
+44,param_7_high_perf,"[0.0, 0.0]",[40 80],"[-1, 0]",egostistical,0,15,0
+45,param_8_high_perf,"[0.0, 0.0]",[ 40 100],"[-1, 0]",pomdp,0,15,0
+46,param_8_high_perf,"[0.0, 0.0]",[ 40 100],"[-1, 0]",myopic,0,30,12
+47,param_8_high_perf,"[0.0, 0.0]",[ 40 100],"[-1, 0]",egostistical,0,15,0
+48,param_1_high_perf,"[0.0, 0.0]",[20 40],"[0, -1]",pomdp,0,15,0
+49,param_1_high_perf,"[0.0, 0.0]",[20 40],"[0, -1]",myopic,0,29,12
+50,param_1_high_perf,"[0.0, 0.0]",[20 40],"[0, -1]",egostistical,0,15,0
+51,param_2_high_perf,"[0.0, 0.0]",[20 60],"[0, -1]",pomdp,0,15,0
+52,param_2_high_perf,"[0.0, 0.0]",[20 60],"[0, -1]",myopic,0,31,12
+53,param_2_high_perf,"[0.0, 0.0]",[20 60],"[0, -1]",egostistical,0,15,0
+54,param_3_high_perf,"[0.0, 0.0]",[20 80],"[0, -1]",pomdp,0,15,0
+55,param_3_high_perf,"[0.0, 0.0]",[20 80],"[0, -1]",myopic,0,31,12
+56,param_3_high_perf,"[0.0, 0.0]",[20 80],"[0, -1]",egostistical,0,15,0
+57,param_4_high_perf,"[0.0, 0.0]",[ 20 100],"[0, -1]",pomdp,0,15,0
+58,param_4_high_perf,"[0.0, 0.0]",[ 20 100],"[0, -1]",myopic,0,33,12
+59,param_4_high_perf,"[0.0, 0.0]",[ 20 100],"[0, -1]",egostistical,0,15,0
+60,param_5_high_perf,"[0.0, 0.0]",[ 20 120],"[0, -1]",pomdp,0,15,0
+61,param_5_high_perf,"[0.0, 0.0]",[ 20 120],"[0, -1]",myopic,0,33,12
+62,param_5_high_perf,"[0.0, 0.0]",[ 20 120],"[0, -1]",egostistical,0,15,0
+63,param_6_high_perf,"[0.0, 0.0]",[40 60],"[0, -1]",pomdp,0,15,0
+64,param_6_high_perf,"[0.0, 0.0]",[40 60],"[0, -1]",myopic,0,29,12
+65,param_6_high_perf,"[0.0, 0.0]",[40 60],"[0, -1]",egostistical,0,15,0
+66,param_7_high_perf,"[0.0, 0.0]",[40 80],"[0, -1]",pomdp,0,15,0
+67,param_7_high_perf,"[0.0, 0.0]",[40 80],"[0, -1]",myopic,0,29,12
+68,param_7_high_perf,"[0.0, 0.0]",[40 80],"[0, -1]",egostistical,0,15,0
+69,param_8_high_perf,"[0.0, 0.0]",[ 40 100],"[0, -1]",pomdp,0,15,0
+70,param_8_high_perf,"[0.0, 0.0]",[ 40 100],"[0, -1]",myopic,0,32,12
+71,param_8_high_perf,"[0.0, 0.0]",[ 40 100],"[0, -1]",egostistical,0,15,0
+72,param_1_high_perf,"[0.0, 0.0]",[20 40],"[0, 0]",pomdp,0,15,0
+73,param_1_high_perf,"[0.0, 0.0]",[20 40],"[0, 0]",myopic,0,26,12
+74,param_1_high_perf,"[0.0, 0.0]",[20 40],"[0, 0]",egostistical,0,15,0
+75,param_2_high_perf,"[0.0, 0.0]",[20 60],"[0, 0]",pomdp,0,15,0
+76,param_2_high_perf,"[0.0, 0.0]",[20 60],"[0, 0]",myopic,0,27,12
+77,param_2_high_perf,"[0.0, 0.0]",[20 60],"[0, 0]",egostistical,0,15,0
+78,param_3_high_perf,"[0.0, 0.0]",[20 80],"[0, 0]",pomdp,0,15,0
+79,param_3_high_perf,"[0.0, 0.0]",[20 80],"[0, 0]",myopic,0,25,12
+80,param_3_high_perf,"[0.0, 0.0]",[20 80],"[0, 0]",egostistical,0,15,0
+81,param_4_high_perf,"[0.0, 0.0]",[ 20 100],"[0, 0]",pomdp,0,15,0
+82,param_4_high_perf,"[0.0, 0.0]",[ 20 100],"[0, 0]",myopic,0,25,12
+83,param_4_high_perf,"[0.0, 0.0]",[ 20 100],"[0, 0]",egostistical,0,15,0
+84,param_5_high_perf,"[0.0, 0.0]",[ 20 120],"[0, 0]",pomdp,0,15,0
+85,param_5_high_perf,"[0.0, 0.0]",[ 20 120],"[0, 0]",myopic,0,24,12
+86,param_5_high_perf,"[0.0, 0.0]",[ 20 120],"[0, 0]",egostistical,0,15,0
+87,param_6_high_perf,"[0.0, 0.0]",[40 60],"[0, 0]",pomdp,0,15,0
+88,param_6_high_perf,"[0.0, 0.0]",[40 60],"[0, 0]",myopic,0,26,12
+89,param_6_high_perf,"[0.0, 0.0]",[40 60],"[0, 0]",egostistical,0,15,0
+90,param_7_high_perf,"[0.0, 0.0]",[40 80],"[0, 0]",pomdp,0,15,0
+91,param_7_high_perf,"[0.0, 0.0]",[40 80],"[0, 0]",myopic,0,25,12
+92,param_7_high_perf,"[0.0, 0.0]",[40 80],"[0, 0]",egostistical,0,15,0
+93,param_8_high_perf,"[0.0, 0.0]",[ 40 100],"[0, 0]",pomdp,0,15,0
+94,param_8_high_perf,"[0.0, 0.0]",[ 40 100],"[0, 0]",myopic,0,24,12
+95,param_8_high_perf,"[0.0, 0.0]",[ 40 100],"[0, 0]",egostistical,0,15,0
+96,param_1_high_perf,"[0.25, 0.0]",[20 40],"[-1, -1]",pomdp,0,24,5
+97,param_1_high_perf,"[0.25, 0.0]",[20 40],"[-1, -1]",myopic,0,31,12
+98,param_1_high_perf,"[0.25, 0.0]",[20 40],"[-1, -1]",egostistical,1,15,0
+99,param_2_high_perf,"[0.25, 0.0]",[20 60],"[-1, -1]",pomdp,0,23,4
+100,param_2_high_perf,"[0.25, 0.0]",[20 60],"[-1, -1]",myopic,0,31,12
+101,param_2_high_perf,"[0.25, 0.0]",[20 60],"[-1, -1]",egostistical,1,15,0
+102,param_3_high_perf,"[0.25, 0.0]",[20 80],"[-1, -1]",pomdp,0,23,4
+103,param_3_high_perf,"[0.25, 0.0]",[20 80],"[-1, -1]",myopic,0,33,12
+104,param_3_high_perf,"[0.25, 0.0]",[20 80],"[-1, -1]",egostistical,1,15,0
+105,param_4_high_perf,"[0.25, 0.0]",[ 20 100],"[-1, -1]",pomdp,0,23,4
+106,param_4_high_perf,"[0.25, 0.0]",[ 20 100],"[-1, -1]",myopic,0,32,12
+107,param_4_high_perf,"[0.25, 0.0]",[ 20 100],"[-1, -1]",egostistical,1,15,0
+108,param_5_high_perf,"[0.25, 0.0]",[ 20 120],"[-1, -1]",pomdp,0,23,4
+109,param_5_high_perf,"[0.25, 0.0]",[ 20 120],"[-1, -1]",myopic,0,32,12
+110,param_5_high_perf,"[0.25, 0.0]",[ 20 120],"[-1, -1]",egostistical,1,15,0
+111,param_6_high_perf,"[0.25, 0.0]",[40 60],"[-1, -1]",pomdp,0,24,5
+112,param_6_high_perf,"[0.25, 0.0]",[40 60],"[-1, -1]",myopic,0,34,12
+113,param_6_high_perf,"[0.25, 0.0]",[40 60],"[-1, -1]",egostistical,1,15,0
+114,param_7_high_perf,"[0.25, 0.0]",[40 80],"[-1, -1]",pomdp,0,23,4
+115,param_7_high_perf,"[0.25, 0.0]",[40 80],"[-1, -1]",myopic,0,34,12
+116,param_7_high_perf,"[0.25, 0.0]",[40 80],"[-1, -1]",egostistical,1,15,0
+117,param_8_high_perf,"[0.25, 0.0]",[ 40 100],"[-1, -1]",pomdp,0,23,4
+118,param_8_high_perf,"[0.25, 0.0]",[ 40 100],"[-1, -1]",myopic,0,36,12
+119,param_8_high_perf,"[0.25, 0.0]",[ 40 100],"[-1, -1]",egostistical,1,15,0
+120,param_1_high_perf,"[0.25, 0.0]",[20 40],"[-1, 0]",pomdp,0,24,5
+121,param_1_high_perf,"[0.25, 0.0]",[20 40],"[-1, 0]",myopic,0,27,12
+122,param_1_high_perf,"[0.25, 0.0]",[20 40],"[-1, 0]",egostistical,1,15,0
+123,param_2_high_perf,"[0.25, 0.0]",[20 60],"[-1, 0]",pomdp,0,23,4
+124,param_2_high_perf,"[0.25, 0.0]",[20 60],"[-1, 0]",myopic,0,27,12
+125,param_2_high_perf,"[0.25, 0.0]",[20 60],"[-1, 0]",egostistical,1,15,0
+126,param_3_high_perf,"[0.25, 0.0]",[20 80],"[-1, 0]",pomdp,0,23,4
+127,param_3_high_perf,"[0.25, 0.0]",[20 80],"[-1, 0]",myopic,0,27,12
+128,param_3_high_perf,"[0.25, 0.0]",[20 80],"[-1, 0]",egostistical,1,15,0
+129,param_4_high_perf,"[0.25, 0.0]",[ 20 100],"[-1, 0]",pomdp,0,23,4
+130,param_4_high_perf,"[0.25, 0.0]",[ 20 100],"[-1, 0]",myopic,0,25,12
+131,param_4_high_perf,"[0.25, 0.0]",[ 20 100],"[-1, 0]",egostistical,1,15,0
+132,param_5_high_perf,"[0.25, 0.0]",[ 20 120],"[-1, 0]",pomdp,0,23,4
+133,param_5_high_perf,"[0.25, 0.0]",[ 20 120],"[-1, 0]",myopic,0,24,12
+134,param_5_high_perf,"[0.25, 0.0]",[ 20 120],"[-1, 0]",egostistical,1,15,0
+135,param_6_high_perf,"[0.25, 0.0]",[40 60],"[-1, 0]",pomdp,0,24,5
+136,param_6_high_perf,"[0.25, 0.0]",[40 60],"[-1, 0]",myopic,0,26,12
+137,param_6_high_perf,"[0.25, 0.0]",[40 60],"[-1, 0]",egostistical,1,15,0
+138,param_7_high_perf,"[0.25, 0.0]",[40 80],"[-1, 0]",pomdp,0,23,4
+139,param_7_high_perf,"[0.25, 0.0]",[40 80],"[-1, 0]",myopic,0,30,12
+140,param_7_high_perf,"[0.25, 0.0]",[40 80],"[-1, 0]",egostistical,1,15,0
+141,param_8_high_perf,"[0.25, 0.0]",[ 40 100],"[-1, 0]",pomdp,0,23,4
+142,param_8_high_perf,"[0.25, 0.0]",[ 40 100],"[-1, 0]",myopic,0,30,12
+143,param_8_high_perf,"[0.25, 0.0]",[ 40 100],"[-1, 0]",egostistical,1,15,0
+144,param_1_high_perf,"[0.25, 0.0]",[20 40],"[0, -1]",pomdp,0,20,4
+145,param_1_high_perf,"[0.25, 0.0]",[20 40],"[0, -1]",myopic,0,29,12
+146,param_1_high_perf,"[0.25, 0.0]",[20 40],"[0, -1]",egostistical,1,15,0
+147,param_2_high_perf,"[0.25, 0.0]",[20 60],"[0, -1]",pomdp,0,20,4
+148,param_2_high_perf,"[0.25, 0.0]",[20 60],"[0, -1]",myopic,0,31,12
+149,param_2_high_perf,"[0.25, 0.0]",[20 60],"[0, -1]",egostistical,1,15,0
+150,param_3_high_perf,"[0.25, 0.0]",[20 80],"[0, -1]",pomdp,0,20,4
+151,param_3_high_perf,"[0.25, 0.0]",[20 80],"[0, -1]",myopic,0,31,12
+152,param_3_high_perf,"[0.25, 0.0]",[20 80],"[0, -1]",egostistical,1,15,0
+153,param_4_high_perf,"[0.25, 0.0]",[ 20 100],"[0, -1]",pomdp,0,20,4
+154,param_4_high_perf,"[0.25, 0.0]",[ 20 100],"[0, -1]",myopic,0,33,12
+155,param_4_high_perf,"[0.25, 0.0]",[ 20 100],"[0, -1]",egostistical,1,15,0
+156,param_5_high_perf,"[0.25, 0.0]",[ 20 120],"[0, -1]",pomdp,0,20,4
+157,param_5_high_perf,"[0.25, 0.0]",[ 20 120],"[0, -1]",myopic,0,33,12
+158,param_5_high_perf,"[0.25, 0.0]",[ 20 120],"[0, -1]",egostistical,1,15,0
+159,param_6_high_perf,"[0.25, 0.0]",[40 60],"[0, -1]",pomdp,0,20,4
+160,param_6_high_perf,"[0.25, 0.0]",[40 60],"[0, -1]",myopic,0,29,12
+161,param_6_high_perf,"[0.25, 0.0]",[40 60],"[0, -1]",egostistical,1,15,0
+162,param_7_high_perf,"[0.25, 0.0]",[40 80],"[0, -1]",pomdp,0,20,4
+163,param_7_high_perf,"[0.25, 0.0]",[40 80],"[0, -1]",myopic,0,29,12
+164,param_7_high_perf,"[0.25, 0.0]",[40 80],"[0, -1]",egostistical,1,15,0
+165,param_8_high_perf,"[0.25, 0.0]",[ 40 100],"[0, -1]",pomdp,0,20,4
+166,param_8_high_perf,"[0.25, 0.0]",[ 40 100],"[0, -1]",myopic,0,32,12
+167,param_8_high_perf,"[0.25, 0.0]",[ 40 100],"[0, -1]",egostistical,1,15,0
+168,param_1_high_perf,"[0.25, 0.0]",[20 40],"[0, 0]",pomdp,0,20,4
+169,param_1_high_perf,"[0.25, 0.0]",[20 40],"[0, 0]",myopic,0,26,12
+170,param_1_high_perf,"[0.25, 0.0]",[20 40],"[0, 0]",egostistical,1,15,0
+171,param_2_high_perf,"[0.25, 0.0]",[20 60],"[0, 0]",pomdp,0,20,4
+172,param_2_high_perf,"[0.25, 0.0]",[20 60],"[0, 0]",myopic,0,27,12
+173,param_2_high_perf,"[0.25, 0.0]",[20 60],"[0, 0]",egostistical,1,15,0
+174,param_3_high_perf,"[0.25, 0.0]",[20 80],"[0, 0]",pomdp,0,20,4
+175,param_3_high_perf,"[0.25, 0.0]",[20 80],"[0, 0]",myopic,0,25,12
+176,param_3_high_perf,"[0.25, 0.0]",[20 80],"[0, 0]",egostistical,1,15,0
+177,param_4_high_perf,"[0.25, 0.0]",[ 20 100],"[0, 0]",pomdp,0,20,4
+178,param_4_high_perf,"[0.25, 0.0]",[ 20 100],"[0, 0]",myopic,0,25,12
+179,param_4_high_perf,"[0.25, 0.0]",[ 20 100],"[0, 0]",egostistical,1,15,0
+180,param_5_high_perf,"[0.25, 0.0]",[ 20 120],"[0, 0]",pomdp,0,20,4
+181,param_5_high_perf,"[0.25, 0.0]",[ 20 120],"[0, 0]",myopic,0,24,12
+182,param_5_high_perf,"[0.25, 0.0]",[ 20 120],"[0, 0]",egostistical,1,15,0
+183,param_6_high_perf,"[0.25, 0.0]",[40 60],"[0, 0]",pomdp,0,20,4
+184,param_6_high_perf,"[0.25, 0.0]",[40 60],"[0, 0]",myopic,0,26,12
+185,param_6_high_perf,"[0.25, 0.0]",[40 60],"[0, 0]",egostistical,1,15,0
+186,param_7_high_perf,"[0.25, 0.0]",[40 80],"[0, 0]",pomdp,0,20,4
+187,param_7_high_perf,"[0.25, 0.0]",[40 80],"[0, 0]",myopic,0,25,12
+188,param_7_high_perf,"[0.25, 0.0]",[40 80],"[0, 0]",egostistical,1,15,0
+189,param_8_high_perf,"[0.25, 0.0]",[ 40 100],"[0, 0]",pomdp,0,20,4
+190,param_8_high_perf,"[0.25, 0.0]",[ 40 100],"[0, 0]",myopic,0,24,12
+191,param_8_high_perf,"[0.25, 0.0]",[ 40 100],"[0, 0]",egostistical,1,15,0
+192,param_1_high_perf,"[0.0, 0.25]",[20 40],"[-1, -1]",pomdp,0,23,4
+193,param_1_high_perf,"[0.0, 0.25]",[20 40],"[-1, -1]",myopic,0,31,12
+194,param_1_high_perf,"[0.0, 0.25]",[20 40],"[-1, -1]",egostistical,1,15,0
+195,param_2_high_perf,"[0.0, 0.25]",[20 60],"[-1, -1]",pomdp,0,23,4
+196,param_2_high_perf,"[0.0, 0.25]",[20 60],"[-1, -1]",myopic,0,31,12
+197,param_2_high_perf,"[0.0, 0.25]",[20 60],"[-1, -1]",egostistical,1,15,0
+198,param_3_high_perf,"[0.0, 0.25]",[20 80],"[-1, -1]",pomdp,0,26,4
+199,param_3_high_perf,"[0.0, 0.25]",[20 80],"[-1, -1]",myopic,0,33,12
+200,param_3_high_perf,"[0.0, 0.25]",[20 80],"[-1, -1]",egostistical,1,15,0
+201,param_4_high_perf,"[0.0, 0.25]",[ 20 100],"[-1, -1]",pomdp,0,26,4
+202,param_4_high_perf,"[0.0, 0.25]",[ 20 100],"[-1, -1]",myopic,0,32,12
+203,param_4_high_perf,"[0.0, 0.25]",[ 20 100],"[-1, -1]",egostistical,1,15,0
+204,param_5_high_perf,"[0.0, 0.25]",[ 20 120],"[-1, -1]",pomdp,0,26,4
+205,param_5_high_perf,"[0.0, 0.25]",[ 20 120],"[-1, -1]",myopic,0,32,12
+206,param_5_high_perf,"[0.0, 0.25]",[ 20 120],"[-1, -1]",egostistical,1,15,0
+207,param_6_high_perf,"[0.0, 0.25]",[40 60],"[-1, -1]",pomdp,0,23,4
+208,param_6_high_perf,"[0.0, 0.25]",[40 60],"[-1, -1]",myopic,0,34,12
+209,param_6_high_perf,"[0.0, 0.25]",[40 60],"[-1, -1]",egostistical,1,15,0
+210,param_7_high_perf,"[0.0, 0.25]",[40 80],"[-1, -1]",pomdp,0,26,4
+211,param_7_high_perf,"[0.0, 0.25]",[40 80],"[-1, -1]",myopic,0,34,12
+212,param_7_high_perf,"[0.0, 0.25]",[40 80],"[-1, -1]",egostistical,1,15,0
+213,param_8_high_perf,"[0.0, 0.25]",[ 40 100],"[-1, -1]",pomdp,0,26,4
+214,param_8_high_perf,"[0.0, 0.25]",[ 40 100],"[-1, -1]",myopic,0,36,12
+215,param_8_high_perf,"[0.0, 0.25]",[ 40 100],"[-1, -1]",egostistical,1,15,0
+216,param_1_high_perf,"[0.0, 0.25]",[20 40],"[-1, 0]",pomdp,0,20,4
+217,param_1_high_perf,"[0.0, 0.25]",[20 40],"[-1, 0]",myopic,0,27,12
+218,param_1_high_perf,"[0.0, 0.25]",[20 40],"[-1, 0]",egostistical,1,15,0
+219,param_2_high_perf,"[0.0, 0.25]",[20 60],"[-1, 0]",pomdp,0,20,4
+220,param_2_high_perf,"[0.0, 0.25]",[20 60],"[-1, 0]",myopic,0,27,12
+221,param_2_high_perf,"[0.0, 0.25]",[20 60],"[-1, 0]",egostistical,1,15,0
+222,param_3_high_perf,"[0.0, 0.25]",[20 80],"[-1, 0]",pomdp,0,17,4
+223,param_3_high_perf,"[0.0, 0.25]",[20 80],"[-1, 0]",myopic,0,27,12
+224,param_3_high_perf,"[0.0, 0.25]",[20 80],"[-1, 0]",egostistical,1,15,0
+225,param_4_high_perf,"[0.0, 0.25]",[ 20 100],"[-1, 0]",pomdp,0,16,4
+226,param_4_high_perf,"[0.0, 0.25]",[ 20 100],"[-1, 0]",myopic,0,25,12
+227,param_4_high_perf,"[0.0, 0.25]",[ 20 100],"[-1, 0]",egostistical,1,15,0
+228,param_5_high_perf,"[0.0, 0.25]",[ 20 120],"[-1, 0]",pomdp,0,15,4
+229,param_5_high_perf,"[0.0, 0.25]",[ 20 120],"[-1, 0]",myopic,0,24,12
+230,param_5_high_perf,"[0.0, 0.25]",[ 20 120],"[-1, 0]",egostistical,1,15,0
+231,param_6_high_perf,"[0.0, 0.25]",[40 60],"[-1, 0]",pomdp,0,20,4
+232,param_6_high_perf,"[0.0, 0.25]",[40 60],"[-1, 0]",myopic,0,26,12
+233,param_6_high_perf,"[0.0, 0.25]",[40 60],"[-1, 0]",egostistical,1,15,0
+234,param_7_high_perf,"[0.0, 0.25]",[40 80],"[-1, 0]",pomdp,0,17,4
+235,param_7_high_perf,"[0.0, 0.25]",[40 80],"[-1, 0]",myopic,0,30,12
+236,param_7_high_perf,"[0.0, 0.25]",[40 80],"[-1, 0]",egostistical,1,15,0
+237,param_8_high_perf,"[0.0, 0.25]",[ 40 100],"[-1, 0]",pomdp,0,16,4
+238,param_8_high_perf,"[0.0, 0.25]",[ 40 100],"[-1, 0]",myopic,0,30,12
+239,param_8_high_perf,"[0.0, 0.25]",[ 40 100],"[-1, 0]",egostistical,1,15,0
+240,param_1_high_perf,"[0.0, 0.25]",[20 40],"[0, -1]",pomdp,0,23,4
+241,param_1_high_perf,"[0.0, 0.25]",[20 40],"[0, -1]",myopic,0,29,12
+242,param_1_high_perf,"[0.0, 0.25]",[20 40],"[0, -1]",egostistical,1,15,0
+243,param_2_high_perf,"[0.0, 0.25]",[20 60],"[0, -1]",pomdp,0,23,4
+244,param_2_high_perf,"[0.0, 0.25]",[20 60],"[0, -1]",myopic,0,31,12
+245,param_2_high_perf,"[0.0, 0.25]",[20 60],"[0, -1]",egostistical,1,15,0
+246,param_3_high_perf,"[0.0, 0.25]",[20 80],"[0, -1]",pomdp,0,26,4
+247,param_3_high_perf,"[0.0, 0.25]",[20 80],"[0, -1]",myopic,0,31,12
+248,param_3_high_perf,"[0.0, 0.25]",[20 80],"[0, -1]",egostistical,1,15,0
+249,param_4_high_perf,"[0.0, 0.25]",[ 20 100],"[0, -1]",pomdp,0,26,4
+250,param_4_high_perf,"[0.0, 0.25]",[ 20 100],"[0, -1]",myopic,0,33,12
+251,param_4_high_perf,"[0.0, 0.25]",[ 20 100],"[0, -1]",egostistical,1,15,0
+252,param_5_high_perf,"[0.0, 0.25]",[ 20 120],"[0, -1]",pomdp,0,26,4
+253,param_5_high_perf,"[0.0, 0.25]",[ 20 120],"[0, -1]",myopic,0,33,12
+254,param_5_high_perf,"[0.0, 0.25]",[ 20 120],"[0, -1]",egostistical,1,15,0
+255,param_6_high_perf,"[0.0, 0.25]",[40 60],"[0, -1]",pomdp,0,23,4
+256,param_6_high_perf,"[0.0, 0.25]",[40 60],"[0, -1]",myopic,0,29,12
+257,param_6_high_perf,"[0.0, 0.25]",[40 60],"[0, -1]",egostistical,1,15,0
+258,param_7_high_perf,"[0.0, 0.25]",[40 80],"[0, -1]",pomdp,0,26,4
+259,param_7_high_perf,"[0.0, 0.25]",[40 80],"[0, -1]",myopic,0,29,12
+260,param_7_high_perf,"[0.0, 0.25]",[40 80],"[0, -1]",egostistical,1,15,0
+261,param_8_high_perf,"[0.0, 0.25]",[ 40 100],"[0, -1]",pomdp,0,26,4
+262,param_8_high_perf,"[0.0, 0.25]",[ 40 100],"[0, -1]",myopic,0,32,12
+263,param_8_high_perf,"[0.0, 0.25]",[ 40 100],"[0, -1]",egostistical,1,15,0
+264,param_1_high_perf,"[0.0, 0.25]",[20 40],"[0, 0]",pomdp,0,20,4
+265,param_1_high_perf,"[0.0, 0.25]",[20 40],"[0, 0]",myopic,0,26,12
+266,param_1_high_perf,"[0.0, 0.25]",[20 40],"[0, 0]",egostistical,1,15,0
+267,param_2_high_perf,"[0.0, 0.25]",[20 60],"[0, 0]",pomdp,0,20,4
+268,param_2_high_perf,"[0.0, 0.25]",[20 60],"[0, 0]",myopic,0,27,12
+269,param_2_high_perf,"[0.0, 0.25]",[20 60],"[0, 0]",egostistical,1,15,0
+270,param_3_high_perf,"[0.0, 0.25]",[20 80],"[0, 0]",pomdp,0,17,4
+271,param_3_high_perf,"[0.0, 0.25]",[20 80],"[0, 0]",myopic,0,25,12
+272,param_3_high_perf,"[0.0, 0.25]",[20 80],"[0, 0]",egostistical,1,15,0
+273,param_4_high_perf,"[0.0, 0.25]",[ 20 100],"[0, 0]",pomdp,0,16,4
+274,param_4_high_perf,"[0.0, 0.25]",[ 20 100],"[0, 0]",myopic,0,25,12
+275,param_4_high_perf,"[0.0, 0.25]",[ 20 100],"[0, 0]",egostistical,1,15,0
+276,param_5_high_perf,"[0.0, 0.25]",[ 20 120],"[0, 0]",pomdp,0,15,4
+277,param_5_high_perf,"[0.0, 0.25]",[ 20 120],"[0, 0]",myopic,0,24,12
+278,param_5_high_perf,"[0.0, 0.25]",[ 20 120],"[0, 0]",egostistical,1,15,0
+279,param_6_high_perf,"[0.0, 0.25]",[40 60],"[0, 0]",pomdp,0,20,4
+280,param_6_high_perf,"[0.0, 0.25]",[40 60],"[0, 0]",myopic,0,26,12
+281,param_6_high_perf,"[0.0, 0.25]",[40 60],"[0, 0]",egostistical,1,15,0
+282,param_7_high_perf,"[0.0, 0.25]",[40 80],"[0, 0]",pomdp,0,17,4
+283,param_7_high_perf,"[0.0, 0.25]",[40 80],"[0, 0]",myopic,0,25,12
+284,param_7_high_perf,"[0.0, 0.25]",[40 80],"[0, 0]",egostistical,1,15,0
+285,param_8_high_perf,"[0.0, 0.25]",[ 40 100],"[0, 0]",pomdp,0,16,4
+286,param_8_high_perf,"[0.0, 0.25]",[ 40 100],"[0, 0]",myopic,0,24,12
+287,param_8_high_perf,"[0.0, 0.25]",[ 40 100],"[0, 0]",egostistical,1,15,0
+288,param_1_high_perf,"[0.25, 0.25]",[20 40],"[-1, -1]",pomdp,0,31,9
+289,param_1_high_perf,"[0.25, 0.25]",[20 40],"[-1, -1]",myopic,0,31,12
+290,param_1_high_perf,"[0.25, 0.25]",[20 40],"[-1, -1]",egostistical,2,15,0
+291,param_2_high_perf,"[0.25, 0.25]",[20 60],"[-1, -1]",pomdp,0,31,8
+292,param_2_high_perf,"[0.25, 0.25]",[20 60],"[-1, -1]",myopic,0,31,12
+293,param_2_high_perf,"[0.25, 0.25]",[20 60],"[-1, -1]",egostistical,2,15,0
+294,param_3_high_perf,"[0.25, 0.25]",[20 80],"[-1, -1]",pomdp,0,33,8
+295,param_3_high_perf,"[0.25, 0.25]",[20 80],"[-1, -1]",myopic,0,33,12
+296,param_3_high_perf,"[0.25, 0.25]",[20 80],"[-1, -1]",egostistical,2,15,0
+297,param_4_high_perf,"[0.25, 0.25]",[ 20 100],"[-1, -1]",pomdp,0,32,8
+298,param_4_high_perf,"[0.25, 0.25]",[ 20 100],"[-1, -1]",myopic,0,32,12
+299,param_4_high_perf,"[0.25, 0.25]",[ 20 100],"[-1, -1]",egostistical,2,15,0
+300,param_5_high_perf,"[0.25, 0.25]",[ 20 120],"[-1, -1]",pomdp,0,32,11
+301,param_5_high_perf,"[0.25, 0.25]",[ 20 120],"[-1, -1]",myopic,0,32,12
+302,param_5_high_perf,"[0.25, 0.25]",[ 20 120],"[-1, -1]",egostistical,2,15,0
+303,param_6_high_perf,"[0.25, 0.25]",[40 60],"[-1, -1]",pomdp,0,31,9
+304,param_6_high_perf,"[0.25, 0.25]",[40 60],"[-1, -1]",myopic,0,34,12
+305,param_6_high_perf,"[0.25, 0.25]",[40 60],"[-1, -1]",egostistical,2,15,0
+306,param_7_high_perf,"[0.25, 0.25]",[40 80],"[-1, -1]",pomdp,0,31,8
+307,param_7_high_perf,"[0.25, 0.25]",[40 80],"[-1, -1]",myopic,0,34,12
+308,param_7_high_perf,"[0.25, 0.25]",[40 80],"[-1, -1]",egostistical,2,15,0
+309,param_8_high_perf,"[0.25, 0.25]",[ 40 100],"[-1, -1]",pomdp,0,33,8
+310,param_8_high_perf,"[0.25, 0.25]",[ 40 100],"[-1, -1]",myopic,0,36,12
+311,param_8_high_perf,"[0.25, 0.25]",[ 40 100],"[-1, -1]",egostistical,2,15,0
+312,param_1_high_perf,"[0.25, 0.25]",[20 40],"[-1, 0]",pomdp,0,24,9
+313,param_1_high_perf,"[0.25, 0.25]",[20 40],"[-1, 0]",myopic,0,27,12
+314,param_1_high_perf,"[0.25, 0.25]",[20 40],"[-1, 0]",egostistical,2,15,0
+315,param_2_high_perf,"[0.25, 0.25]",[20 60],"[-1, 0]",pomdp,0,23,8
+316,param_2_high_perf,"[0.25, 0.25]",[20 60],"[-1, 0]",myopic,0,27,12
+317,param_2_high_perf,"[0.25, 0.25]",[20 60],"[-1, 0]",egostistical,2,15,0
+318,param_3_high_perf,"[0.25, 0.25]",[20 80],"[-1, 0]",pomdp,0,23,8
+319,param_3_high_perf,"[0.25, 0.25]",[20 80],"[-1, 0]",myopic,0,27,12
+320,param_3_high_perf,"[0.25, 0.25]",[20 80],"[-1, 0]",egostistical,2,15,0
+321,param_4_high_perf,"[0.25, 0.25]",[ 20 100],"[-1, 0]",pomdp,0,23,8
+322,param_4_high_perf,"[0.25, 0.25]",[ 20 100],"[-1, 0]",myopic,0,25,12
+323,param_4_high_perf,"[0.25, 0.25]",[ 20 100],"[-1, 0]",egostistical,2,15,0
+324,param_5_high_perf,"[0.25, 0.25]",[ 20 120],"[-1, 0]",pomdp,0,23,8
+325,param_5_high_perf,"[0.25, 0.25]",[ 20 120],"[-1, 0]",myopic,0,24,12
+326,param_5_high_perf,"[0.25, 0.25]",[ 20 120],"[-1, 0]",egostistical,2,15,0
+327,param_6_high_perf,"[0.25, 0.25]",[40 60],"[-1, 0]",pomdp,0,24,9
+328,param_6_high_perf,"[0.25, 0.25]",[40 60],"[-1, 0]",myopic,0,26,12
+329,param_6_high_perf,"[0.25, 0.25]",[40 60],"[-1, 0]",egostistical,2,15,0
+330,param_7_high_perf,"[0.25, 0.25]",[40 80],"[-1, 0]",pomdp,0,23,8
+331,param_7_high_perf,"[0.25, 0.25]",[40 80],"[-1, 0]",myopic,0,30,12
+332,param_7_high_perf,"[0.25, 0.25]",[40 80],"[-1, 0]",egostistical,2,15,0
+333,param_8_high_perf,"[0.25, 0.25]",[ 40 100],"[-1, 0]",pomdp,0,23,8
+334,param_8_high_perf,"[0.25, 0.25]",[ 40 100],"[-1, 0]",myopic,0,30,12
+335,param_8_high_perf,"[0.25, 0.25]",[ 40 100],"[-1, 0]",egostistical,2,15,0
+336,param_1_high_perf,"[0.25, 0.25]",[20 40],"[0, -1]",pomdp,0,29,9
+337,param_1_high_perf,"[0.25, 0.25]",[20 40],"[0, -1]",myopic,0,29,12
+338,param_1_high_perf,"[0.25, 0.25]",[20 40],"[0, -1]",egostistical,2,15,0
+339,param_2_high_perf,"[0.25, 0.25]",[20 60],"[0, -1]",pomdp,0,31,8
+340,param_2_high_perf,"[0.25, 0.25]",[20 60],"[0, -1]",myopic,0,31,12
+341,param_2_high_perf,"[0.25, 0.25]",[20 60],"[0, -1]",egostistical,2,15,0
+342,param_3_high_perf,"[0.25, 0.25]",[20 80],"[0, -1]",pomdp,0,29,8
+343,param_3_high_perf,"[0.25, 0.25]",[20 80],"[0, -1]",myopic,0,31,12
+344,param_3_high_perf,"[0.25, 0.25]",[20 80],"[0, -1]",egostistical,2,15,0
+345,param_4_high_perf,"[0.25, 0.25]",[ 20 100],"[0, -1]",pomdp,0,31,8
+346,param_4_high_perf,"[0.25, 0.25]",[ 20 100],"[0, -1]",myopic,0,33,12
+347,param_4_high_perf,"[0.25, 0.25]",[ 20 100],"[0, -1]",egostistical,2,15,0
+348,param_5_high_perf,"[0.25, 0.25]",[ 20 120],"[0, -1]",pomdp,0,31,8
+349,param_5_high_perf,"[0.25, 0.25]",[ 20 120],"[0, -1]",myopic,0,33,12
+350,param_5_high_perf,"[0.25, 0.25]",[ 20 120],"[0, -1]",egostistical,2,15,0
+351,param_6_high_perf,"[0.25, 0.25]",[40 60],"[0, -1]",pomdp,0,29,9
+352,param_6_high_perf,"[0.25, 0.25]",[40 60],"[0, -1]",myopic,0,29,12
+353,param_6_high_perf,"[0.25, 0.25]",[40 60],"[0, -1]",egostistical,2,15,0
+354,param_7_high_perf,"[0.25, 0.25]",[40 80],"[0, -1]",pomdp,0,31,8
+355,param_7_high_perf,"[0.25, 0.25]",[40 80],"[0, -1]",myopic,0,29,12
+356,param_7_high_perf,"[0.25, 0.25]",[40 80],"[0, -1]",egostistical,2,15,0
+357,param_8_high_perf,"[0.25, 0.25]",[ 40 100],"[0, -1]",pomdp,0,29,8
+358,param_8_high_perf,"[0.25, 0.25]",[ 40 100],"[0, -1]",myopic,0,32,12
+359,param_8_high_perf,"[0.25, 0.25]",[ 40 100],"[0, -1]",egostistical,2,15,0
+360,param_1_high_perf,"[0.25, 0.25]",[20 40],"[0, 0]",pomdp,0,24,9
+361,param_1_high_perf,"[0.25, 0.25]",[20 40],"[0, 0]",myopic,0,26,12
+362,param_1_high_perf,"[0.25, 0.25]",[20 40],"[0, 0]",egostistical,2,15,0
+363,param_2_high_perf,"[0.25, 0.25]",[20 60],"[0, 0]",pomdp,0,20,8
+364,param_2_high_perf,"[0.25, 0.25]",[20 60],"[0, 0]",myopic,0,27,12
+365,param_2_high_perf,"[0.25, 0.25]",[20 60],"[0, 0]",egostistical,2,15,0
+366,param_3_high_perf,"[0.25, 0.25]",[20 80],"[0, 0]",pomdp,0,20,8
+367,param_3_high_perf,"[0.25, 0.25]",[20 80],"[0, 0]",myopic,0,25,12
+368,param_3_high_perf,"[0.25, 0.25]",[20 80],"[0, 0]",egostistical,2,15,0
+369,param_4_high_perf,"[0.25, 0.25]",[ 20 100],"[0, 0]",pomdp,0,20,8
+370,param_4_high_perf,"[0.25, 0.25]",[ 20 100],"[0, 0]",myopic,0,25,12
+371,param_4_high_perf,"[0.25, 0.25]",[ 20 100],"[0, 0]",egostistical,2,15,0
+372,param_5_high_perf,"[0.25, 0.25]",[ 20 120],"[0, 0]",pomdp,0,20,8
+373,param_5_high_perf,"[0.25, 0.25]",[ 20 120],"[0, 0]",myopic,0,24,12
+374,param_5_high_perf,"[0.25, 0.25]",[ 20 120],"[0, 0]",egostistical,2,15,0
+375,param_6_high_perf,"[0.25, 0.25]",[40 60],"[0, 0]",pomdp,0,24,9
+376,param_6_high_perf,"[0.25, 0.25]",[40 60],"[0, 0]",myopic,0,26,12
+377,param_6_high_perf,"[0.25, 0.25]",[40 60],"[0, 0]",egostistical,2,15,0
+378,param_7_high_perf,"[0.25, 0.25]",[40 80],"[0, 0]",pomdp,0,20,8
+379,param_7_high_perf,"[0.25, 0.25]",[40 80],"[0, 0]",myopic,0,25,12
+380,param_7_high_perf,"[0.25, 0.25]",[40 80],"[0, 0]",egostistical,2,15,0
+381,param_8_high_perf,"[0.25, 0.25]",[ 40 100],"[0, 0]",pomdp,0,20,8
+382,param_8_high_perf,"[0.25, 0.25]",[ 40 100],"[0, 0]",myopic,0,24,12
+383,param_8_high_perf,"[0.25, 0.25]",[ 40 100],"[0, 0]",egostistical,2,15,0
+384,param_1_high_perf,"[0.5, 0.0]",[20 40],"[-1, -1]",pomdp,0,24,1
+385,param_1_high_perf,"[0.5, 0.0]",[20 40],"[-1, -1]",myopic,0,31,12
+386,param_1_high_perf,"[0.5, 0.0]",[20 40],"[-1, -1]",egostistical,0,23,0
+387,param_2_high_perf,"[0.5, 0.0]",[20 60],"[-1, -1]",pomdp,0,23,0
+388,param_2_high_perf,"[0.5, 0.0]",[20 60],"[-1, -1]",myopic,0,31,12
+389,param_2_high_perf,"[0.5, 0.0]",[20 60],"[-1, -1]",egostistical,0,23,0
+390,param_3_high_perf,"[0.5, 0.0]",[20 80],"[-1, -1]",pomdp,0,23,0
+391,param_3_high_perf,"[0.5, 0.0]",[20 80],"[-1, -1]",myopic,0,33,12
+392,param_3_high_perf,"[0.5, 0.0]",[20 80],"[-1, -1]",egostistical,0,23,0
+393,param_4_high_perf,"[0.5, 0.0]",[ 20 100],"[-1, -1]",pomdp,0,23,0
+394,param_4_high_perf,"[0.5, 0.0]",[ 20 100],"[-1, -1]",myopic,0,32,12
+395,param_4_high_perf,"[0.5, 0.0]",[ 20 100],"[-1, -1]",egostistical,0,23,0
+396,param_5_high_perf,"[0.5, 0.0]",[ 20 120],"[-1, -1]",pomdp,0,23,0
+397,param_5_high_perf,"[0.5, 0.0]",[ 20 120],"[-1, -1]",myopic,0,32,12
+398,param_5_high_perf,"[0.5, 0.0]",[ 20 120],"[-1, -1]",egostistical,0,23,0
+399,param_6_high_perf,"[0.5, 0.0]",[40 60],"[-1, -1]",pomdp,0,27,5
+400,param_6_high_perf,"[0.5, 0.0]",[40 60],"[-1, -1]",myopic,0,34,12
+401,param_6_high_perf,"[0.5, 0.0]",[40 60],"[-1, -1]",egostistical,0,26,0
+402,param_7_high_perf,"[0.5, 0.0]",[40 80],"[-1, -1]",pomdp,0,26,0
+403,param_7_high_perf,"[0.5, 0.0]",[40 80],"[-1, -1]",myopic,0,34,12
+404,param_7_high_perf,"[0.5, 0.0]",[40 80],"[-1, -1]",egostistical,0,26,0
+405,param_8_high_perf,"[0.5, 0.0]",[ 40 100],"[-1, -1]",pomdp,0,26,4
+406,param_8_high_perf,"[0.5, 0.0]",[ 40 100],"[-1, -1]",myopic,0,36,12
+407,param_8_high_perf,"[0.5, 0.0]",[ 40 100],"[-1, -1]",egostistical,0,26,0
+408,param_1_high_perf,"[0.5, 0.0]",[20 40],"[-1, 0]",pomdp,0,24,1
+409,param_1_high_perf,"[0.5, 0.0]",[20 40],"[-1, 0]",myopic,0,27,12
+410,param_1_high_perf,"[0.5, 0.0]",[20 40],"[-1, 0]",egostistical,0,23,0
+411,param_2_high_perf,"[0.5, 0.0]",[20 60],"[-1, 0]",pomdp,0,23,0
+412,param_2_high_perf,"[0.5, 0.0]",[20 60],"[-1, 0]",myopic,0,27,12
+413,param_2_high_perf,"[0.5, 0.0]",[20 60],"[-1, 0]",egostistical,0,23,0
+414,param_3_high_perf,"[0.5, 0.0]",[20 80],"[-1, 0]",pomdp,0,23,0
+415,param_3_high_perf,"[0.5, 0.0]",[20 80],"[-1, 0]",myopic,0,27,12
+416,param_3_high_perf,"[0.5, 0.0]",[20 80],"[-1, 0]",egostistical,0,23,0
+417,param_4_high_perf,"[0.5, 0.0]",[ 20 100],"[-1, 0]",pomdp,0,23,0
+418,param_4_high_perf,"[0.5, 0.0]",[ 20 100],"[-1, 0]",myopic,0,25,12
+419,param_4_high_perf,"[0.5, 0.0]",[ 20 100],"[-1, 0]",egostistical,0,23,0
+420,param_5_high_perf,"[0.5, 0.0]",[ 20 120],"[-1, 0]",pomdp,0,23,0
+421,param_5_high_perf,"[0.5, 0.0]",[ 20 120],"[-1, 0]",myopic,0,24,12
+422,param_5_high_perf,"[0.5, 0.0]",[ 20 120],"[-1, 0]",egostistical,0,23,0
+423,param_6_high_perf,"[0.5, 0.0]",[40 60],"[-1, 0]",pomdp,0,27,5
+424,param_6_high_perf,"[0.5, 0.0]",[40 60],"[-1, 0]",myopic,0,26,12
+425,param_6_high_perf,"[0.5, 0.0]",[40 60],"[-1, 0]",egostistical,0,26,0
+426,param_7_high_perf,"[0.5, 0.0]",[40 80],"[-1, 0]",pomdp,0,26,0
+427,param_7_high_perf,"[0.5, 0.0]",[40 80],"[-1, 0]",myopic,0,30,12
+428,param_7_high_perf,"[0.5, 0.0]",[40 80],"[-1, 0]",egostistical,0,26,0
+429,param_8_high_perf,"[0.5, 0.0]",[ 40 100],"[-1, 0]",pomdp,0,26,4
+430,param_8_high_perf,"[0.5, 0.0]",[ 40 100],"[-1, 0]",myopic,0,30,12
+431,param_8_high_perf,"[0.5, 0.0]",[ 40 100],"[-1, 0]",egostistical,0,26,0
+432,param_1_high_perf,"[0.5, 0.0]",[20 40],"[0, -1]",pomdp,0,24,1
+433,param_1_high_perf,"[0.5, 0.0]",[20 40],"[0, -1]",myopic,0,29,12
+434,param_1_high_perf,"[0.5, 0.0]",[20 40],"[0, -1]",egostistical,0,23,0
+435,param_2_high_perf,"[0.5, 0.0]",[20 60],"[0, -1]",pomdp,0,23,0
+436,param_2_high_perf,"[0.5, 0.0]",[20 60],"[0, -1]",myopic,0,31,12
+437,param_2_high_perf,"[0.5, 0.0]",[20 60],"[0, -1]",egostistical,0,23,0
+438,param_3_high_perf,"[0.5, 0.0]",[20 80],"[0, -1]",pomdp,0,23,0
+439,param_3_high_perf,"[0.5, 0.0]",[20 80],"[0, -1]",myopic,0,31,12
+440,param_3_high_perf,"[0.5, 0.0]",[20 80],"[0, -1]",egostistical,0,23,0
+441,param_4_high_perf,"[0.5, 0.0]",[ 20 100],"[0, -1]",pomdp,0,23,0
+442,param_4_high_perf,"[0.5, 0.0]",[ 20 100],"[0, -1]",myopic,0,33,12
+443,param_4_high_perf,"[0.5, 0.0]",[ 20 100],"[0, -1]",egostistical,0,23,0
+444,param_5_high_perf,"[0.5, 0.0]",[ 20 120],"[0, -1]",pomdp,0,23,0
+445,param_5_high_perf,"[0.5, 0.0]",[ 20 120],"[0, -1]",myopic,0,33,12
+446,param_5_high_perf,"[0.5, 0.0]",[ 20 120],"[0, -1]",egostistical,0,23,0
+447,param_6_high_perf,"[0.5, 0.0]",[40 60],"[0, -1]",pomdp,0,22,4
+448,param_6_high_perf,"[0.5, 0.0]",[40 60],"[0, -1]",myopic,0,29,12
+449,param_6_high_perf,"[0.5, 0.0]",[40 60],"[0, -1]",egostistical,0,26,0
+450,param_7_high_perf,"[0.5, 0.0]",[40 80],"[0, -1]",pomdp,0,26,0
+451,param_7_high_perf,"[0.5, 0.0]",[40 80],"[0, -1]",myopic,0,29,12
+452,param_7_high_perf,"[0.5, 0.0]",[40 80],"[0, -1]",egostistical,0,26,0
+453,param_8_high_perf,"[0.5, 0.0]",[ 40 100],"[0, -1]",pomdp,0,22,4
+454,param_8_high_perf,"[0.5, 0.0]",[ 40 100],"[0, -1]",myopic,0,32,12
+455,param_8_high_perf,"[0.5, 0.0]",[ 40 100],"[0, -1]",egostistical,0,26,0
+456,param_1_high_perf,"[0.5, 0.0]",[20 40],"[0, 0]",pomdp,0,24,1
+457,param_1_high_perf,"[0.5, 0.0]",[20 40],"[0, 0]",myopic,0,26,12
+458,param_1_high_perf,"[0.5, 0.0]",[20 40],"[0, 0]",egostistical,0,23,0
+459,param_2_high_perf,"[0.5, 0.0]",[20 60],"[0, 0]",pomdp,0,23,0
+460,param_2_high_perf,"[0.5, 0.0]",[20 60],"[0, 0]",myopic,0,27,12
+461,param_2_high_perf,"[0.5, 0.0]",[20 60],"[0, 0]",egostistical,0,23,0
+462,param_3_high_perf,"[0.5, 0.0]",[20 80],"[0, 0]",pomdp,0,23,0
+463,param_3_high_perf,"[0.5, 0.0]",[20 80],"[0, 0]",myopic,0,25,12
+464,param_3_high_perf,"[0.5, 0.0]",[20 80],"[0, 0]",egostistical,0,23,0
+465,param_4_high_perf,"[0.5, 0.0]",[ 20 100],"[0, 0]",pomdp,0,23,0
+466,param_4_high_perf,"[0.5, 0.0]",[ 20 100],"[0, 0]",myopic,0,25,12
+467,param_4_high_perf,"[0.5, 0.0]",[ 20 100],"[0, 0]",egostistical,0,23,0
+468,param_5_high_perf,"[0.5, 0.0]",[ 20 120],"[0, 0]",pomdp,0,23,0
+469,param_5_high_perf,"[0.5, 0.0]",[ 20 120],"[0, 0]",myopic,0,24,12
+470,param_5_high_perf,"[0.5, 0.0]",[ 20 120],"[0, 0]",egostistical,0,23,0
+471,param_6_high_perf,"[0.5, 0.0]",[40 60],"[0, 0]",pomdp,0,22,4
+472,param_6_high_perf,"[0.5, 0.0]",[40 60],"[0, 0]",myopic,0,26,12
+473,param_6_high_perf,"[0.5, 0.0]",[40 60],"[0, 0]",egostistical,0,26,0
+474,param_7_high_perf,"[0.5, 0.0]",[40 80],"[0, 0]",pomdp,0,26,0
+475,param_7_high_perf,"[0.5, 0.0]",[40 80],"[0, 0]",myopic,0,25,12
+476,param_7_high_perf,"[0.5, 0.0]",[40 80],"[0, 0]",egostistical,0,26,0
+477,param_8_high_perf,"[0.5, 0.0]",[ 40 100],"[0, 0]",pomdp,0,22,4
+478,param_8_high_perf,"[0.5, 0.0]",[ 40 100],"[0, 0]",myopic,0,24,12
+479,param_8_high_perf,"[0.5, 0.0]",[ 40 100],"[0, 0]",egostistical,0,26,0
+480,param_1_high_perf,"[0.5, 0.25]",[20 40],"[-1, -1]",pomdp,0,31,4
+481,param_1_high_perf,"[0.5, 0.25]",[20 40],"[-1, -1]",myopic,0,31,12
+482,param_1_high_perf,"[0.5, 0.25]",[20 40],"[-1, -1]",egostistical,1,23,0
+483,param_2_high_perf,"[0.5, 0.25]",[20 60],"[-1, -1]",pomdp,0,31,4
+484,param_2_high_perf,"[0.5, 0.25]",[20 60],"[-1, -1]",myopic,0,31,12
+485,param_2_high_perf,"[0.5, 0.25]",[20 60],"[-1, -1]",egostistical,1,23,0
+486,param_3_high_perf,"[0.5, 0.25]",[20 80],"[-1, -1]",pomdp,0,33,4
+487,param_3_high_perf,"[0.5, 0.25]",[20 80],"[-1, -1]",myopic,0,33,12
+488,param_3_high_perf,"[0.5, 0.25]",[20 80],"[-1, -1]",egostistical,1,23,0
+489,param_4_high_perf,"[0.5, 0.25]",[ 20 100],"[-1, -1]",pomdp,0,32,4
+490,param_4_high_perf,"[0.5, 0.25]",[ 20 100],"[-1, -1]",myopic,0,32,12
+491,param_4_high_perf,"[0.5, 0.25]",[ 20 100],"[-1, -1]",egostistical,1,23,0
+492,param_5_high_perf,"[0.5, 0.25]",[ 20 120],"[-1, -1]",pomdp,0,32,7
+493,param_5_high_perf,"[0.5, 0.25]",[ 20 120],"[-1, -1]",myopic,0,32,12
+494,param_5_high_perf,"[0.5, 0.25]",[ 20 120],"[-1, -1]",egostistical,1,23,0
+495,param_6_high_perf,"[0.5, 0.25]",[40 60],"[-1, -1]",pomdp,0,34,4
+496,param_6_high_perf,"[0.5, 0.25]",[40 60],"[-1, -1]",myopic,0,34,12
+497,param_6_high_perf,"[0.5, 0.25]",[40 60],"[-1, -1]",egostistical,1,26,0
+498,param_7_high_perf,"[0.5, 0.25]",[40 80],"[-1, -1]",pomdp,0,34,4
+499,param_7_high_perf,"[0.5, 0.25]",[40 80],"[-1, -1]",myopic,0,34,12
+500,param_7_high_perf,"[0.5, 0.25]",[40 80],"[-1, -1]",egostistical,1,26,0
+501,param_8_high_perf,"[0.5, 0.25]",[ 40 100],"[-1, -1]",pomdp,0,36,7
+502,param_8_high_perf,"[0.5, 0.25]",[ 40 100],"[-1, -1]",myopic,0,36,12
+503,param_8_high_perf,"[0.5, 0.25]",[ 40 100],"[-1, -1]",egostistical,1,26,0
+504,param_1_high_perf,"[0.5, 0.25]",[20 40],"[-1, 0]",pomdp,0,24,4
+505,param_1_high_perf,"[0.5, 0.25]",[20 40],"[-1, 0]",myopic,0,27,12
+506,param_1_high_perf,"[0.5, 0.25]",[20 40],"[-1, 0]",egostistical,1,23,0
+507,param_2_high_perf,"[0.5, 0.25]",[20 60],"[-1, 0]",pomdp,0,23,4
+508,param_2_high_perf,"[0.5, 0.25]",[20 60],"[-1, 0]",myopic,0,27,12
+509,param_2_high_perf,"[0.5, 0.25]",[20 60],"[-1, 0]",egostistical,1,23,0
+510,param_3_high_perf,"[0.5, 0.25]",[20 80],"[-1, 0]",pomdp,0,23,4
+511,param_3_high_perf,"[0.5, 0.25]",[20 80],"[-1, 0]",myopic,0,27,12
+512,param_3_high_perf,"[0.5, 0.25]",[20 80],"[-1, 0]",egostistical,1,23,0
+513,param_4_high_perf,"[0.5, 0.25]",[ 20 100],"[-1, 0]",pomdp,0,23,4
+514,param_4_high_perf,"[0.5, 0.25]",[ 20 100],"[-1, 0]",myopic,0,25,12
+515,param_4_high_perf,"[0.5, 0.25]",[ 20 100],"[-1, 0]",egostistical,1,23,0
+516,param_5_high_perf,"[0.5, 0.25]",[ 20 120],"[-1, 0]",pomdp,0,23,4
+517,param_5_high_perf,"[0.5, 0.25]",[ 20 120],"[-1, 0]",myopic,0,24,12
+518,param_5_high_perf,"[0.5, 0.25]",[ 20 120],"[-1, 0]",egostistical,1,23,0
+519,param_6_high_perf,"[0.5, 0.25]",[40 60],"[-1, 0]",pomdp,0,27,5
+520,param_6_high_perf,"[0.5, 0.25]",[40 60],"[-1, 0]",myopic,0,26,12
+521,param_6_high_perf,"[0.5, 0.25]",[40 60],"[-1, 0]",egostistical,1,26,0
+522,param_7_high_perf,"[0.5, 0.25]",[40 80],"[-1, 0]",pomdp,0,26,4
+523,param_7_high_perf,"[0.5, 0.25]",[40 80],"[-1, 0]",myopic,0,30,12
+524,param_7_high_perf,"[0.5, 0.25]",[40 80],"[-1, 0]",egostistical,1,26,0
+525,param_8_high_perf,"[0.5, 0.25]",[ 40 100],"[-1, 0]",pomdp,0,26,4
+526,param_8_high_perf,"[0.5, 0.25]",[ 40 100],"[-1, 0]",myopic,0,30,12
+527,param_8_high_perf,"[0.5, 0.25]",[ 40 100],"[-1, 0]",egostistical,1,26,0
+528,param_1_high_perf,"[0.5, 0.25]",[20 40],"[0, -1]",pomdp,0,31,4
+529,param_1_high_perf,"[0.5, 0.25]",[20 40],"[0, -1]",myopic,0,29,12
+530,param_1_high_perf,"[0.5, 0.25]",[20 40],"[0, -1]",egostistical,1,23,0
+531,param_2_high_perf,"[0.5, 0.25]",[20 60],"[0, -1]",pomdp,0,31,4
+532,param_2_high_perf,"[0.5, 0.25]",[20 60],"[0, -1]",myopic,0,31,12
+533,param_2_high_perf,"[0.5, 0.25]",[20 60],"[0, -1]",egostistical,1,23,0
+534,param_3_high_perf,"[0.5, 0.25]",[20 80],"[0, -1]",pomdp,0,33,4
+535,param_3_high_perf,"[0.5, 0.25]",[20 80],"[0, -1]",myopic,0,31,12
+536,param_3_high_perf,"[0.5, 0.25]",[20 80],"[0, -1]",egostistical,1,23,0
+537,param_4_high_perf,"[0.5, 0.25]",[ 20 100],"[0, -1]",pomdp,0,32,4
+538,param_4_high_perf,"[0.5, 0.25]",[ 20 100],"[0, -1]",myopic,0,33,12
+539,param_4_high_perf,"[0.5, 0.25]",[ 20 100],"[0, -1]",egostistical,1,23,0
+540,param_5_high_perf,"[0.5, 0.25]",[ 20 120],"[0, -1]",pomdp,0,32,7
+541,param_5_high_perf,"[0.5, 0.25]",[ 20 120],"[0, -1]",myopic,0,33,12
+542,param_5_high_perf,"[0.5, 0.25]",[ 20 120],"[0, -1]",egostistical,1,23,0
+543,param_6_high_perf,"[0.5, 0.25]",[40 60],"[0, -1]",pomdp,0,34,4
+544,param_6_high_perf,"[0.5, 0.25]",[40 60],"[0, -1]",myopic,0,29,12
+545,param_6_high_perf,"[0.5, 0.25]",[40 60],"[0, -1]",egostistical,1,26,0
+546,param_7_high_perf,"[0.5, 0.25]",[40 80],"[0, -1]",pomdp,0,34,4
+547,param_7_high_perf,"[0.5, 0.25]",[40 80],"[0, -1]",myopic,0,29,12
+548,param_7_high_perf,"[0.5, 0.25]",[40 80],"[0, -1]",egostistical,1,26,0
+549,param_8_high_perf,"[0.5, 0.25]",[ 40 100],"[0, -1]",pomdp,0,36,7
+550,param_8_high_perf,"[0.5, 0.25]",[ 40 100],"[0, -1]",myopic,0,32,12
+551,param_8_high_perf,"[0.5, 0.25]",[ 40 100],"[0, -1]",egostistical,1,26,0
+552,param_1_high_perf,"[0.5, 0.25]",[20 40],"[0, 0]",pomdp,0,24,4
+553,param_1_high_perf,"[0.5, 0.25]",[20 40],"[0, 0]",myopic,0,26,12
+554,param_1_high_perf,"[0.5, 0.25]",[20 40],"[0, 0]",egostistical,1,23,0
+555,param_2_high_perf,"[0.5, 0.25]",[20 60],"[0, 0]",pomdp,0,23,4
+556,param_2_high_perf,"[0.5, 0.25]",[20 60],"[0, 0]",myopic,0,27,12
+557,param_2_high_perf,"[0.5, 0.25]",[20 60],"[0, 0]",egostistical,1,23,0
+558,param_3_high_perf,"[0.5, 0.25]",[20 80],"[0, 0]",pomdp,0,23,4
+559,param_3_high_perf,"[0.5, 0.25]",[20 80],"[0, 0]",myopic,0,25,12
+560,param_3_high_perf,"[0.5, 0.25]",[20 80],"[0, 0]",egostistical,1,23,0
+561,param_4_high_perf,"[0.5, 0.25]",[ 20 100],"[0, 0]",pomdp,0,23,4
+562,param_4_high_perf,"[0.5, 0.25]",[ 20 100],"[0, 0]",myopic,0,25,12
+563,param_4_high_perf,"[0.5, 0.25]",[ 20 100],"[0, 0]",egostistical,1,23,0
+564,param_5_high_perf,"[0.5, 0.25]",[ 20 120],"[0, 0]",pomdp,0,23,4
+565,param_5_high_perf,"[0.5, 0.25]",[ 20 120],"[0, 0]",myopic,0,24,12
+566,param_5_high_perf,"[0.5, 0.25]",[ 20 120],"[0, 0]",egostistical,1,23,0
+567,param_6_high_perf,"[0.5, 0.25]",[40 60],"[0, 0]",pomdp,0,27,5
+568,param_6_high_perf,"[0.5, 0.25]",[40 60],"[0, 0]",myopic,0,26,12
+569,param_6_high_perf,"[0.5, 0.25]",[40 60],"[0, 0]",egostistical,1,26,0
+570,param_7_high_perf,"[0.5, 0.25]",[40 80],"[0, 0]",pomdp,0,26,4
+571,param_7_high_perf,"[0.5, 0.25]",[40 80],"[0, 0]",myopic,0,25,12
+572,param_7_high_perf,"[0.5, 0.25]",[40 80],"[0, 0]",egostistical,1,26,0
+573,param_8_high_perf,"[0.5, 0.25]",[ 40 100],"[0, 0]",pomdp,0,26,4
+574,param_8_high_perf,"[0.5, 0.25]",[ 40 100],"[0, 0]",myopic,0,24,12
+575,param_8_high_perf,"[0.5, 0.25]",[ 40 100],"[0, 0]",egostistical,1,26,0
+576,param_1_high_perf,"[0.75, 0.0]",[20 40],"[-1, -1]",pomdp,0,24,1
+577,param_1_high_perf,"[0.75, 0.0]",[20 40],"[-1, -1]",myopic,0,31,12
+578,param_1_high_perf,"[0.75, 0.0]",[20 40],"[-1, -1]",egostistical,0,23,0
+579,param_2_high_perf,"[0.75, 0.0]",[20 60],"[-1, -1]",pomdp,0,23,0
+580,param_2_high_perf,"[0.75, 0.0]",[20 60],"[-1, -1]",myopic,0,31,12
+581,param_2_high_perf,"[0.75, 0.0]",[20 60],"[-1, -1]",egostistical,0,23,0
+582,param_3_high_perf,"[0.75, 0.0]",[20 80],"[-1, -1]",pomdp,0,23,0
+583,param_3_high_perf,"[0.75, 0.0]",[20 80],"[-1, -1]",myopic,0,33,12
+584,param_3_high_perf,"[0.75, 0.0]",[20 80],"[-1, -1]",egostistical,0,23,0
+585,param_4_high_perf,"[0.75, 0.0]",[ 20 100],"[-1, -1]",pomdp,0,23,0
+586,param_4_high_perf,"[0.75, 0.0]",[ 20 100],"[-1, -1]",myopic,0,32,12
+587,param_4_high_perf,"[0.75, 0.0]",[ 20 100],"[-1, -1]",egostistical,0,23,0
+588,param_5_high_perf,"[0.75, 0.0]",[ 20 120],"[-1, -1]",pomdp,0,23,0
+589,param_5_high_perf,"[0.75, 0.0]",[ 20 120],"[-1, -1]",myopic,0,32,12
+590,param_5_high_perf,"[0.75, 0.0]",[ 20 120],"[-1, -1]",egostistical,0,23,0
+591,param_6_high_perf,"[0.75, 0.0]",[40 60],"[-1, -1]",pomdp,0,27,5
+592,param_6_high_perf,"[0.75, 0.0]",[40 60],"[-1, -1]",myopic,0,34,12
+593,param_6_high_perf,"[0.75, 0.0]",[40 60],"[-1, -1]",egostistical,0,26,0
+594,param_7_high_perf,"[0.75, 0.0]",[40 80],"[-1, -1]",pomdp,0,26,0
+595,param_7_high_perf,"[0.75, 0.0]",[40 80],"[-1, -1]",myopic,0,34,12
+596,param_7_high_perf,"[0.75, 0.0]",[40 80],"[-1, -1]",egostistical,0,26,0
+597,param_8_high_perf,"[0.75, 0.0]",[ 40 100],"[-1, -1]",pomdp,0,26,4
+598,param_8_high_perf,"[0.75, 0.0]",[ 40 100],"[-1, -1]",myopic,0,36,12
+599,param_8_high_perf,"[0.75, 0.0]",[ 40 100],"[-1, -1]",egostistical,0,26,0
+600,param_1_high_perf,"[0.75, 0.0]",[20 40],"[-1, 0]",pomdp,0,24,1
+601,param_1_high_perf,"[0.75, 0.0]",[20 40],"[-1, 0]",myopic,0,27,12
+602,param_1_high_perf,"[0.75, 0.0]",[20 40],"[-1, 0]",egostistical,0,23,0
+603,param_2_high_perf,"[0.75, 0.0]",[20 60],"[-1, 0]",pomdp,0,23,0
+604,param_2_high_perf,"[0.75, 0.0]",[20 60],"[-1, 0]",myopic,0,27,12
+605,param_2_high_perf,"[0.75, 0.0]",[20 60],"[-1, 0]",egostistical,0,23,0
+606,param_3_high_perf,"[0.75, 0.0]",[20 80],"[-1, 0]",pomdp,0,23,0
+607,param_3_high_perf,"[0.75, 0.0]",[20 80],"[-1, 0]",myopic,0,27,12
+608,param_3_high_perf,"[0.75, 0.0]",[20 80],"[-1, 0]",egostistical,0,23,0
+609,param_4_high_perf,"[0.75, 0.0]",[ 20 100],"[-1, 0]",pomdp,0,23,0
+610,param_4_high_perf,"[0.75, 0.0]",[ 20 100],"[-1, 0]",myopic,0,25,12
+611,param_4_high_perf,"[0.75, 0.0]",[ 20 100],"[-1, 0]",egostistical,0,23,0
+612,param_5_high_perf,"[0.75, 0.0]",[ 20 120],"[-1, 0]",pomdp,0,23,0
+613,param_5_high_perf,"[0.75, 0.0]",[ 20 120],"[-1, 0]",myopic,0,24,12
+614,param_5_high_perf,"[0.75, 0.0]",[ 20 120],"[-1, 0]",egostistical,0,23,0
+615,param_6_high_perf,"[0.75, 0.0]",[40 60],"[-1, 0]",pomdp,0,27,5
+616,param_6_high_perf,"[0.75, 0.0]",[40 60],"[-1, 0]",myopic,0,26,12
+617,param_6_high_perf,"[0.75, 0.0]",[40 60],"[-1, 0]",egostistical,0,26,0
+618,param_7_high_perf,"[0.75, 0.0]",[40 80],"[-1, 0]",pomdp,0,26,0
+619,param_7_high_perf,"[0.75, 0.0]",[40 80],"[-1, 0]",myopic,0,30,12
+620,param_7_high_perf,"[0.75, 0.0]",[40 80],"[-1, 0]",egostistical,0,26,0
+621,param_8_high_perf,"[0.75, 0.0]",[ 40 100],"[-1, 0]",pomdp,0,26,4
+622,param_8_high_perf,"[0.75, 0.0]",[ 40 100],"[-1, 0]",myopic,0,30,12
+623,param_8_high_perf,"[0.75, 0.0]",[ 40 100],"[-1, 0]",egostistical,0,26,0
+624,param_1_high_perf,"[0.75, 0.0]",[20 40],"[0, -1]",pomdp,0,24,1
+625,param_1_high_perf,"[0.75, 0.0]",[20 40],"[0, -1]",myopic,0,29,12
+626,param_1_high_perf,"[0.75, 0.0]",[20 40],"[0, -1]",egostistical,0,23,0
+627,param_2_high_perf,"[0.75, 0.0]",[20 60],"[0, -1]",pomdp,0,23,0
+628,param_2_high_perf,"[0.75, 0.0]",[20 60],"[0, -1]",myopic,0,31,12
+629,param_2_high_perf,"[0.75, 0.0]",[20 60],"[0, -1]",egostistical,0,23,0
+630,param_3_high_perf,"[0.75, 0.0]",[20 80],"[0, -1]",pomdp,0,23,0
+631,param_3_high_perf,"[0.75, 0.0]",[20 80],"[0, -1]",myopic,0,31,12
+632,param_3_high_perf,"[0.75, 0.0]",[20 80],"[0, -1]",egostistical,0,23,0
+633,param_4_high_perf,"[0.75, 0.0]",[ 20 100],"[0, -1]",pomdp,0,23,0
+634,param_4_high_perf,"[0.75, 0.0]",[ 20 100],"[0, -1]",myopic,0,33,12
+635,param_4_high_perf,"[0.75, 0.0]",[ 20 100],"[0, -1]",egostistical,0,23,0
+636,param_5_high_perf,"[0.75, 0.0]",[ 20 120],"[0, -1]",pomdp,0,23,0
+637,param_5_high_perf,"[0.75, 0.0]",[ 20 120],"[0, -1]",myopic,0,33,12
+638,param_5_high_perf,"[0.75, 0.0]",[ 20 120],"[0, -1]",egostistical,0,23,0
+639,param_6_high_perf,"[0.75, 0.0]",[40 60],"[0, -1]",pomdp,0,22,4
+640,param_6_high_perf,"[0.75, 0.0]",[40 60],"[0, -1]",myopic,0,29,12
+641,param_6_high_perf,"[0.75, 0.0]",[40 60],"[0, -1]",egostistical,0,26,0
+642,param_7_high_perf,"[0.75, 0.0]",[40 80],"[0, -1]",pomdp,0,26,0
+643,param_7_high_perf,"[0.75, 0.0]",[40 80],"[0, -1]",myopic,0,29,12
+644,param_7_high_perf,"[0.75, 0.0]",[40 80],"[0, -1]",egostistical,0,26,0
+645,param_8_high_perf,"[0.75, 0.0]",[ 40 100],"[0, -1]",pomdp,0,22,4
+646,param_8_high_perf,"[0.75, 0.0]",[ 40 100],"[0, -1]",myopic,0,32,12
+647,param_8_high_perf,"[0.75, 0.0]",[ 40 100],"[0, -1]",egostistical,0,26,0
+648,param_1_high_perf,"[0.75, 0.0]",[20 40],"[0, 0]",pomdp,0,24,1
+649,param_1_high_perf,"[0.75, 0.0]",[20 40],"[0, 0]",myopic,0,26,12
+650,param_1_high_perf,"[0.75, 0.0]",[20 40],"[0, 0]",egostistical,0,23,0
+651,param_2_high_perf,"[0.75, 0.0]",[20 60],"[0, 0]",pomdp,0,23,0
+652,param_2_high_perf,"[0.75, 0.0]",[20 60],"[0, 0]",myopic,0,27,12
+653,param_2_high_perf,"[0.75, 0.0]",[20 60],"[0, 0]",egostistical,0,23,0
+654,param_3_high_perf,"[0.75, 0.0]",[20 80],"[0, 0]",pomdp,0,23,0
+655,param_3_high_perf,"[0.75, 0.0]",[20 80],"[0, 0]",myopic,0,25,12
+656,param_3_high_perf,"[0.75, 0.0]",[20 80],"[0, 0]",egostistical,0,23,0
+657,param_4_high_perf,"[0.75, 0.0]",[ 20 100],"[0, 0]",pomdp,0,23,0
+658,param_4_high_perf,"[0.75, 0.0]",[ 20 100],"[0, 0]",myopic,0,25,12
+659,param_4_high_perf,"[0.75, 0.0]",[ 20 100],"[0, 0]",egostistical,0,23,0
+660,param_5_high_perf,"[0.75, 0.0]",[ 20 120],"[0, 0]",pomdp,0,23,0
+661,param_5_high_perf,"[0.75, 0.0]",[ 20 120],"[0, 0]",myopic,0,24,12
+662,param_5_high_perf,"[0.75, 0.0]",[ 20 120],"[0, 0]",egostistical,0,23,0
+663,param_6_high_perf,"[0.75, 0.0]",[40 60],"[0, 0]",pomdp,0,22,4
+664,param_6_high_perf,"[0.75, 0.0]",[40 60],"[0, 0]",myopic,0,26,12
+665,param_6_high_perf,"[0.75, 0.0]",[40 60],"[0, 0]",egostistical,0,26,0
+666,param_7_high_perf,"[0.75, 0.0]",[40 80],"[0, 0]",pomdp,0,26,0
+667,param_7_high_perf,"[0.75, 0.0]",[40 80],"[0, 0]",myopic,0,25,12
+668,param_7_high_perf,"[0.75, 0.0]",[40 80],"[0, 0]",egostistical,0,26,0
+669,param_8_high_perf,"[0.75, 0.0]",[ 40 100],"[0, 0]",pomdp,0,22,4
+670,param_8_high_perf,"[0.75, 0.0]",[ 40 100],"[0, 0]",myopic,0,24,12
+671,param_8_high_perf,"[0.75, 0.0]",[ 40 100],"[0, 0]",egostistical,0,26,0
+672,param_1_high_perf,"[0.75, 0.25]",[20 40],"[-1, -1]",pomdp,0,31,4
+673,param_1_high_perf,"[0.75, 0.25]",[20 40],"[-1, -1]",myopic,0,31,12
+674,param_1_high_perf,"[0.75, 0.25]",[20 40],"[-1, -1]",egostistical,1,23,0
+675,param_2_high_perf,"[0.75, 0.25]",[20 60],"[-1, -1]",pomdp,0,31,4
+676,param_2_high_perf,"[0.75, 0.25]",[20 60],"[-1, -1]",myopic,0,31,12
+677,param_2_high_perf,"[0.75, 0.25]",[20 60],"[-1, -1]",egostistical,1,23,0
+678,param_3_high_perf,"[0.75, 0.25]",[20 80],"[-1, -1]",pomdp,0,33,4
+679,param_3_high_perf,"[0.75, 0.25]",[20 80],"[-1, -1]",myopic,0,33,12
+680,param_3_high_perf,"[0.75, 0.25]",[20 80],"[-1, -1]",egostistical,1,23,0
+681,param_4_high_perf,"[0.75, 0.25]",[ 20 100],"[-1, -1]",pomdp,0,32,4
+682,param_4_high_perf,"[0.75, 0.25]",[ 20 100],"[-1, -1]",myopic,0,32,12
+683,param_4_high_perf,"[0.75, 0.25]",[ 20 100],"[-1, -1]",egostistical,1,23,0
+684,param_5_high_perf,"[0.75, 0.25]",[ 20 120],"[-1, -1]",pomdp,0,32,7
+685,param_5_high_perf,"[0.75, 0.25]",[ 20 120],"[-1, -1]",myopic,0,32,12
+686,param_5_high_perf,"[0.75, 0.25]",[ 20 120],"[-1, -1]",egostistical,1,23,0
+687,param_6_high_perf,"[0.75, 0.25]",[40 60],"[-1, -1]",pomdp,0,34,4
+688,param_6_high_perf,"[0.75, 0.25]",[40 60],"[-1, -1]",myopic,0,34,12
+689,param_6_high_perf,"[0.75, 0.25]",[40 60],"[-1, -1]",egostistical,1,26,0
+690,param_7_high_perf,"[0.75, 0.25]",[40 80],"[-1, -1]",pomdp,0,34,4
+691,param_7_high_perf,"[0.75, 0.25]",[40 80],"[-1, -1]",myopic,0,34,12
+692,param_7_high_perf,"[0.75, 0.25]",[40 80],"[-1, -1]",egostistical,1,26,0
+693,param_8_high_perf,"[0.75, 0.25]",[ 40 100],"[-1, -1]",pomdp,0,36,7
+694,param_8_high_perf,"[0.75, 0.25]",[ 40 100],"[-1, -1]",myopic,0,36,12
+695,param_8_high_perf,"[0.75, 0.25]",[ 40 100],"[-1, -1]",egostistical,1,26,0
+696,param_1_high_perf,"[0.75, 0.25]",[20 40],"[-1, 0]",pomdp,0,24,4
+697,param_1_high_perf,"[0.75, 0.25]",[20 40],"[-1, 0]",myopic,0,27,12
+698,param_1_high_perf,"[0.75, 0.25]",[20 40],"[-1, 0]",egostistical,1,23,0
+699,param_2_high_perf,"[0.75, 0.25]",[20 60],"[-1, 0]",pomdp,0,23,4
+700,param_2_high_perf,"[0.75, 0.25]",[20 60],"[-1, 0]",myopic,0,27,12
+701,param_2_high_perf,"[0.75, 0.25]",[20 60],"[-1, 0]",egostistical,1,23,0
+702,param_3_high_perf,"[0.75, 0.25]",[20 80],"[-1, 0]",pomdp,0,23,4
+703,param_3_high_perf,"[0.75, 0.25]",[20 80],"[-1, 0]",myopic,0,27,12
+704,param_3_high_perf,"[0.75, 0.25]",[20 80],"[-1, 0]",egostistical,1,23,0
+705,param_4_high_perf,"[0.75, 0.25]",[ 20 100],"[-1, 0]",pomdp,0,23,4
+706,param_4_high_perf,"[0.75, 0.25]",[ 20 100],"[-1, 0]",myopic,0,25,12
+707,param_4_high_perf,"[0.75, 0.25]",[ 20 100],"[-1, 0]",egostistical,1,23,0
+708,param_5_high_perf,"[0.75, 0.25]",[ 20 120],"[-1, 0]",pomdp,0,23,4
+709,param_5_high_perf,"[0.75, 0.25]",[ 20 120],"[-1, 0]",myopic,0,24,12
+710,param_5_high_perf,"[0.75, 0.25]",[ 20 120],"[-1, 0]",egostistical,1,23,0
+711,param_6_high_perf,"[0.75, 0.25]",[40 60],"[-1, 0]",pomdp,0,27,5
+712,param_6_high_perf,"[0.75, 0.25]",[40 60],"[-1, 0]",myopic,0,26,12
+713,param_6_high_perf,"[0.75, 0.25]",[40 60],"[-1, 0]",egostistical,1,26,0
+714,param_7_high_perf,"[0.75, 0.25]",[40 80],"[-1, 0]",pomdp,0,26,4
+715,param_7_high_perf,"[0.75, 0.25]",[40 80],"[-1, 0]",myopic,0,30,12
+716,param_7_high_perf,"[0.75, 0.25]",[40 80],"[-1, 0]",egostistical,1,26,0
+717,param_8_high_perf,"[0.75, 0.25]",[ 40 100],"[-1, 0]",pomdp,0,26,4
+718,param_8_high_perf,"[0.75, 0.25]",[ 40 100],"[-1, 0]",myopic,0,30,12
+719,param_8_high_perf,"[0.75, 0.25]",[ 40 100],"[-1, 0]",egostistical,1,26,0
+720,param_1_high_perf,"[0.75, 0.25]",[20 40],"[0, -1]",pomdp,0,31,4
+721,param_1_high_perf,"[0.75, 0.25]",[20 40],"[0, -1]",myopic,0,29,12
+722,param_1_high_perf,"[0.75, 0.25]",[20 40],"[0, -1]",egostistical,1,23,0
+723,param_2_high_perf,"[0.75, 0.25]",[20 60],"[0, -1]",pomdp,0,31,4
+724,param_2_high_perf,"[0.75, 0.25]",[20 60],"[0, -1]",myopic,0,31,12
+725,param_2_high_perf,"[0.75, 0.25]",[20 60],"[0, -1]",egostistical,1,23,0
+726,param_3_high_perf,"[0.75, 0.25]",[20 80],"[0, -1]",pomdp,0,33,4
+727,param_3_high_perf,"[0.75, 0.25]",[20 80],"[0, -1]",myopic,0,31,12
+728,param_3_high_perf,"[0.75, 0.25]",[20 80],"[0, -1]",egostistical,1,23,0
+729,param_4_high_perf,"[0.75, 0.25]",[ 20 100],"[0, -1]",pomdp,0,32,4
+730,param_4_high_perf,"[0.75, 0.25]",[ 20 100],"[0, -1]",myopic,0,33,12
+731,param_4_high_perf,"[0.75, 0.25]",[ 20 100],"[0, -1]",egostistical,1,23,0
+732,param_5_high_perf,"[0.75, 0.25]",[ 20 120],"[0, -1]",pomdp,0,32,7
+733,param_5_high_perf,"[0.75, 0.25]",[ 20 120],"[0, -1]",myopic,0,33,12
+734,param_5_high_perf,"[0.75, 0.25]",[ 20 120],"[0, -1]",egostistical,1,23,0
+735,param_6_high_perf,"[0.75, 0.25]",[40 60],"[0, -1]",pomdp,0,34,4
+736,param_6_high_perf,"[0.75, 0.25]",[40 60],"[0, -1]",myopic,0,29,12
+737,param_6_high_perf,"[0.75, 0.25]",[40 60],"[0, -1]",egostistical,1,26,0
+738,param_7_high_perf,"[0.75, 0.25]",[40 80],"[0, -1]",pomdp,0,34,4
+739,param_7_high_perf,"[0.75, 0.25]",[40 80],"[0, -1]",myopic,0,29,12
+740,param_7_high_perf,"[0.75, 0.25]",[40 80],"[0, -1]",egostistical,1,26,0
+741,param_8_high_perf,"[0.75, 0.25]",[ 40 100],"[0, -1]",pomdp,0,36,7
+742,param_8_high_perf,"[0.75, 0.25]",[ 40 100],"[0, -1]",myopic,0,32,12
+743,param_8_high_perf,"[0.75, 0.25]",[ 40 100],"[0, -1]",egostistical,1,26,0
+744,param_1_high_perf,"[0.75, 0.25]",[20 40],"[0, 0]",pomdp,0,24,4
+745,param_1_high_perf,"[0.75, 0.25]",[20 40],"[0, 0]",myopic,0,26,12
+746,param_1_high_perf,"[0.75, 0.25]",[20 40],"[0, 0]",egostistical,1,23,0
+747,param_2_high_perf,"[0.75, 0.25]",[20 60],"[0, 0]",pomdp,0,23,4
+748,param_2_high_perf,"[0.75, 0.25]",[20 60],"[0, 0]",myopic,0,27,12
+749,param_2_high_perf,"[0.75, 0.25]",[20 60],"[0, 0]",egostistical,1,23,0
+750,param_3_high_perf,"[0.75, 0.25]",[20 80],"[0, 0]",pomdp,0,23,4
+751,param_3_high_perf,"[0.75, 0.25]",[20 80],"[0, 0]",myopic,0,25,12
+752,param_3_high_perf,"[0.75, 0.25]",[20 80],"[0, 0]",egostistical,1,23,0
+753,param_4_high_perf,"[0.75, 0.25]",[ 20 100],"[0, 0]",pomdp,0,23,4
+754,param_4_high_perf,"[0.75, 0.25]",[ 20 100],"[0, 0]",myopic,0,25,12
+755,param_4_high_perf,"[0.75, 0.25]",[ 20 100],"[0, 0]",egostistical,1,23,0
+756,param_5_high_perf,"[0.75, 0.25]",[ 20 120],"[0, 0]",pomdp,0,23,4
+757,param_5_high_perf,"[0.75, 0.25]",[ 20 120],"[0, 0]",myopic,0,24,12
+758,param_5_high_perf,"[0.75, 0.25]",[ 20 120],"[0, 0]",egostistical,1,23,0
+759,param_6_high_perf,"[0.75, 0.25]",[40 60],"[0, 0]",pomdp,0,27,5
+760,param_6_high_perf,"[0.75, 0.25]",[40 60],"[0, 0]",myopic,0,26,12
+761,param_6_high_perf,"[0.75, 0.25]",[40 60],"[0, 0]",egostistical,1,26,0
+762,param_7_high_perf,"[0.75, 0.25]",[40 80],"[0, 0]",pomdp,0,26,4
+763,param_7_high_perf,"[0.75, 0.25]",[40 80],"[0, 0]",myopic,0,25,12
+764,param_7_high_perf,"[0.75, 0.25]",[40 80],"[0, 0]",egostistical,1,26,0
+765,param_8_high_perf,"[0.75, 0.25]",[ 40 100],"[0, 0]",pomdp,0,26,4
+766,param_8_high_perf,"[0.75, 0.25]",[ 40 100],"[0, 0]",myopic,0,24,12
+767,param_8_high_perf,"[0.75, 0.25]",[ 40 100],"[0, 0]",egostistical,1,26,0
+768,param_1_high_perf,"[1.0, 0.0]",[20 40],"[-1, -1]",pomdp,0,24,1
+769,param_1_high_perf,"[1.0, 0.0]",[20 40],"[-1, -1]",myopic,0,31,12
+770,param_1_high_perf,"[1.0, 0.0]",[20 40],"[-1, -1]",egostistical,0,23,0
+771,param_2_high_perf,"[1.0, 0.0]",[20 60],"[-1, -1]",pomdp,0,23,0
+772,param_2_high_perf,"[1.0, 0.0]",[20 60],"[-1, -1]",myopic,0,31,12
+773,param_2_high_perf,"[1.0, 0.0]",[20 60],"[-1, -1]",egostistical,0,23,0
+774,param_3_high_perf,"[1.0, 0.0]",[20 80],"[-1, -1]",pomdp,0,23,0
+775,param_3_high_perf,"[1.0, 0.0]",[20 80],"[-1, -1]",myopic,0,33,12
+776,param_3_high_perf,"[1.0, 0.0]",[20 80],"[-1, -1]",egostistical,0,23,0
+777,param_4_high_perf,"[1.0, 0.0]",[ 20 100],"[-1, -1]",pomdp,0,23,0
+778,param_4_high_perf,"[1.0, 0.0]",[ 20 100],"[-1, -1]",myopic,0,32,12
+779,param_4_high_perf,"[1.0, 0.0]",[ 20 100],"[-1, -1]",egostistical,0,23,0
+780,param_5_high_perf,"[1.0, 0.0]",[ 20 120],"[-1, -1]",pomdp,0,23,0
+781,param_5_high_perf,"[1.0, 0.0]",[ 20 120],"[-1, -1]",myopic,0,32,12
+782,param_5_high_perf,"[1.0, 0.0]",[ 20 120],"[-1, -1]",egostistical,0,23,0
+783,param_6_high_perf,"[1.0, 0.0]",[40 60],"[-1, -1]",pomdp,0,27,1
+784,param_6_high_perf,"[1.0, 0.0]",[40 60],"[-1, -1]",myopic,0,34,12
+785,param_6_high_perf,"[1.0, 0.0]",[40 60],"[-1, -1]",egostistical,0,26,0
+786,param_7_high_perf,"[1.0, 0.0]",[40 80],"[-1, -1]",pomdp,0,26,0
+787,param_7_high_perf,"[1.0, 0.0]",[40 80],"[-1, -1]",myopic,0,34,12
+788,param_7_high_perf,"[1.0, 0.0]",[40 80],"[-1, -1]",egostistical,0,26,0
+789,param_8_high_perf,"[1.0, 0.0]",[ 40 100],"[-1, -1]",pomdp,0,26,0
+790,param_8_high_perf,"[1.0, 0.0]",[ 40 100],"[-1, -1]",myopic,0,36,12
+791,param_8_high_perf,"[1.0, 0.0]",[ 40 100],"[-1, -1]",egostistical,0,26,0
+792,param_1_high_perf,"[1.0, 0.0]",[20 40],"[-1, 0]",pomdp,0,24,1
+793,param_1_high_perf,"[1.0, 0.0]",[20 40],"[-1, 0]",myopic,0,27,12
+794,param_1_high_perf,"[1.0, 0.0]",[20 40],"[-1, 0]",egostistical,0,23,0
+795,param_2_high_perf,"[1.0, 0.0]",[20 60],"[-1, 0]",pomdp,0,23,0
+796,param_2_high_perf,"[1.0, 0.0]",[20 60],"[-1, 0]",myopic,0,27,12
+797,param_2_high_perf,"[1.0, 0.0]",[20 60],"[-1, 0]",egostistical,0,23,0
+798,param_3_high_perf,"[1.0, 0.0]",[20 80],"[-1, 0]",pomdp,0,23,0
+799,param_3_high_perf,"[1.0, 0.0]",[20 80],"[-1, 0]",myopic,0,27,12
+800,param_3_high_perf,"[1.0, 0.0]",[20 80],"[-1, 0]",egostistical,0,23,0
+801,param_4_high_perf,"[1.0, 0.0]",[ 20 100],"[-1, 0]",pomdp,0,23,0
+802,param_4_high_perf,"[1.0, 0.0]",[ 20 100],"[-1, 0]",myopic,0,25,12
+803,param_4_high_perf,"[1.0, 0.0]",[ 20 100],"[-1, 0]",egostistical,0,23,0
+804,param_5_high_perf,"[1.0, 0.0]",[ 20 120],"[-1, 0]",pomdp,0,23,0
+805,param_5_high_perf,"[1.0, 0.0]",[ 20 120],"[-1, 0]",myopic,0,24,12
+806,param_5_high_perf,"[1.0, 0.0]",[ 20 120],"[-1, 0]",egostistical,0,23,0
+807,param_6_high_perf,"[1.0, 0.0]",[40 60],"[-1, 0]",pomdp,0,27,1
+808,param_6_high_perf,"[1.0, 0.0]",[40 60],"[-1, 0]",myopic,0,26,12
+809,param_6_high_perf,"[1.0, 0.0]",[40 60],"[-1, 0]",egostistical,0,26,0
+810,param_7_high_perf,"[1.0, 0.0]",[40 80],"[-1, 0]",pomdp,0,26,0
+811,param_7_high_perf,"[1.0, 0.0]",[40 80],"[-1, 0]",myopic,0,30,12
+812,param_7_high_perf,"[1.0, 0.0]",[40 80],"[-1, 0]",egostistical,0,26,0
+813,param_8_high_perf,"[1.0, 0.0]",[ 40 100],"[-1, 0]",pomdp,0,26,0
+814,param_8_high_perf,"[1.0, 0.0]",[ 40 100],"[-1, 0]",myopic,0,30,12
+815,param_8_high_perf,"[1.0, 0.0]",[ 40 100],"[-1, 0]",egostistical,0,26,0
+816,param_1_high_perf,"[1.0, 0.0]",[20 40],"[0, -1]",pomdp,0,24,1
+817,param_1_high_perf,"[1.0, 0.0]",[20 40],"[0, -1]",myopic,0,29,12
+818,param_1_high_perf,"[1.0, 0.0]",[20 40],"[0, -1]",egostistical,0,23,0
+819,param_2_high_perf,"[1.0, 0.0]",[20 60],"[0, -1]",pomdp,0,23,0
+820,param_2_high_perf,"[1.0, 0.0]",[20 60],"[0, -1]",myopic,0,31,12
+821,param_2_high_perf,"[1.0, 0.0]",[20 60],"[0, -1]",egostistical,0,23,0
+822,param_3_high_perf,"[1.0, 0.0]",[20 80],"[0, -1]",pomdp,0,23,0
+823,param_3_high_perf,"[1.0, 0.0]",[20 80],"[0, -1]",myopic,0,31,12
+824,param_3_high_perf,"[1.0, 0.0]",[20 80],"[0, -1]",egostistical,0,23,0
+825,param_4_high_perf,"[1.0, 0.0]",[ 20 100],"[0, -1]",pomdp,0,23,0
+826,param_4_high_perf,"[1.0, 0.0]",[ 20 100],"[0, -1]",myopic,0,33,12
+827,param_4_high_perf,"[1.0, 0.0]",[ 20 100],"[0, -1]",egostistical,0,23,0
+828,param_5_high_perf,"[1.0, 0.0]",[ 20 120],"[0, -1]",pomdp,0,23,0
+829,param_5_high_perf,"[1.0, 0.0]",[ 20 120],"[0, -1]",myopic,0,33,12
+830,param_5_high_perf,"[1.0, 0.0]",[ 20 120],"[0, -1]",egostistical,0,23,0
+831,param_6_high_perf,"[1.0, 0.0]",[40 60],"[0, -1]",pomdp,0,27,1
+832,param_6_high_perf,"[1.0, 0.0]",[40 60],"[0, -1]",myopic,0,29,12
+833,param_6_high_perf,"[1.0, 0.0]",[40 60],"[0, -1]",egostistical,0,26,0
+834,param_7_high_perf,"[1.0, 0.0]",[40 80],"[0, -1]",pomdp,0,26,0
+835,param_7_high_perf,"[1.0, 0.0]",[40 80],"[0, -1]",myopic,0,29,12
+836,param_7_high_perf,"[1.0, 0.0]",[40 80],"[0, -1]",egostistical,0,26,0
+837,param_8_high_perf,"[1.0, 0.0]",[ 40 100],"[0, -1]",pomdp,0,26,0
+838,param_8_high_perf,"[1.0, 0.0]",[ 40 100],"[0, -1]",myopic,0,32,12
+839,param_8_high_perf,"[1.0, 0.0]",[ 40 100],"[0, -1]",egostistical,0,26,0
+840,param_1_high_perf,"[1.0, 0.0]",[20 40],"[0, 0]",pomdp,0,24,1
+841,param_1_high_perf,"[1.0, 0.0]",[20 40],"[0, 0]",myopic,0,26,12
+842,param_1_high_perf,"[1.0, 0.0]",[20 40],"[0, 0]",egostistical,0,23,0
+843,param_2_high_perf,"[1.0, 0.0]",[20 60],"[0, 0]",pomdp,0,23,0
+844,param_2_high_perf,"[1.0, 0.0]",[20 60],"[0, 0]",myopic,0,27,12
+845,param_2_high_perf,"[1.0, 0.0]",[20 60],"[0, 0]",egostistical,0,23,0
+846,param_3_high_perf,"[1.0, 0.0]",[20 80],"[0, 0]",pomdp,0,23,0
+847,param_3_high_perf,"[1.0, 0.0]",[20 80],"[0, 0]",myopic,0,25,12
+848,param_3_high_perf,"[1.0, 0.0]",[20 80],"[0, 0]",egostistical,0,23,0
+849,param_4_high_perf,"[1.0, 0.0]",[ 20 100],"[0, 0]",pomdp,0,23,0
+850,param_4_high_perf,"[1.0, 0.0]",[ 20 100],"[0, 0]",myopic,0,25,12
+851,param_4_high_perf,"[1.0, 0.0]",[ 20 100],"[0, 0]",egostistical,0,23,0
+852,param_5_high_perf,"[1.0, 0.0]",[ 20 120],"[0, 0]",pomdp,0,23,0
+853,param_5_high_perf,"[1.0, 0.0]",[ 20 120],"[0, 0]",myopic,0,24,12
+854,param_5_high_perf,"[1.0, 0.0]",[ 20 120],"[0, 0]",egostistical,0,23,0
+855,param_6_high_perf,"[1.0, 0.0]",[40 60],"[0, 0]",pomdp,0,27,1
+856,param_6_high_perf,"[1.0, 0.0]",[40 60],"[0, 0]",myopic,0,26,12
+857,param_6_high_perf,"[1.0, 0.0]",[40 60],"[0, 0]",egostistical,0,26,0
+858,param_7_high_perf,"[1.0, 0.0]",[40 80],"[0, 0]",pomdp,0,26,0
+859,param_7_high_perf,"[1.0, 0.0]",[40 80],"[0, 0]",myopic,0,25,12
+860,param_7_high_perf,"[1.0, 0.0]",[40 80],"[0, 0]",egostistical,0,26,0
+861,param_8_high_perf,"[1.0, 0.0]",[ 40 100],"[0, 0]",pomdp,0,26,0
+862,param_8_high_perf,"[1.0, 0.0]",[ 40 100],"[0, 0]",myopic,0,24,12
+863,param_8_high_perf,"[1.0, 0.0]",[ 40 100],"[0, 0]",egostistical,0,26,0
+864,param_1_high_perf,"[1.0, 0.25]",[20 40],"[-1, -1]",pomdp,0,31,4
+865,param_1_high_perf,"[1.0, 0.25]",[20 40],"[-1, -1]",myopic,0,31,12
+866,param_1_high_perf,"[1.0, 0.25]",[20 40],"[-1, -1]",egostistical,1,23,0
+867,param_2_high_perf,"[1.0, 0.25]",[20 60],"[-1, -1]",pomdp,0,31,4
+868,param_2_high_perf,"[1.0, 0.25]",[20 60],"[-1, -1]",myopic,0,31,12
+869,param_2_high_perf,"[1.0, 0.25]",[20 60],"[-1, -1]",egostistical,1,23,0
+870,param_3_high_perf,"[1.0, 0.25]",[20 80],"[-1, -1]",pomdp,0,33,4
+871,param_3_high_perf,"[1.0, 0.25]",[20 80],"[-1, -1]",myopic,0,33,12
+872,param_3_high_perf,"[1.0, 0.25]",[20 80],"[-1, -1]",egostistical,1,23,0
+873,param_4_high_perf,"[1.0, 0.25]",[ 20 100],"[-1, -1]",pomdp,0,32,4
+874,param_4_high_perf,"[1.0, 0.25]",[ 20 100],"[-1, -1]",myopic,0,32,12
+875,param_4_high_perf,"[1.0, 0.25]",[ 20 100],"[-1, -1]",egostistical,1,23,0
+876,param_5_high_perf,"[1.0, 0.25]",[ 20 120],"[-1, -1]",pomdp,0,32,7
+877,param_5_high_perf,"[1.0, 0.25]",[ 20 120],"[-1, -1]",myopic,0,32,12
+878,param_5_high_perf,"[1.0, 0.25]",[ 20 120],"[-1, -1]",egostistical,1,23,0
+879,param_6_high_perf,"[1.0, 0.25]",[40 60],"[-1, -1]",pomdp,0,34,4
+880,param_6_high_perf,"[1.0, 0.25]",[40 60],"[-1, -1]",myopic,0,34,12
+881,param_6_high_perf,"[1.0, 0.25]",[40 60],"[-1, -1]",egostistical,1,26,0
+882,param_7_high_perf,"[1.0, 0.25]",[40 80],"[-1, -1]",pomdp,0,34,4
+883,param_7_high_perf,"[1.0, 0.25]",[40 80],"[-1, -1]",myopic,0,34,12
+884,param_7_high_perf,"[1.0, 0.25]",[40 80],"[-1, -1]",egostistical,1,26,0
+885,param_8_high_perf,"[1.0, 0.25]",[ 40 100],"[-1, -1]",pomdp,0,36,7
+886,param_8_high_perf,"[1.0, 0.25]",[ 40 100],"[-1, -1]",myopic,0,36,12
+887,param_8_high_perf,"[1.0, 0.25]",[ 40 100],"[-1, -1]",egostistical,1,26,0
+888,param_1_high_perf,"[1.0, 0.25]",[20 40],"[-1, 0]",pomdp,0,24,4
+889,param_1_high_perf,"[1.0, 0.25]",[20 40],"[-1, 0]",myopic,0,27,12
+890,param_1_high_perf,"[1.0, 0.25]",[20 40],"[-1, 0]",egostistical,1,23,0
+891,param_2_high_perf,"[1.0, 0.25]",[20 60],"[-1, 0]",pomdp,0,23,4
+892,param_2_high_perf,"[1.0, 0.25]",[20 60],"[-1, 0]",myopic,0,27,12
+893,param_2_high_perf,"[1.0, 0.25]",[20 60],"[-1, 0]",egostistical,1,23,0
+894,param_3_high_perf,"[1.0, 0.25]",[20 80],"[-1, 0]",pomdp,0,23,4
+895,param_3_high_perf,"[1.0, 0.25]",[20 80],"[-1, 0]",myopic,0,27,12
+896,param_3_high_perf,"[1.0, 0.25]",[20 80],"[-1, 0]",egostistical,1,23,0
+897,param_4_high_perf,"[1.0, 0.25]",[ 20 100],"[-1, 0]",pomdp,0,23,4
+898,param_4_high_perf,"[1.0, 0.25]",[ 20 100],"[-1, 0]",myopic,0,25,12
+899,param_4_high_perf,"[1.0, 0.25]",[ 20 100],"[-1, 0]",egostistical,1,23,0
+900,param_5_high_perf,"[1.0, 0.25]",[ 20 120],"[-1, 0]",pomdp,0,23,4
+901,param_5_high_perf,"[1.0, 0.25]",[ 20 120],"[-1, 0]",myopic,0,24,12
+902,param_5_high_perf,"[1.0, 0.25]",[ 20 120],"[-1, 0]",egostistical,1,23,0
+903,param_6_high_perf,"[1.0, 0.25]",[40 60],"[-1, 0]",pomdp,0,27,5
+904,param_6_high_perf,"[1.0, 0.25]",[40 60],"[-1, 0]",myopic,0,26,12
+905,param_6_high_perf,"[1.0, 0.25]",[40 60],"[-1, 0]",egostistical,1,26,0
+906,param_7_high_perf,"[1.0, 0.25]",[40 80],"[-1, 0]",pomdp,0,26,4
+907,param_7_high_perf,"[1.0, 0.25]",[40 80],"[-1, 0]",myopic,0,30,12
+908,param_7_high_perf,"[1.0, 0.25]",[40 80],"[-1, 0]",egostistical,1,26,0
+909,param_8_high_perf,"[1.0, 0.25]",[ 40 100],"[-1, 0]",pomdp,0,26,4
+910,param_8_high_perf,"[1.0, 0.25]",[ 40 100],"[-1, 0]",myopic,0,30,12
+911,param_8_high_perf,"[1.0, 0.25]",[ 40 100],"[-1, 0]",egostistical,1,26,0
+912,param_1_high_perf,"[1.0, 0.25]",[20 40],"[0, -1]",pomdp,0,31,4
+913,param_1_high_perf,"[1.0, 0.25]",[20 40],"[0, -1]",myopic,0,29,12
+914,param_1_high_perf,"[1.0, 0.25]",[20 40],"[0, -1]",egostistical,1,23,0
+915,param_2_high_perf,"[1.0, 0.25]",[20 60],"[0, -1]",pomdp,0,31,4
+916,param_2_high_perf,"[1.0, 0.25]",[20 60],"[0, -1]",myopic,0,31,12
+917,param_2_high_perf,"[1.0, 0.25]",[20 60],"[0, -1]",egostistical,1,23,0
+918,param_3_high_perf,"[1.0, 0.25]",[20 80],"[0, -1]",pomdp,0,33,4
+919,param_3_high_perf,"[1.0, 0.25]",[20 80],"[0, -1]",myopic,0,31,12
+920,param_3_high_perf,"[1.0, 0.25]",[20 80],"[0, -1]",egostistical,1,23,0
+921,param_4_high_perf,"[1.0, 0.25]",[ 20 100],"[0, -1]",pomdp,0,32,4
+922,param_4_high_perf,"[1.0, 0.25]",[ 20 100],"[0, -1]",myopic,0,33,12
+923,param_4_high_perf,"[1.0, 0.25]",[ 20 100],"[0, -1]",egostistical,1,23,0
+924,param_5_high_perf,"[1.0, 0.25]",[ 20 120],"[0, -1]",pomdp,0,32,7
+925,param_5_high_perf,"[1.0, 0.25]",[ 20 120],"[0, -1]",myopic,0,33,12
+926,param_5_high_perf,"[1.0, 0.25]",[ 20 120],"[0, -1]",egostistical,1,23,0
+927,param_6_high_perf,"[1.0, 0.25]",[40 60],"[0, -1]",pomdp,0,34,4
+928,param_6_high_perf,"[1.0, 0.25]",[40 60],"[0, -1]",myopic,0,29,12
+929,param_6_high_perf,"[1.0, 0.25]",[40 60],"[0, -1]",egostistical,1,26,0
+930,param_7_high_perf,"[1.0, 0.25]",[40 80],"[0, -1]",pomdp,0,34,4
+931,param_7_high_perf,"[1.0, 0.25]",[40 80],"[0, -1]",myopic,0,29,12
+932,param_7_high_perf,"[1.0, 0.25]",[40 80],"[0, -1]",egostistical,1,26,0
+933,param_8_high_perf,"[1.0, 0.25]",[ 40 100],"[0, -1]",pomdp,0,36,7
+934,param_8_high_perf,"[1.0, 0.25]",[ 40 100],"[0, -1]",myopic,0,32,12
+935,param_8_high_perf,"[1.0, 0.25]",[ 40 100],"[0, -1]",egostistical,1,26,0
+936,param_1_high_perf,"[1.0, 0.25]",[20 40],"[0, 0]",pomdp,0,24,4
+937,param_1_high_perf,"[1.0, 0.25]",[20 40],"[0, 0]",myopic,0,26,12
+938,param_1_high_perf,"[1.0, 0.25]",[20 40],"[0, 0]",egostistical,1,23,0
+939,param_2_high_perf,"[1.0, 0.25]",[20 60],"[0, 0]",pomdp,0,23,4
+940,param_2_high_perf,"[1.0, 0.25]",[20 60],"[0, 0]",myopic,0,27,12
+941,param_2_high_perf,"[1.0, 0.25]",[20 60],"[0, 0]",egostistical,1,23,0
+942,param_3_high_perf,"[1.0, 0.25]",[20 80],"[0, 0]",pomdp,0,23,4
+943,param_3_high_perf,"[1.0, 0.25]",[20 80],"[0, 0]",myopic,0,25,12
+944,param_3_high_perf,"[1.0, 0.25]",[20 80],"[0, 0]",egostistical,1,23,0
+945,param_4_high_perf,"[1.0, 0.25]",[ 20 100],"[0, 0]",pomdp,0,23,4
+946,param_4_high_perf,"[1.0, 0.25]",[ 20 100],"[0, 0]",myopic,0,25,12
+947,param_4_high_perf,"[1.0, 0.25]",[ 20 100],"[0, 0]",egostistical,1,23,0
+948,param_5_high_perf,"[1.0, 0.25]",[ 20 120],"[0, 0]",pomdp,0,23,4
+949,param_5_high_perf,"[1.0, 0.25]",[ 20 120],"[0, 0]",myopic,0,24,12
+950,param_5_high_perf,"[1.0, 0.25]",[ 20 120],"[0, 0]",egostistical,1,23,0
+951,param_6_high_perf,"[1.0, 0.25]",[40 60],"[0, 0]",pomdp,0,27,5
+952,param_6_high_perf,"[1.0, 0.25]",[40 60],"[0, 0]",myopic,0,26,12
+953,param_6_high_perf,"[1.0, 0.25]",[40 60],"[0, 0]",egostistical,1,26,0
+954,param_7_high_perf,"[1.0, 0.25]",[40 80],"[0, 0]",pomdp,0,26,4
+955,param_7_high_perf,"[1.0, 0.25]",[40 80],"[0, 0]",myopic,0,25,12
+956,param_7_high_perf,"[1.0, 0.25]",[40 80],"[0, 0]",egostistical,1,26,0
+957,param_8_high_perf,"[1.0, 0.25]",[ 40 100],"[0, 0]",pomdp,0,26,4
+958,param_8_high_perf,"[1.0, 0.25]",[ 40 100],"[0, 0]",myopic,0,24,12
+959,param_8_high_perf,"[1.0, 0.25]",[ 40 100],"[0, 0]",egostistical,1,26,0
+960,param_1_high_perf,"[0.0, 0.5]",[20 40],"[-1, -1]",pomdp,0,26,4
+961,param_1_high_perf,"[0.0, 0.5]",[20 40],"[-1, -1]",myopic,0,31,12
+962,param_1_high_perf,"[0.0, 0.5]",[20 40],"[-1, -1]",egostistical,0,26,0
+963,param_2_high_perf,"[0.0, 0.5]",[20 60],"[-1, -1]",pomdp,0,26,4
+964,param_2_high_perf,"[0.0, 0.5]",[20 60],"[-1, -1]",myopic,0,31,12
+965,param_2_high_perf,"[0.0, 0.5]",[20 60],"[-1, -1]",egostistical,0,26,0
+966,param_3_high_perf,"[0.0, 0.5]",[20 80],"[-1, -1]",pomdp,0,26,4
+967,param_3_high_perf,"[0.0, 0.5]",[20 80],"[-1, -1]",myopic,0,33,12
+968,param_3_high_perf,"[0.0, 0.5]",[20 80],"[-1, -1]",egostistical,0,26,0
+969,param_4_high_perf,"[0.0, 0.5]",[ 20 100],"[-1, -1]",pomdp,0,26,4
+970,param_4_high_perf,"[0.0, 0.5]",[ 20 100],"[-1, -1]",myopic,0,32,12
+971,param_4_high_perf,"[0.0, 0.5]",[ 20 100],"[-1, -1]",egostistical,0,26,0
+972,param_5_high_perf,"[0.0, 0.5]",[ 20 120],"[-1, -1]",pomdp,0,26,4
+973,param_5_high_perf,"[0.0, 0.5]",[ 20 120],"[-1, -1]",myopic,0,32,12
+974,param_5_high_perf,"[0.0, 0.5]",[ 20 120],"[-1, -1]",egostistical,0,26,0
+975,param_6_high_perf,"[0.0, 0.5]",[40 60],"[-1, -1]",pomdp,0,26,4
+976,param_6_high_perf,"[0.0, 0.5]",[40 60],"[-1, -1]",myopic,0,34,12
+977,param_6_high_perf,"[0.0, 0.5]",[40 60],"[-1, -1]",egostistical,0,26,0
+978,param_7_high_perf,"[0.0, 0.5]",[40 80],"[-1, -1]",pomdp,0,26,4
+979,param_7_high_perf,"[0.0, 0.5]",[40 80],"[-1, -1]",myopic,0,34,12
+980,param_7_high_perf,"[0.0, 0.5]",[40 80],"[-1, -1]",egostistical,0,26,0
+981,param_8_high_perf,"[0.0, 0.5]",[ 40 100],"[-1, -1]",pomdp,0,26,4
+982,param_8_high_perf,"[0.0, 0.5]",[ 40 100],"[-1, -1]",myopic,0,36,12
+983,param_8_high_perf,"[0.0, 0.5]",[ 40 100],"[-1, -1]",egostistical,0,26,0
+984,param_1_high_perf,"[0.0, 0.5]",[20 40],"[-1, 0]",pomdp,0,22,4
+985,param_1_high_perf,"[0.0, 0.5]",[20 40],"[-1, 0]",myopic,0,27,12
+986,param_1_high_perf,"[0.0, 0.5]",[20 40],"[-1, 0]",egostistical,0,26,0
+987,param_2_high_perf,"[0.0, 0.5]",[20 60],"[-1, 0]",pomdp,0,20,4
+988,param_2_high_perf,"[0.0, 0.5]",[20 60],"[-1, 0]",myopic,0,27,12
+989,param_2_high_perf,"[0.0, 0.5]",[20 60],"[-1, 0]",egostistical,0,26,0
+990,param_3_high_perf,"[0.0, 0.5]",[20 80],"[-1, 0]",pomdp,0,17,4
+991,param_3_high_perf,"[0.0, 0.5]",[20 80],"[-1, 0]",myopic,0,27,12
+992,param_3_high_perf,"[0.0, 0.5]",[20 80],"[-1, 0]",egostistical,0,26,0
+993,param_4_high_perf,"[0.0, 0.5]",[ 20 100],"[-1, 0]",pomdp,0,16,4
+994,param_4_high_perf,"[0.0, 0.5]",[ 20 100],"[-1, 0]",myopic,0,25,12
+995,param_4_high_perf,"[0.0, 0.5]",[ 20 100],"[-1, 0]",egostistical,0,26,0
+996,param_5_high_perf,"[0.0, 0.5]",[ 20 120],"[-1, 0]",pomdp,0,15,4
+997,param_5_high_perf,"[0.0, 0.5]",[ 20 120],"[-1, 0]",myopic,0,24,12
+998,param_5_high_perf,"[0.0, 0.5]",[ 20 120],"[-1, 0]",egostistical,0,26,0
+999,param_6_high_perf,"[0.0, 0.5]",[40 60],"[-1, 0]",pomdp,0,20,4
+1000,param_6_high_perf,"[0.0, 0.5]",[40 60],"[-1, 0]",myopic,0,26,12
+1001,param_6_high_perf,"[0.0, 0.5]",[40 60],"[-1, 0]",egostistical,0,26,0
+1002,param_7_high_perf,"[0.0, 0.5]",[40 80],"[-1, 0]",pomdp,0,17,4
+1003,param_7_high_perf,"[0.0, 0.5]",[40 80],"[-1, 0]",myopic,0,30,12
+1004,param_7_high_perf,"[0.0, 0.5]",[40 80],"[-1, 0]",egostistical,0,26,0
+1005,param_8_high_perf,"[0.0, 0.5]",[ 40 100],"[-1, 0]",pomdp,0,16,4
+1006,param_8_high_perf,"[0.0, 0.5]",[ 40 100],"[-1, 0]",myopic,0,30,12
+1007,param_8_high_perf,"[0.0, 0.5]",[ 40 100],"[-1, 0]",egostistical,0,26,0
+1008,param_1_high_perf,"[0.0, 0.5]",[20 40],"[0, -1]",pomdp,0,26,4
+1009,param_1_high_perf,"[0.0, 0.5]",[20 40],"[0, -1]",myopic,0,29,12
+1010,param_1_high_perf,"[0.0, 0.5]",[20 40],"[0, -1]",egostistical,0,26,0
+1011,param_2_high_perf,"[0.0, 0.5]",[20 60],"[0, -1]",pomdp,0,26,4
+1012,param_2_high_perf,"[0.0, 0.5]",[20 60],"[0, -1]",myopic,0,31,12
+1013,param_2_high_perf,"[0.0, 0.5]",[20 60],"[0, -1]",egostistical,0,26,0
+1014,param_3_high_perf,"[0.0, 0.5]",[20 80],"[0, -1]",pomdp,0,26,4
+1015,param_3_high_perf,"[0.0, 0.5]",[20 80],"[0, -1]",myopic,0,31,12
+1016,param_3_high_perf,"[0.0, 0.5]",[20 80],"[0, -1]",egostistical,0,26,0
+1017,param_4_high_perf,"[0.0, 0.5]",[ 20 100],"[0, -1]",pomdp,0,26,4
+1018,param_4_high_perf,"[0.0, 0.5]",[ 20 100],"[0, -1]",myopic,0,33,12
+1019,param_4_high_perf,"[0.0, 0.5]",[ 20 100],"[0, -1]",egostistical,0,26,0
+1020,param_5_high_perf,"[0.0, 0.5]",[ 20 120],"[0, -1]",pomdp,0,26,4
+1021,param_5_high_perf,"[0.0, 0.5]",[ 20 120],"[0, -1]",myopic,0,33,12
+1022,param_5_high_perf,"[0.0, 0.5]",[ 20 120],"[0, -1]",egostistical,0,26,0
+1023,param_6_high_perf,"[0.0, 0.5]",[40 60],"[0, -1]",pomdp,0,26,4
+1024,param_6_high_perf,"[0.0, 0.5]",[40 60],"[0, -1]",myopic,0,29,12
+1025,param_6_high_perf,"[0.0, 0.5]",[40 60],"[0, -1]",egostistical,0,26,0
+1026,param_7_high_perf,"[0.0, 0.5]",[40 80],"[0, -1]",pomdp,0,26,4
+1027,param_7_high_perf,"[0.0, 0.5]",[40 80],"[0, -1]",myopic,0,29,12
+1028,param_7_high_perf,"[0.0, 0.5]",[40 80],"[0, -1]",egostistical,0,26,0
+1029,param_8_high_perf,"[0.0, 0.5]",[ 40 100],"[0, -1]",pomdp,0,26,4
+1030,param_8_high_perf,"[0.0, 0.5]",[ 40 100],"[0, -1]",myopic,0,32,12
+1031,param_8_high_perf,"[0.0, 0.5]",[ 40 100],"[0, -1]",egostistical,0,26,0
+1032,param_1_high_perf,"[0.0, 0.5]",[20 40],"[0, 0]",pomdp,0,22,4
+1033,param_1_high_perf,"[0.0, 0.5]",[20 40],"[0, 0]",myopic,0,26,12
+1034,param_1_high_perf,"[0.0, 0.5]",[20 40],"[0, 0]",egostistical,0,26,0
+1035,param_2_high_perf,"[0.0, 0.5]",[20 60],"[0, 0]",pomdp,0,20,4
+1036,param_2_high_perf,"[0.0, 0.5]",[20 60],"[0, 0]",myopic,0,27,12
+1037,param_2_high_perf,"[0.0, 0.5]",[20 60],"[0, 0]",egostistical,0,26,0
+1038,param_3_high_perf,"[0.0, 0.5]",[20 80],"[0, 0]",pomdp,0,17,4
+1039,param_3_high_perf,"[0.0, 0.5]",[20 80],"[0, 0]",myopic,0,25,12
+1040,param_3_high_perf,"[0.0, 0.5]",[20 80],"[0, 0]",egostistical,0,26,0
+1041,param_4_high_perf,"[0.0, 0.5]",[ 20 100],"[0, 0]",pomdp,0,16,4
+1042,param_4_high_perf,"[0.0, 0.5]",[ 20 100],"[0, 0]",myopic,0,25,12
+1043,param_4_high_perf,"[0.0, 0.5]",[ 20 100],"[0, 0]",egostistical,0,26,0
+1044,param_5_high_perf,"[0.0, 0.5]",[ 20 120],"[0, 0]",pomdp,0,15,4
+1045,param_5_high_perf,"[0.0, 0.5]",[ 20 120],"[0, 0]",myopic,0,24,12
+1046,param_5_high_perf,"[0.0, 0.5]",[ 20 120],"[0, 0]",egostistical,0,26,0
+1047,param_6_high_perf,"[0.0, 0.5]",[40 60],"[0, 0]",pomdp,0,20,4
+1048,param_6_high_perf,"[0.0, 0.5]",[40 60],"[0, 0]",myopic,0,26,12
+1049,param_6_high_perf,"[0.0, 0.5]",[40 60],"[0, 0]",egostistical,0,26,0
+1050,param_7_high_perf,"[0.0, 0.5]",[40 80],"[0, 0]",pomdp,0,17,4
+1051,param_7_high_perf,"[0.0, 0.5]",[40 80],"[0, 0]",myopic,0,25,12
+1052,param_7_high_perf,"[0.0, 0.5]",[40 80],"[0, 0]",egostistical,0,26,0
+1053,param_8_high_perf,"[0.0, 0.5]",[ 40 100],"[0, 0]",pomdp,0,16,4
+1054,param_8_high_perf,"[0.0, 0.5]",[ 40 100],"[0, 0]",myopic,0,24,12
+1055,param_8_high_perf,"[0.0, 0.5]",[ 40 100],"[0, 0]",egostistical,0,26,0
+1056,param_1_high_perf,"[0.0, 0.75]",[20 40],"[-1, -1]",pomdp,0,26,4
+1057,param_1_high_perf,"[0.0, 0.75]",[20 40],"[-1, -1]",myopic,0,31,12
+1058,param_1_high_perf,"[0.0, 0.75]",[20 40],"[-1, -1]",egostistical,0,26,0
+1059,param_2_high_perf,"[0.0, 0.75]",[20 60],"[-1, -1]",pomdp,0,26,4
+1060,param_2_high_perf,"[0.0, 0.75]",[20 60],"[-1, -1]",myopic,0,31,12
+1061,param_2_high_perf,"[0.0, 0.75]",[20 60],"[-1, -1]",egostistical,0,26,0
+1062,param_3_high_perf,"[0.0, 0.75]",[20 80],"[-1, -1]",pomdp,0,26,4
+1063,param_3_high_perf,"[0.0, 0.75]",[20 80],"[-1, -1]",myopic,0,33,12
+1064,param_3_high_perf,"[0.0, 0.75]",[20 80],"[-1, -1]",egostistical,0,26,0
+1065,param_4_high_perf,"[0.0, 0.75]",[ 20 100],"[-1, -1]",pomdp,0,26,4
+1066,param_4_high_perf,"[0.0, 0.75]",[ 20 100],"[-1, -1]",myopic,0,32,12
+1067,param_4_high_perf,"[0.0, 0.75]",[ 20 100],"[-1, -1]",egostistical,0,26,0
+1068,param_5_high_perf,"[0.0, 0.75]",[ 20 120],"[-1, -1]",pomdp,0,26,4
+1069,param_5_high_perf,"[0.0, 0.75]",[ 20 120],"[-1, -1]",myopic,0,32,12
+1070,param_5_high_perf,"[0.0, 0.75]",[ 20 120],"[-1, -1]",egostistical,0,26,0
+1071,param_6_high_perf,"[0.0, 0.75]",[40 60],"[-1, -1]",pomdp,0,26,4
+1072,param_6_high_perf,"[0.0, 0.75]",[40 60],"[-1, -1]",myopic,0,34,12
+1073,param_6_high_perf,"[0.0, 0.75]",[40 60],"[-1, -1]",egostistical,0,26,0
+1074,param_7_high_perf,"[0.0, 0.75]",[40 80],"[-1, -1]",pomdp,0,26,4
+1075,param_7_high_perf,"[0.0, 0.75]",[40 80],"[-1, -1]",myopic,0,34,12
+1076,param_7_high_perf,"[0.0, 0.75]",[40 80],"[-1, -1]",egostistical,0,26,0
+1077,param_8_high_perf,"[0.0, 0.75]",[ 40 100],"[-1, -1]",pomdp,0,26,4
+1078,param_8_high_perf,"[0.0, 0.75]",[ 40 100],"[-1, -1]",myopic,0,36,12
+1079,param_8_high_perf,"[0.0, 0.75]",[ 40 100],"[-1, -1]",egostistical,0,26,0
+1080,param_1_high_perf,"[0.0, 0.75]",[20 40],"[-1, 0]",pomdp,0,22,4
+1081,param_1_high_perf,"[0.0, 0.75]",[20 40],"[-1, 0]",myopic,0,27,12
+1082,param_1_high_perf,"[0.0, 0.75]",[20 40],"[-1, 0]",egostistical,0,26,0
+1083,param_2_high_perf,"[0.0, 0.75]",[20 60],"[-1, 0]",pomdp,0,20,4
+1084,param_2_high_perf,"[0.0, 0.75]",[20 60],"[-1, 0]",myopic,0,27,12
+1085,param_2_high_perf,"[0.0, 0.75]",[20 60],"[-1, 0]",egostistical,0,26,0
+1086,param_3_high_perf,"[0.0, 0.75]",[20 80],"[-1, 0]",pomdp,0,17,4
+1087,param_3_high_perf,"[0.0, 0.75]",[20 80],"[-1, 0]",myopic,0,27,12
+1088,param_3_high_perf,"[0.0, 0.75]",[20 80],"[-1, 0]",egostistical,0,26,0
+1089,param_4_high_perf,"[0.0, 0.75]",[ 20 100],"[-1, 0]",pomdp,0,16,4
+1090,param_4_high_perf,"[0.0, 0.75]",[ 20 100],"[-1, 0]",myopic,0,25,12
+1091,param_4_high_perf,"[0.0, 0.75]",[ 20 100],"[-1, 0]",egostistical,0,26,0
+1092,param_5_high_perf,"[0.0, 0.75]",[ 20 120],"[-1, 0]",pomdp,0,15,4
+1093,param_5_high_perf,"[0.0, 0.75]",[ 20 120],"[-1, 0]",myopic,0,24,12
+1094,param_5_high_perf,"[0.0, 0.75]",[ 20 120],"[-1, 0]",egostistical,0,26,0
+1095,param_6_high_perf,"[0.0, 0.75]",[40 60],"[-1, 0]",pomdp,0,20,4
+1096,param_6_high_perf,"[0.0, 0.75]",[40 60],"[-1, 0]",myopic,0,26,12
+1097,param_6_high_perf,"[0.0, 0.75]",[40 60],"[-1, 0]",egostistical,0,26,0
+1098,param_7_high_perf,"[0.0, 0.75]",[40 80],"[-1, 0]",pomdp,0,17,4
+1099,param_7_high_perf,"[0.0, 0.75]",[40 80],"[-1, 0]",myopic,0,30,12
+1100,param_7_high_perf,"[0.0, 0.75]",[40 80],"[-1, 0]",egostistical,0,26,0
+1101,param_8_high_perf,"[0.0, 0.75]",[ 40 100],"[-1, 0]",pomdp,0,16,4
+1102,param_8_high_perf,"[0.0, 0.75]",[ 40 100],"[-1, 0]",myopic,0,30,12
+1103,param_8_high_perf,"[0.0, 0.75]",[ 40 100],"[-1, 0]",egostistical,0,26,0
+1104,param_1_high_perf,"[0.0, 0.75]",[20 40],"[0, -1]",pomdp,0,26,4
+1105,param_1_high_perf,"[0.0, 0.75]",[20 40],"[0, -1]",myopic,0,29,12
+1106,param_1_high_perf,"[0.0, 0.75]",[20 40],"[0, -1]",egostistical,0,26,0
+1107,param_2_high_perf,"[0.0, 0.75]",[20 60],"[0, -1]",pomdp,0,26,4
+1108,param_2_high_perf,"[0.0, 0.75]",[20 60],"[0, -1]",myopic,0,31,12
+1109,param_2_high_perf,"[0.0, 0.75]",[20 60],"[0, -1]",egostistical,0,26,0
+1110,param_3_high_perf,"[0.0, 0.75]",[20 80],"[0, -1]",pomdp,0,26,4
+1111,param_3_high_perf,"[0.0, 0.75]",[20 80],"[0, -1]",myopic,0,31,12
+1112,param_3_high_perf,"[0.0, 0.75]",[20 80],"[0, -1]",egostistical,0,26,0
+1113,param_4_high_perf,"[0.0, 0.75]",[ 20 100],"[0, -1]",pomdp,0,26,4
+1114,param_4_high_perf,"[0.0, 0.75]",[ 20 100],"[0, -1]",myopic,0,33,12
+1115,param_4_high_perf,"[0.0, 0.75]",[ 20 100],"[0, -1]",egostistical,0,26,0
+1116,param_5_high_perf,"[0.0, 0.75]",[ 20 120],"[0, -1]",pomdp,0,26,4
+1117,param_5_high_perf,"[0.0, 0.75]",[ 20 120],"[0, -1]",myopic,0,33,12
+1118,param_5_high_perf,"[0.0, 0.75]",[ 20 120],"[0, -1]",egostistical,0,26,0
+1119,param_6_high_perf,"[0.0, 0.75]",[40 60],"[0, -1]",pomdp,0,26,4
+1120,param_6_high_perf,"[0.0, 0.75]",[40 60],"[0, -1]",myopic,0,29,12
+1121,param_6_high_perf,"[0.0, 0.75]",[40 60],"[0, -1]",egostistical,0,26,0
+1122,param_7_high_perf,"[0.0, 0.75]",[40 80],"[0, -1]",pomdp,0,26,4
+1123,param_7_high_perf,"[0.0, 0.75]",[40 80],"[0, -1]",myopic,0,29,12
+1124,param_7_high_perf,"[0.0, 0.75]",[40 80],"[0, -1]",egostistical,0,26,0
+1125,param_8_high_perf,"[0.0, 0.75]",[ 40 100],"[0, -1]",pomdp,0,26,4
+1126,param_8_high_perf,"[0.0, 0.75]",[ 40 100],"[0, -1]",myopic,0,32,12
+1127,param_8_high_perf,"[0.0, 0.75]",[ 40 100],"[0, -1]",egostistical,0,26,0
+1128,param_1_high_perf,"[0.0, 0.75]",[20 40],"[0, 0]",pomdp,0,22,4
+1129,param_1_high_perf,"[0.0, 0.75]",[20 40],"[0, 0]",myopic,0,26,12
+1130,param_1_high_perf,"[0.0, 0.75]",[20 40],"[0, 0]",egostistical,0,26,0
+1131,param_2_high_perf,"[0.0, 0.75]",[20 60],"[0, 0]",pomdp,0,20,4
+1132,param_2_high_perf,"[0.0, 0.75]",[20 60],"[0, 0]",myopic,0,27,12
+1133,param_2_high_perf,"[0.0, 0.75]",[20 60],"[0, 0]",egostistical,0,26,0
+1134,param_3_high_perf,"[0.0, 0.75]",[20 80],"[0, 0]",pomdp,0,17,4
+1135,param_3_high_perf,"[0.0, 0.75]",[20 80],"[0, 0]",myopic,0,25,12
+1136,param_3_high_perf,"[0.0, 0.75]",[20 80],"[0, 0]",egostistical,0,26,0
+1137,param_4_high_perf,"[0.0, 0.75]",[ 20 100],"[0, 0]",pomdp,0,16,4
+1138,param_4_high_perf,"[0.0, 0.75]",[ 20 100],"[0, 0]",myopic,0,25,12
+1139,param_4_high_perf,"[0.0, 0.75]",[ 20 100],"[0, 0]",egostistical,0,26,0
+1140,param_5_high_perf,"[0.0, 0.75]",[ 20 120],"[0, 0]",pomdp,0,15,4
+1141,param_5_high_perf,"[0.0, 0.75]",[ 20 120],"[0, 0]",myopic,0,24,12
+1142,param_5_high_perf,"[0.0, 0.75]",[ 20 120],"[0, 0]",egostistical,0,26,0
+1143,param_6_high_perf,"[0.0, 0.75]",[40 60],"[0, 0]",pomdp,0,20,4
+1144,param_6_high_perf,"[0.0, 0.75]",[40 60],"[0, 0]",myopic,0,26,12
+1145,param_6_high_perf,"[0.0, 0.75]",[40 60],"[0, 0]",egostistical,0,26,0
+1146,param_7_high_perf,"[0.0, 0.75]",[40 80],"[0, 0]",pomdp,0,17,4
+1147,param_7_high_perf,"[0.0, 0.75]",[40 80],"[0, 0]",myopic,0,25,12
+1148,param_7_high_perf,"[0.0, 0.75]",[40 80],"[0, 0]",egostistical,0,26,0
+1149,param_8_high_perf,"[0.0, 0.75]",[ 40 100],"[0, 0]",pomdp,0,16,4
+1150,param_8_high_perf,"[0.0, 0.75]",[ 40 100],"[0, 0]",myopic,0,24,12
+1151,param_8_high_perf,"[0.0, 0.75]",[ 40 100],"[0, 0]",egostistical,0,26,0
+1152,param_1_high_perf,"[0.0, 1.0]",[20 40],"[-1, -1]",pomdp,0,26,0
+1153,param_1_high_perf,"[0.0, 1.0]",[20 40],"[-1, -1]",myopic,0,31,12
+1154,param_1_high_perf,"[0.0, 1.0]",[20 40],"[-1, -1]",egostistical,0,26,0
+1155,param_2_high_perf,"[0.0, 1.0]",[20 60],"[-1, -1]",pomdp,0,26,0
+1156,param_2_high_perf,"[0.0, 1.0]",[20 60],"[-1, -1]",myopic,0,31,12
+1157,param_2_high_perf,"[0.0, 1.0]",[20 60],"[-1, -1]",egostistical,0,26,0
+1158,param_3_high_perf,"[0.0, 1.0]",[20 80],"[-1, -1]",pomdp,0,26,0
+1159,param_3_high_perf,"[0.0, 1.0]",[20 80],"[-1, -1]",myopic,0,33,12
+1160,param_3_high_perf,"[0.0, 1.0]",[20 80],"[-1, -1]",egostistical,0,26,0
+1161,param_4_high_perf,"[0.0, 1.0]",[ 20 100],"[-1, -1]",pomdp,0,26,3
+1162,param_4_high_perf,"[0.0, 1.0]",[ 20 100],"[-1, -1]",myopic,0,32,12
+1163,param_4_high_perf,"[0.0, 1.0]",[ 20 100],"[-1, -1]",egostistical,0,26,0
+1164,param_5_high_perf,"[0.0, 1.0]",[ 20 120],"[-1, -1]",pomdp,0,26,3
+1165,param_5_high_perf,"[0.0, 1.0]",[ 20 120],"[-1, -1]",myopic,0,32,12
+1166,param_5_high_perf,"[0.0, 1.0]",[ 20 120],"[-1, -1]",egostistical,0,26,0
+1167,param_6_high_perf,"[0.0, 1.0]",[40 60],"[-1, -1]",pomdp,0,26,0
+1168,param_6_high_perf,"[0.0, 1.0]",[40 60],"[-1, -1]",myopic,0,34,12
+1169,param_6_high_perf,"[0.0, 1.0]",[40 60],"[-1, -1]",egostistical,0,26,0
+1170,param_7_high_perf,"[0.0, 1.0]",[40 80],"[-1, -1]",pomdp,0,26,0
+1171,param_7_high_perf,"[0.0, 1.0]",[40 80],"[-1, -1]",myopic,0,34,12
+1172,param_7_high_perf,"[0.0, 1.0]",[40 80],"[-1, -1]",egostistical,0,26,0
+1173,param_8_high_perf,"[0.0, 1.0]",[ 40 100],"[-1, -1]",pomdp,0,26,3
+1174,param_8_high_perf,"[0.0, 1.0]",[ 40 100],"[-1, -1]",myopic,0,36,12
+1175,param_8_high_perf,"[0.0, 1.0]",[ 40 100],"[-1, -1]",egostistical,0,26,0
+1176,param_1_high_perf,"[0.0, 1.0]",[20 40],"[-1, 0]",pomdp,0,26,0
+1177,param_1_high_perf,"[0.0, 1.0]",[20 40],"[-1, 0]",myopic,0,27,12
+1178,param_1_high_perf,"[0.0, 1.0]",[20 40],"[-1, 0]",egostistical,0,26,0
+1179,param_2_high_perf,"[0.0, 1.0]",[20 60],"[-1, 0]",pomdp,0,26,0
+1180,param_2_high_perf,"[0.0, 1.0]",[20 60],"[-1, 0]",myopic,0,27,12
+1181,param_2_high_perf,"[0.0, 1.0]",[20 60],"[-1, 0]",egostistical,0,26,0
+1182,param_3_high_perf,"[0.0, 1.0]",[20 80],"[-1, 0]",pomdp,0,26,0
+1183,param_3_high_perf,"[0.0, 1.0]",[20 80],"[-1, 0]",myopic,0,27,12
+1184,param_3_high_perf,"[0.0, 1.0]",[20 80],"[-1, 0]",egostistical,0,26,0
+1185,param_4_high_perf,"[0.0, 1.0]",[ 20 100],"[-1, 0]",pomdp,0,26,3
+1186,param_4_high_perf,"[0.0, 1.0]",[ 20 100],"[-1, 0]",myopic,0,25,12
+1187,param_4_high_perf,"[0.0, 1.0]",[ 20 100],"[-1, 0]",egostistical,0,26,0
+1188,param_5_high_perf,"[0.0, 1.0]",[ 20 120],"[-1, 0]",pomdp,0,26,3
+1189,param_5_high_perf,"[0.0, 1.0]",[ 20 120],"[-1, 0]",myopic,0,24,12
+1190,param_5_high_perf,"[0.0, 1.0]",[ 20 120],"[-1, 0]",egostistical,0,26,0
+1191,param_6_high_perf,"[0.0, 1.0]",[40 60],"[-1, 0]",pomdp,0,26,0
+1192,param_6_high_perf,"[0.0, 1.0]",[40 60],"[-1, 0]",myopic,0,26,12
+1193,param_6_high_perf,"[0.0, 1.0]",[40 60],"[-1, 0]",egostistical,0,26,0
+1194,param_7_high_perf,"[0.0, 1.0]",[40 80],"[-1, 0]",pomdp,0,26,0
+1195,param_7_high_perf,"[0.0, 1.0]",[40 80],"[-1, 0]",myopic,0,30,12
+1196,param_7_high_perf,"[0.0, 1.0]",[40 80],"[-1, 0]",egostistical,0,26,0
+1197,param_8_high_perf,"[0.0, 1.0]",[ 40 100],"[-1, 0]",pomdp,0,26,3
+1198,param_8_high_perf,"[0.0, 1.0]",[ 40 100],"[-1, 0]",myopic,0,30,12
+1199,param_8_high_perf,"[0.0, 1.0]",[ 40 100],"[-1, 0]",egostistical,0,26,0
+1200,param_1_high_perf,"[0.0, 1.0]",[20 40],"[0, -1]",pomdp,0,26,0
+1201,param_1_high_perf,"[0.0, 1.0]",[20 40],"[0, -1]",myopic,0,29,12
+1202,param_1_high_perf,"[0.0, 1.0]",[20 40],"[0, -1]",egostistical,0,26,0
+1203,param_2_high_perf,"[0.0, 1.0]",[20 60],"[0, -1]",pomdp,0,26,0
+1204,param_2_high_perf,"[0.0, 1.0]",[20 60],"[0, -1]",myopic,0,31,12
+1205,param_2_high_perf,"[0.0, 1.0]",[20 60],"[0, -1]",egostistical,0,26,0
+1206,param_3_high_perf,"[0.0, 1.0]",[20 80],"[0, -1]",pomdp,0,26,0
+1207,param_3_high_perf,"[0.0, 1.0]",[20 80],"[0, -1]",myopic,0,31,12
+1208,param_3_high_perf,"[0.0, 1.0]",[20 80],"[0, -1]",egostistical,0,26,0
+1209,param_4_high_perf,"[0.0, 1.0]",[ 20 100],"[0, -1]",pomdp,0,26,3
+1210,param_4_high_perf,"[0.0, 1.0]",[ 20 100],"[0, -1]",myopic,0,33,12
+1211,param_4_high_perf,"[0.0, 1.0]",[ 20 100],"[0, -1]",egostistical,0,26,0
+1212,param_5_high_perf,"[0.0, 1.0]",[ 20 120],"[0, -1]",pomdp,0,26,3
+1213,param_5_high_perf,"[0.0, 1.0]",[ 20 120],"[0, -1]",myopic,0,33,12
+1214,param_5_high_perf,"[0.0, 1.0]",[ 20 120],"[0, -1]",egostistical,0,26,0
+1215,param_6_high_perf,"[0.0, 1.0]",[40 60],"[0, -1]",pomdp,0,26,0
+1216,param_6_high_perf,"[0.0, 1.0]",[40 60],"[0, -1]",myopic,0,29,12
+1217,param_6_high_perf,"[0.0, 1.0]",[40 60],"[0, -1]",egostistical,0,26,0
+1218,param_7_high_perf,"[0.0, 1.0]",[40 80],"[0, -1]",pomdp,0,26,0
+1219,param_7_high_perf,"[0.0, 1.0]",[40 80],"[0, -1]",myopic,0,29,12
+1220,param_7_high_perf,"[0.0, 1.0]",[40 80],"[0, -1]",egostistical,0,26,0
+1221,param_8_high_perf,"[0.0, 1.0]",[ 40 100],"[0, -1]",pomdp,0,26,3
+1222,param_8_high_perf,"[0.0, 1.0]",[ 40 100],"[0, -1]",myopic,0,32,12
+1223,param_8_high_perf,"[0.0, 1.0]",[ 40 100],"[0, -1]",egostistical,0,26,0
+1224,param_1_high_perf,"[0.0, 1.0]",[20 40],"[0, 0]",pomdp,0,26,0
+1225,param_1_high_perf,"[0.0, 1.0]",[20 40],"[0, 0]",myopic,0,26,12
+1226,param_1_high_perf,"[0.0, 1.0]",[20 40],"[0, 0]",egostistical,0,26,0
+1227,param_2_high_perf,"[0.0, 1.0]",[20 60],"[0, 0]",pomdp,0,26,0
+1228,param_2_high_perf,"[0.0, 1.0]",[20 60],"[0, 0]",myopic,0,27,12
+1229,param_2_high_perf,"[0.0, 1.0]",[20 60],"[0, 0]",egostistical,0,26,0
+1230,param_3_high_perf,"[0.0, 1.0]",[20 80],"[0, 0]",pomdp,0,26,0
+1231,param_3_high_perf,"[0.0, 1.0]",[20 80],"[0, 0]",myopic,0,25,12
+1232,param_3_high_perf,"[0.0, 1.0]",[20 80],"[0, 0]",egostistical,0,26,0
+1233,param_4_high_perf,"[0.0, 1.0]",[ 20 100],"[0, 0]",pomdp,0,26,3
+1234,param_4_high_perf,"[0.0, 1.0]",[ 20 100],"[0, 0]",myopic,0,25,12
+1235,param_4_high_perf,"[0.0, 1.0]",[ 20 100],"[0, 0]",egostistical,0,26,0
+1236,param_5_high_perf,"[0.0, 1.0]",[ 20 120],"[0, 0]",pomdp,0,26,3
+1237,param_5_high_perf,"[0.0, 1.0]",[ 20 120],"[0, 0]",myopic,0,24,12
+1238,param_5_high_perf,"[0.0, 1.0]",[ 20 120],"[0, 0]",egostistical,0,26,0
+1239,param_6_high_perf,"[0.0, 1.0]",[40 60],"[0, 0]",pomdp,0,26,0
+1240,param_6_high_perf,"[0.0, 1.0]",[40 60],"[0, 0]",myopic,0,26,12
+1241,param_6_high_perf,"[0.0, 1.0]",[40 60],"[0, 0]",egostistical,0,26,0
+1242,param_7_high_perf,"[0.0, 1.0]",[40 80],"[0, 0]",pomdp,0,26,0
+1243,param_7_high_perf,"[0.0, 1.0]",[40 80],"[0, 0]",myopic,0,25,12
+1244,param_7_high_perf,"[0.0, 1.0]",[40 80],"[0, 0]",egostistical,0,26,0
+1245,param_8_high_perf,"[0.0, 1.0]",[ 40 100],"[0, 0]",pomdp,0,26,3
+1246,param_8_high_perf,"[0.0, 1.0]",[ 40 100],"[0, 0]",myopic,0,24,12
+1247,param_8_high_perf,"[0.0, 1.0]",[ 40 100],"[0, 0]",egostistical,0,26,0
+1248,param_1_high_perf,"[0.25, 0.5]",[20 40],"[-1, -1]",pomdp,0,31,9
+1249,param_1_high_perf,"[0.25, 0.5]",[20 40],"[-1, -1]",myopic,0,31,12
+1250,param_1_high_perf,"[0.25, 0.5]",[20 40],"[-1, -1]",egostistical,1,26,0
+1251,param_2_high_perf,"[0.25, 0.5]",[20 60],"[-1, -1]",pomdp,0,31,8
+1252,param_2_high_perf,"[0.25, 0.5]",[20 60],"[-1, -1]",myopic,0,31,12
+1253,param_2_high_perf,"[0.25, 0.5]",[20 60],"[-1, -1]",egostistical,1,26,0
+1254,param_3_high_perf,"[0.25, 0.5]",[20 80],"[-1, -1]",pomdp,0,33,8
+1255,param_3_high_perf,"[0.25, 0.5]",[20 80],"[-1, -1]",myopic,0,33,12
+1256,param_3_high_perf,"[0.25, 0.5]",[20 80],"[-1, -1]",egostistical,1,26,0
+1257,param_4_high_perf,"[0.25, 0.5]",[ 20 100],"[-1, -1]",pomdp,0,32,8
+1258,param_4_high_perf,"[0.25, 0.5]",[ 20 100],"[-1, -1]",myopic,0,32,12
+1259,param_4_high_perf,"[0.25, 0.5]",[ 20 100],"[-1, -1]",egostistical,1,26,0
+1260,param_5_high_perf,"[0.25, 0.5]",[ 20 120],"[-1, -1]",pomdp,0,32,11
+1261,param_5_high_perf,"[0.25, 0.5]",[ 20 120],"[-1, -1]",myopic,0,32,12
+1262,param_5_high_perf,"[0.25, 0.5]",[ 20 120],"[-1, -1]",egostistical,1,26,0
+1263,param_6_high_perf,"[0.25, 0.5]",[40 60],"[-1, -1]",pomdp,0,31,9
+1264,param_6_high_perf,"[0.25, 0.5]",[40 60],"[-1, -1]",myopic,0,34,12
+1265,param_6_high_perf,"[0.25, 0.5]",[40 60],"[-1, -1]",egostistical,1,26,0
+1266,param_7_high_perf,"[0.25, 0.5]",[40 80],"[-1, -1]",pomdp,0,31,8
+1267,param_7_high_perf,"[0.25, 0.5]",[40 80],"[-1, -1]",myopic,0,34,12
+1268,param_7_high_perf,"[0.25, 0.5]",[40 80],"[-1, -1]",egostistical,1,26,0
+1269,param_8_high_perf,"[0.25, 0.5]",[ 40 100],"[-1, -1]",pomdp,0,33,8
+1270,param_8_high_perf,"[0.25, 0.5]",[ 40 100],"[-1, -1]",myopic,0,36,12
+1271,param_8_high_perf,"[0.25, 0.5]",[ 40 100],"[-1, -1]",egostistical,1,26,0
+1272,param_1_high_perf,"[0.25, 0.5]",[20 40],"[-1, 0]",pomdp,0,24,9
+1273,param_1_high_perf,"[0.25, 0.5]",[20 40],"[-1, 0]",myopic,0,27,12
+1274,param_1_high_perf,"[0.25, 0.5]",[20 40],"[-1, 0]",egostistical,1,26,0
+1275,param_2_high_perf,"[0.25, 0.5]",[20 60],"[-1, 0]",pomdp,0,23,8
+1276,param_2_high_perf,"[0.25, 0.5]",[20 60],"[-1, 0]",myopic,0,27,12
+1277,param_2_high_perf,"[0.25, 0.5]",[20 60],"[-1, 0]",egostistical,1,26,0
+1278,param_3_high_perf,"[0.25, 0.5]",[20 80],"[-1, 0]",pomdp,0,23,8
+1279,param_3_high_perf,"[0.25, 0.5]",[20 80],"[-1, 0]",myopic,0,27,12
+1280,param_3_high_perf,"[0.25, 0.5]",[20 80],"[-1, 0]",egostistical,1,26,0
+1281,param_4_high_perf,"[0.25, 0.5]",[ 20 100],"[-1, 0]",pomdp,0,23,8
+1282,param_4_high_perf,"[0.25, 0.5]",[ 20 100],"[-1, 0]",myopic,0,25,12
+1283,param_4_high_perf,"[0.25, 0.5]",[ 20 100],"[-1, 0]",egostistical,1,26,0
+1284,param_5_high_perf,"[0.25, 0.5]",[ 20 120],"[-1, 0]",pomdp,0,23,8
+1285,param_5_high_perf,"[0.25, 0.5]",[ 20 120],"[-1, 0]",myopic,0,24,12
+1286,param_5_high_perf,"[0.25, 0.5]",[ 20 120],"[-1, 0]",egostistical,1,26,0
+1287,param_6_high_perf,"[0.25, 0.5]",[40 60],"[-1, 0]",pomdp,0,24,9
+1288,param_6_high_perf,"[0.25, 0.5]",[40 60],"[-1, 0]",myopic,0,26,12
+1289,param_6_high_perf,"[0.25, 0.5]",[40 60],"[-1, 0]",egostistical,1,26,0
+1290,param_7_high_perf,"[0.25, 0.5]",[40 80],"[-1, 0]",pomdp,0,23,8
+1291,param_7_high_perf,"[0.25, 0.5]",[40 80],"[-1, 0]",myopic,0,30,12
+1292,param_7_high_perf,"[0.25, 0.5]",[40 80],"[-1, 0]",egostistical,1,26,0
+1293,param_8_high_perf,"[0.25, 0.5]",[ 40 100],"[-1, 0]",pomdp,0,23,8
+1294,param_8_high_perf,"[0.25, 0.5]",[ 40 100],"[-1, 0]",myopic,0,30,12
+1295,param_8_high_perf,"[0.25, 0.5]",[ 40 100],"[-1, 0]",egostistical,1,26,0
+1296,param_1_high_perf,"[0.25, 0.5]",[20 40],"[0, -1]",pomdp,0,29,9
+1297,param_1_high_perf,"[0.25, 0.5]",[20 40],"[0, -1]",myopic,0,29,12
+1298,param_1_high_perf,"[0.25, 0.5]",[20 40],"[0, -1]",egostistical,1,26,0
+1299,param_2_high_perf,"[0.25, 0.5]",[20 60],"[0, -1]",pomdp,0,31,8
+1300,param_2_high_perf,"[0.25, 0.5]",[20 60],"[0, -1]",myopic,0,31,12
+1301,param_2_high_perf,"[0.25, 0.5]",[20 60],"[0, -1]",egostistical,1,26,0
+1302,param_3_high_perf,"[0.25, 0.5]",[20 80],"[0, -1]",pomdp,0,29,8
+1303,param_3_high_perf,"[0.25, 0.5]",[20 80],"[0, -1]",myopic,0,31,12
+1304,param_3_high_perf,"[0.25, 0.5]",[20 80],"[0, -1]",egostistical,1,26,0
+1305,param_4_high_perf,"[0.25, 0.5]",[ 20 100],"[0, -1]",pomdp,0,31,8
+1306,param_4_high_perf,"[0.25, 0.5]",[ 20 100],"[0, -1]",myopic,0,33,12
+1307,param_4_high_perf,"[0.25, 0.5]",[ 20 100],"[0, -1]",egostistical,1,26,0
+1308,param_5_high_perf,"[0.25, 0.5]",[ 20 120],"[0, -1]",pomdp,0,31,8
+1309,param_5_high_perf,"[0.25, 0.5]",[ 20 120],"[0, -1]",myopic,0,33,12
+1310,param_5_high_perf,"[0.25, 0.5]",[ 20 120],"[0, -1]",egostistical,1,26,0
+1311,param_6_high_perf,"[0.25, 0.5]",[40 60],"[0, -1]",pomdp,0,29,9
+1312,param_6_high_perf,"[0.25, 0.5]",[40 60],"[0, -1]",myopic,0,29,12
+1313,param_6_high_perf,"[0.25, 0.5]",[40 60],"[0, -1]",egostistical,1,26,0
+1314,param_7_high_perf,"[0.25, 0.5]",[40 80],"[0, -1]",pomdp,0,31,8
+1315,param_7_high_perf,"[0.25, 0.5]",[40 80],"[0, -1]",myopic,0,29,12
+1316,param_7_high_perf,"[0.25, 0.5]",[40 80],"[0, -1]",egostistical,1,26,0
+1317,param_8_high_perf,"[0.25, 0.5]",[ 40 100],"[0, -1]",pomdp,0,29,8
+1318,param_8_high_perf,"[0.25, 0.5]",[ 40 100],"[0, -1]",myopic,0,32,12
+1319,param_8_high_perf,"[0.25, 0.5]",[ 40 100],"[0, -1]",egostistical,1,26,0
+1320,param_1_high_perf,"[0.25, 0.5]",[20 40],"[0, 0]",pomdp,0,24,9
+1321,param_1_high_perf,"[0.25, 0.5]",[20 40],"[0, 0]",myopic,0,26,12
+1322,param_1_high_perf,"[0.25, 0.5]",[20 40],"[0, 0]",egostistical,1,26,0
+1323,param_2_high_perf,"[0.25, 0.5]",[20 60],"[0, 0]",pomdp,0,20,8
+1324,param_2_high_perf,"[0.25, 0.5]",[20 60],"[0, 0]",myopic,0,27,12
+1325,param_2_high_perf,"[0.25, 0.5]",[20 60],"[0, 0]",egostistical,1,26,0
+1326,param_3_high_perf,"[0.25, 0.5]",[20 80],"[0, 0]",pomdp,0,20,8
+1327,param_3_high_perf,"[0.25, 0.5]",[20 80],"[0, 0]",myopic,0,25,12
+1328,param_3_high_perf,"[0.25, 0.5]",[20 80],"[0, 0]",egostistical,1,26,0
+1329,param_4_high_perf,"[0.25, 0.5]",[ 20 100],"[0, 0]",pomdp,0,20,8
+1330,param_4_high_perf,"[0.25, 0.5]",[ 20 100],"[0, 0]",myopic,0,25,12
+1331,param_4_high_perf,"[0.25, 0.5]",[ 20 100],"[0, 0]",egostistical,1,26,0
+1332,param_5_high_perf,"[0.25, 0.5]",[ 20 120],"[0, 0]",pomdp,0,20,8
+1333,param_5_high_perf,"[0.25, 0.5]",[ 20 120],"[0, 0]",myopic,0,24,12
+1334,param_5_high_perf,"[0.25, 0.5]",[ 20 120],"[0, 0]",egostistical,1,26,0
+1335,param_6_high_perf,"[0.25, 0.5]",[40 60],"[0, 0]",pomdp,0,24,9
+1336,param_6_high_perf,"[0.25, 0.5]",[40 60],"[0, 0]",myopic,0,26,12
+1337,param_6_high_perf,"[0.25, 0.5]",[40 60],"[0, 0]",egostistical,1,26,0
+1338,param_7_high_perf,"[0.25, 0.5]",[40 80],"[0, 0]",pomdp,0,20,8
+1339,param_7_high_perf,"[0.25, 0.5]",[40 80],"[0, 0]",myopic,0,25,12
+1340,param_7_high_perf,"[0.25, 0.5]",[40 80],"[0, 0]",egostistical,1,26,0
+1341,param_8_high_perf,"[0.25, 0.5]",[ 40 100],"[0, 0]",pomdp,0,20,8
+1342,param_8_high_perf,"[0.25, 0.5]",[ 40 100],"[0, 0]",myopic,0,24,12
+1343,param_8_high_perf,"[0.25, 0.5]",[ 40 100],"[0, 0]",egostistical,1,26,0
+1344,param_1_high_perf,"[0.25, 0.75]",[20 40],"[-1, -1]",pomdp,0,31,9
+1345,param_1_high_perf,"[0.25, 0.75]",[20 40],"[-1, -1]",myopic,0,31,12
+1346,param_1_high_perf,"[0.25, 0.75]",[20 40],"[-1, -1]",egostistical,1,26,0
+1347,param_2_high_perf,"[0.25, 0.75]",[20 60],"[-1, -1]",pomdp,0,31,8
+1348,param_2_high_perf,"[0.25, 0.75]",[20 60],"[-1, -1]",myopic,0,31,12
+1349,param_2_high_perf,"[0.25, 0.75]",[20 60],"[-1, -1]",egostistical,1,26,0
+1350,param_3_high_perf,"[0.25, 0.75]",[20 80],"[-1, -1]",pomdp,0,33,8
+1351,param_3_high_perf,"[0.25, 0.75]",[20 80],"[-1, -1]",myopic,0,33,12
+1352,param_3_high_perf,"[0.25, 0.75]",[20 80],"[-1, -1]",egostistical,1,26,0
+1353,param_4_high_perf,"[0.25, 0.75]",[ 20 100],"[-1, -1]",pomdp,0,32,8
+1354,param_4_high_perf,"[0.25, 0.75]",[ 20 100],"[-1, -1]",myopic,0,32,12
+1355,param_4_high_perf,"[0.25, 0.75]",[ 20 100],"[-1, -1]",egostistical,1,26,0
+1356,param_5_high_perf,"[0.25, 0.75]",[ 20 120],"[-1, -1]",pomdp,0,32,11
+1357,param_5_high_perf,"[0.25, 0.75]",[ 20 120],"[-1, -1]",myopic,0,32,12
+1358,param_5_high_perf,"[0.25, 0.75]",[ 20 120],"[-1, -1]",egostistical,1,26,0
+1359,param_6_high_perf,"[0.25, 0.75]",[40 60],"[-1, -1]",pomdp,0,31,9
+1360,param_6_high_perf,"[0.25, 0.75]",[40 60],"[-1, -1]",myopic,0,34,12
+1361,param_6_high_perf,"[0.25, 0.75]",[40 60],"[-1, -1]",egostistical,1,26,0
+1362,param_7_high_perf,"[0.25, 0.75]",[40 80],"[-1, -1]",pomdp,0,31,8
+1363,param_7_high_perf,"[0.25, 0.75]",[40 80],"[-1, -1]",myopic,0,34,12
+1364,param_7_high_perf,"[0.25, 0.75]",[40 80],"[-1, -1]",egostistical,1,26,0
+1365,param_8_high_perf,"[0.25, 0.75]",[ 40 100],"[-1, -1]",pomdp,0,33,8
+1366,param_8_high_perf,"[0.25, 0.75]",[ 40 100],"[-1, -1]",myopic,0,36,12
+1367,param_8_high_perf,"[0.25, 0.75]",[ 40 100],"[-1, -1]",egostistical,1,26,0
+1368,param_1_high_perf,"[0.25, 0.75]",[20 40],"[-1, 0]",pomdp,0,24,9
+1369,param_1_high_perf,"[0.25, 0.75]",[20 40],"[-1, 0]",myopic,0,27,12
+1370,param_1_high_perf,"[0.25, 0.75]",[20 40],"[-1, 0]",egostistical,1,26,0
+1371,param_2_high_perf,"[0.25, 0.75]",[20 60],"[-1, 0]",pomdp,0,23,8
+1372,param_2_high_perf,"[0.25, 0.75]",[20 60],"[-1, 0]",myopic,0,27,12
+1373,param_2_high_perf,"[0.25, 0.75]",[20 60],"[-1, 0]",egostistical,1,26,0
+1374,param_3_high_perf,"[0.25, 0.75]",[20 80],"[-1, 0]",pomdp,0,23,8
+1375,param_3_high_perf,"[0.25, 0.75]",[20 80],"[-1, 0]",myopic,0,27,12
+1376,param_3_high_perf,"[0.25, 0.75]",[20 80],"[-1, 0]",egostistical,1,26,0
+1377,param_4_high_perf,"[0.25, 0.75]",[ 20 100],"[-1, 0]",pomdp,0,23,8
+1378,param_4_high_perf,"[0.25, 0.75]",[ 20 100],"[-1, 0]",myopic,0,25,12
+1379,param_4_high_perf,"[0.25, 0.75]",[ 20 100],"[-1, 0]",egostistical,1,26,0
+1380,param_5_high_perf,"[0.25, 0.75]",[ 20 120],"[-1, 0]",pomdp,0,23,8
+1381,param_5_high_perf,"[0.25, 0.75]",[ 20 120],"[-1, 0]",myopic,0,24,12
+1382,param_5_high_perf,"[0.25, 0.75]",[ 20 120],"[-1, 0]",egostistical,1,26,0
+1383,param_6_high_perf,"[0.25, 0.75]",[40 60],"[-1, 0]",pomdp,0,24,9
+1384,param_6_high_perf,"[0.25, 0.75]",[40 60],"[-1, 0]",myopic,0,26,12
+1385,param_6_high_perf,"[0.25, 0.75]",[40 60],"[-1, 0]",egostistical,1,26,0
+1386,param_7_high_perf,"[0.25, 0.75]",[40 80],"[-1, 0]",pomdp,0,23,8
+1387,param_7_high_perf,"[0.25, 0.75]",[40 80],"[-1, 0]",myopic,0,30,12
+1388,param_7_high_perf,"[0.25, 0.75]",[40 80],"[-1, 0]",egostistical,1,26,0
+1389,param_8_high_perf,"[0.25, 0.75]",[ 40 100],"[-1, 0]",pomdp,0,23,8
+1390,param_8_high_perf,"[0.25, 0.75]",[ 40 100],"[-1, 0]",myopic,0,30,12
+1391,param_8_high_perf,"[0.25, 0.75]",[ 40 100],"[-1, 0]",egostistical,1,26,0
+1392,param_1_high_perf,"[0.25, 0.75]",[20 40],"[0, -1]",pomdp,0,29,9
+1393,param_1_high_perf,"[0.25, 0.75]",[20 40],"[0, -1]",myopic,0,29,12
+1394,param_1_high_perf,"[0.25, 0.75]",[20 40],"[0, -1]",egostistical,1,26,0
+1395,param_2_high_perf,"[0.25, 0.75]",[20 60],"[0, -1]",pomdp,0,31,8
+1396,param_2_high_perf,"[0.25, 0.75]",[20 60],"[0, -1]",myopic,0,31,12
+1397,param_2_high_perf,"[0.25, 0.75]",[20 60],"[0, -1]",egostistical,1,26,0
+1398,param_3_high_perf,"[0.25, 0.75]",[20 80],"[0, -1]",pomdp,0,29,8
+1399,param_3_high_perf,"[0.25, 0.75]",[20 80],"[0, -1]",myopic,0,31,12
+1400,param_3_high_perf,"[0.25, 0.75]",[20 80],"[0, -1]",egostistical,1,26,0
+1401,param_4_high_perf,"[0.25, 0.75]",[ 20 100],"[0, -1]",pomdp,0,31,8
+1402,param_4_high_perf,"[0.25, 0.75]",[ 20 100],"[0, -1]",myopic,0,33,12
+1403,param_4_high_perf,"[0.25, 0.75]",[ 20 100],"[0, -1]",egostistical,1,26,0
+1404,param_5_high_perf,"[0.25, 0.75]",[ 20 120],"[0, -1]",pomdp,0,31,8
+1405,param_5_high_perf,"[0.25, 0.75]",[ 20 120],"[0, -1]",myopic,0,33,12
+1406,param_5_high_perf,"[0.25, 0.75]",[ 20 120],"[0, -1]",egostistical,1,26,0
+1407,param_6_high_perf,"[0.25, 0.75]",[40 60],"[0, -1]",pomdp,0,29,9
+1408,param_6_high_perf,"[0.25, 0.75]",[40 60],"[0, -1]",myopic,0,29,12
+1409,param_6_high_perf,"[0.25, 0.75]",[40 60],"[0, -1]",egostistical,1,26,0
+1410,param_7_high_perf,"[0.25, 0.75]",[40 80],"[0, -1]",pomdp,0,31,8
+1411,param_7_high_perf,"[0.25, 0.75]",[40 80],"[0, -1]",myopic,0,29,12
+1412,param_7_high_perf,"[0.25, 0.75]",[40 80],"[0, -1]",egostistical,1,26,0
+1413,param_8_high_perf,"[0.25, 0.75]",[ 40 100],"[0, -1]",pomdp,0,29,8
+1414,param_8_high_perf,"[0.25, 0.75]",[ 40 100],"[0, -1]",myopic,0,32,12
+1415,param_8_high_perf,"[0.25, 0.75]",[ 40 100],"[0, -1]",egostistical,1,26,0
+1416,param_1_high_perf,"[0.25, 0.75]",[20 40],"[0, 0]",pomdp,0,24,9
+1417,param_1_high_perf,"[0.25, 0.75]",[20 40],"[0, 0]",myopic,0,26,12
+1418,param_1_high_perf,"[0.25, 0.75]",[20 40],"[0, 0]",egostistical,1,26,0
+1419,param_2_high_perf,"[0.25, 0.75]",[20 60],"[0, 0]",pomdp,0,20,8
+1420,param_2_high_perf,"[0.25, 0.75]",[20 60],"[0, 0]",myopic,0,27,12
+1421,param_2_high_perf,"[0.25, 0.75]",[20 60],"[0, 0]",egostistical,1,26,0
+1422,param_3_high_perf,"[0.25, 0.75]",[20 80],"[0, 0]",pomdp,0,20,8
+1423,param_3_high_perf,"[0.25, 0.75]",[20 80],"[0, 0]",myopic,0,25,12
+1424,param_3_high_perf,"[0.25, 0.75]",[20 80],"[0, 0]",egostistical,1,26,0
+1425,param_4_high_perf,"[0.25, 0.75]",[ 20 100],"[0, 0]",pomdp,0,20,8
+1426,param_4_high_perf,"[0.25, 0.75]",[ 20 100],"[0, 0]",myopic,0,25,12
+1427,param_4_high_perf,"[0.25, 0.75]",[ 20 100],"[0, 0]",egostistical,1,26,0
+1428,param_5_high_perf,"[0.25, 0.75]",[ 20 120],"[0, 0]",pomdp,0,20,8
+1429,param_5_high_perf,"[0.25, 0.75]",[ 20 120],"[0, 0]",myopic,0,24,12
+1430,param_5_high_perf,"[0.25, 0.75]",[ 20 120],"[0, 0]",egostistical,1,26,0
+1431,param_6_high_perf,"[0.25, 0.75]",[40 60],"[0, 0]",pomdp,0,24,9
+1432,param_6_high_perf,"[0.25, 0.75]",[40 60],"[0, 0]",myopic,0,26,12
+1433,param_6_high_perf,"[0.25, 0.75]",[40 60],"[0, 0]",egostistical,1,26,0
+1434,param_7_high_perf,"[0.25, 0.75]",[40 80],"[0, 0]",pomdp,0,20,8
+1435,param_7_high_perf,"[0.25, 0.75]",[40 80],"[0, 0]",myopic,0,25,12
+1436,param_7_high_perf,"[0.25, 0.75]",[40 80],"[0, 0]",egostistical,1,26,0
+1437,param_8_high_perf,"[0.25, 0.75]",[ 40 100],"[0, 0]",pomdp,0,20,8
+1438,param_8_high_perf,"[0.25, 0.75]",[ 40 100],"[0, 0]",myopic,0,24,12
+1439,param_8_high_perf,"[0.25, 0.75]",[ 40 100],"[0, 0]",egostistical,1,26,0
+1440,param_1_high_perf,"[0.25, 1.0]",[20 40],"[-1, -1]",pomdp,0,31,5
+1441,param_1_high_perf,"[0.25, 1.0]",[20 40],"[-1, -1]",myopic,0,31,12
+1442,param_1_high_perf,"[0.25, 1.0]",[20 40],"[-1, -1]",egostistical,1,26,0
+1443,param_2_high_perf,"[0.25, 1.0]",[20 60],"[-1, -1]",pomdp,0,31,8
+1444,param_2_high_perf,"[0.25, 1.0]",[20 60],"[-1, -1]",myopic,0,31,12
+1445,param_2_high_perf,"[0.25, 1.0]",[20 60],"[-1, -1]",egostistical,1,26,0
+1446,param_3_high_perf,"[0.25, 1.0]",[20 80],"[-1, -1]",pomdp,0,33,7
+1447,param_3_high_perf,"[0.25, 1.0]",[20 80],"[-1, -1]",myopic,0,33,12
+1448,param_3_high_perf,"[0.25, 1.0]",[20 80],"[-1, -1]",egostistical,1,26,0
+1449,param_4_high_perf,"[0.25, 1.0]",[ 20 100],"[-1, -1]",pomdp,0,32,8
+1450,param_4_high_perf,"[0.25, 1.0]",[ 20 100],"[-1, -1]",myopic,0,32,12
+1451,param_4_high_perf,"[0.25, 1.0]",[ 20 100],"[-1, -1]",egostistical,1,26,0
+1452,param_5_high_perf,"[0.25, 1.0]",[ 20 120],"[-1, -1]",pomdp,0,32,11
+1453,param_5_high_perf,"[0.25, 1.0]",[ 20 120],"[-1, -1]",myopic,0,32,12
+1454,param_5_high_perf,"[0.25, 1.0]",[ 20 120],"[-1, -1]",egostistical,1,26,0
+1455,param_6_high_perf,"[0.25, 1.0]",[40 60],"[-1, -1]",pomdp,1,26,2
+1456,param_6_high_perf,"[0.25, 1.0]",[40 60],"[-1, -1]",myopic,0,34,12
+1457,param_6_high_perf,"[0.25, 1.0]",[40 60],"[-1, -1]",egostistical,1,26,0
+1458,param_7_high_perf,"[0.25, 1.0]",[40 80],"[-1, -1]",pomdp,0,31,8
+1459,param_7_high_perf,"[0.25, 1.0]",[40 80],"[-1, -1]",myopic,0,34,12
+1460,param_7_high_perf,"[0.25, 1.0]",[40 80],"[-1, -1]",egostistical,1,26,0
+1461,param_8_high_perf,"[0.25, 1.0]",[ 40 100],"[-1, -1]",pomdp,0,33,7
+1462,param_8_high_perf,"[0.25, 1.0]",[ 40 100],"[-1, -1]",myopic,0,36,12
+1463,param_8_high_perf,"[0.25, 1.0]",[ 40 100],"[-1, -1]",egostistical,1,26,0
+1464,param_1_high_perf,"[0.25, 1.0]",[20 40],"[-1, 0]",pomdp,0,31,5
+1465,param_1_high_perf,"[0.25, 1.0]",[20 40],"[-1, 0]",myopic,0,27,12
+1466,param_1_high_perf,"[0.25, 1.0]",[20 40],"[-1, 0]",egostistical,1,26,0
+1467,param_2_high_perf,"[0.25, 1.0]",[20 60],"[-1, 0]",pomdp,0,31,8
+1468,param_2_high_perf,"[0.25, 1.0]",[20 60],"[-1, 0]",myopic,0,27,12
+1469,param_2_high_perf,"[0.25, 1.0]",[20 60],"[-1, 0]",egostistical,1,26,0
+1470,param_3_high_perf,"[0.25, 1.0]",[20 80],"[-1, 0]",pomdp,0,33,7
+1471,param_3_high_perf,"[0.25, 1.0]",[20 80],"[-1, 0]",myopic,0,27,12
+1472,param_3_high_perf,"[0.25, 1.0]",[20 80],"[-1, 0]",egostistical,1,26,0
+1473,param_4_high_perf,"[0.25, 1.0]",[ 20 100],"[-1, 0]",pomdp,0,32,8
+1474,param_4_high_perf,"[0.25, 1.0]",[ 20 100],"[-1, 0]",myopic,0,25,12
+1475,param_4_high_perf,"[0.25, 1.0]",[ 20 100],"[-1, 0]",egostistical,1,26,0
+1476,param_5_high_perf,"[0.25, 1.0]",[ 20 120],"[-1, 0]",pomdp,0,32,11
+1477,param_5_high_perf,"[0.25, 1.0]",[ 20 120],"[-1, 0]",myopic,0,24,12
+1478,param_5_high_perf,"[0.25, 1.0]",[ 20 120],"[-1, 0]",egostistical,1,26,0
+1479,param_6_high_perf,"[0.25, 1.0]",[40 60],"[-1, 0]",pomdp,1,26,2
+1480,param_6_high_perf,"[0.25, 1.0]",[40 60],"[-1, 0]",myopic,0,26,12
+1481,param_6_high_perf,"[0.25, 1.0]",[40 60],"[-1, 0]",egostistical,1,26,0
+1482,param_7_high_perf,"[0.25, 1.0]",[40 80],"[-1, 0]",pomdp,0,31,8
+1483,param_7_high_perf,"[0.25, 1.0]",[40 80],"[-1, 0]",myopic,0,30,12
+1484,param_7_high_perf,"[0.25, 1.0]",[40 80],"[-1, 0]",egostistical,1,26,0
+1485,param_8_high_perf,"[0.25, 1.0]",[ 40 100],"[-1, 0]",pomdp,0,33,7
+1486,param_8_high_perf,"[0.25, 1.0]",[ 40 100],"[-1, 0]",myopic,0,30,12
+1487,param_8_high_perf,"[0.25, 1.0]",[ 40 100],"[-1, 0]",egostistical,1,26,0
+1488,param_1_high_perf,"[0.25, 1.0]",[20 40],"[0, -1]",pomdp,0,29,5
+1489,param_1_high_perf,"[0.25, 1.0]",[20 40],"[0, -1]",myopic,0,29,12
+1490,param_1_high_perf,"[0.25, 1.0]",[20 40],"[0, -1]",egostistical,1,26,0
+1491,param_2_high_perf,"[0.25, 1.0]",[20 60],"[0, -1]",pomdp,0,31,8
+1492,param_2_high_perf,"[0.25, 1.0]",[20 60],"[0, -1]",myopic,0,31,12
+1493,param_2_high_perf,"[0.25, 1.0]",[20 60],"[0, -1]",egostistical,1,26,0
+1494,param_3_high_perf,"[0.25, 1.0]",[20 80],"[0, -1]",pomdp,0,29,7
+1495,param_3_high_perf,"[0.25, 1.0]",[20 80],"[0, -1]",myopic,0,31,12
+1496,param_3_high_perf,"[0.25, 1.0]",[20 80],"[0, -1]",egostistical,1,26,0
+1497,param_4_high_perf,"[0.25, 1.0]",[ 20 100],"[0, -1]",pomdp,0,31,8
+1498,param_4_high_perf,"[0.25, 1.0]",[ 20 100],"[0, -1]",myopic,0,33,12
+1499,param_4_high_perf,"[0.25, 1.0]",[ 20 100],"[0, -1]",egostistical,1,26,0
+1500,param_5_high_perf,"[0.25, 1.0]",[ 20 120],"[0, -1]",pomdp,0,31,8
+1501,param_5_high_perf,"[0.25, 1.0]",[ 20 120],"[0, -1]",myopic,0,33,12
+1502,param_5_high_perf,"[0.25, 1.0]",[ 20 120],"[0, -1]",egostistical,1,26,0
+1503,param_6_high_perf,"[0.25, 1.0]",[40 60],"[0, -1]",pomdp,1,26,2
+1504,param_6_high_perf,"[0.25, 1.0]",[40 60],"[0, -1]",myopic,0,29,12
+1505,param_6_high_perf,"[0.25, 1.0]",[40 60],"[0, -1]",egostistical,1,26,0
+1506,param_7_high_perf,"[0.25, 1.0]",[40 80],"[0, -1]",pomdp,0,31,8
+1507,param_7_high_perf,"[0.25, 1.0]",[40 80],"[0, -1]",myopic,0,29,12
+1508,param_7_high_perf,"[0.25, 1.0]",[40 80],"[0, -1]",egostistical,1,26,0
+1509,param_8_high_perf,"[0.25, 1.0]",[ 40 100],"[0, -1]",pomdp,0,29,7
+1510,param_8_high_perf,"[0.25, 1.0]",[ 40 100],"[0, -1]",myopic,0,32,12
+1511,param_8_high_perf,"[0.25, 1.0]",[ 40 100],"[0, -1]",egostistical,1,26,0
+1512,param_1_high_perf,"[0.25, 1.0]",[20 40],"[0, 0]",pomdp,0,29,5
+1513,param_1_high_perf,"[0.25, 1.0]",[20 40],"[0, 0]",myopic,0,26,12
+1514,param_1_high_perf,"[0.25, 1.0]",[20 40],"[0, 0]",egostistical,1,26,0
+1515,param_2_high_perf,"[0.25, 1.0]",[20 60],"[0, 0]",pomdp,0,31,8
+1516,param_2_high_perf,"[0.25, 1.0]",[20 60],"[0, 0]",myopic,0,27,12
+1517,param_2_high_perf,"[0.25, 1.0]",[20 60],"[0, 0]",egostistical,1,26,0
+1518,param_3_high_perf,"[0.25, 1.0]",[20 80],"[0, 0]",pomdp,0,29,7
+1519,param_3_high_perf,"[0.25, 1.0]",[20 80],"[0, 0]",myopic,0,25,12
+1520,param_3_high_perf,"[0.25, 1.0]",[20 80],"[0, 0]",egostistical,1,26,0
+1521,param_4_high_perf,"[0.25, 1.0]",[ 20 100],"[0, 0]",pomdp,0,31,8
+1522,param_4_high_perf,"[0.25, 1.0]",[ 20 100],"[0, 0]",myopic,0,25,12
+1523,param_4_high_perf,"[0.25, 1.0]",[ 20 100],"[0, 0]",egostistical,1,26,0
+1524,param_5_high_perf,"[0.25, 1.0]",[ 20 120],"[0, 0]",pomdp,0,31,8
+1525,param_5_high_perf,"[0.25, 1.0]",[ 20 120],"[0, 0]",myopic,0,24,12
+1526,param_5_high_perf,"[0.25, 1.0]",[ 20 120],"[0, 0]",egostistical,1,26,0
+1527,param_6_high_perf,"[0.25, 1.0]",[40 60],"[0, 0]",pomdp,1,26,2
+1528,param_6_high_perf,"[0.25, 1.0]",[40 60],"[0, 0]",myopic,0,26,12
+1529,param_6_high_perf,"[0.25, 1.0]",[40 60],"[0, 0]",egostistical,1,26,0
+1530,param_7_high_perf,"[0.25, 1.0]",[40 80],"[0, 0]",pomdp,0,31,8
+1531,param_7_high_perf,"[0.25, 1.0]",[40 80],"[0, 0]",myopic,0,25,12
+1532,param_7_high_perf,"[0.25, 1.0]",[40 80],"[0, 0]",egostistical,1,26,0
+1533,param_8_high_perf,"[0.25, 1.0]",[ 40 100],"[0, 0]",pomdp,0,29,7
+1534,param_8_high_perf,"[0.25, 1.0]",[ 40 100],"[0, 0]",myopic,0,24,12
+1535,param_8_high_perf,"[0.25, 1.0]",[ 40 100],"[0, 0]",egostistical,1,26,0
+1536,param_1_high_perf,"[0.5, 0.5]",[20 40],"[-1, -1]",pomdp,0,31,4
+1537,param_1_high_perf,"[0.5, 0.5]",[20 40],"[-1, -1]",myopic,0,31,12
+1538,param_1_high_perf,"[0.5, 0.5]",[20 40],"[-1, -1]",egostistical,0,31,0
+1539,param_2_high_perf,"[0.5, 0.5]",[20 60],"[-1, -1]",pomdp,0,31,4
+1540,param_2_high_perf,"[0.5, 0.5]",[20 60],"[-1, -1]",myopic,0,31,12
+1541,param_2_high_perf,"[0.5, 0.5]",[20 60],"[-1, -1]",egostistical,0,31,0
+1542,param_3_high_perf,"[0.5, 0.5]",[20 80],"[-1, -1]",pomdp,0,33,4
+1543,param_3_high_perf,"[0.5, 0.5]",[20 80],"[-1, -1]",myopic,0,33,12
+1544,param_3_high_perf,"[0.5, 0.5]",[20 80],"[-1, -1]",egostistical,0,33,0
+1545,param_4_high_perf,"[0.5, 0.5]",[ 20 100],"[-1, -1]",pomdp,0,32,4
+1546,param_4_high_perf,"[0.5, 0.5]",[ 20 100],"[-1, -1]",myopic,0,32,12
+1547,param_4_high_perf,"[0.5, 0.5]",[ 20 100],"[-1, -1]",egostistical,0,32,0
+1548,param_5_high_perf,"[0.5, 0.5]",[ 20 120],"[-1, -1]",pomdp,0,32,7
+1549,param_5_high_perf,"[0.5, 0.5]",[ 20 120],"[-1, -1]",myopic,0,32,12
+1550,param_5_high_perf,"[0.5, 0.5]",[ 20 120],"[-1, -1]",egostistical,0,32,0
+1551,param_6_high_perf,"[0.5, 0.5]",[40 60],"[-1, -1]",pomdp,0,34,4
+1552,param_6_high_perf,"[0.5, 0.5]",[40 60],"[-1, -1]",myopic,0,34,12
+1553,param_6_high_perf,"[0.5, 0.5]",[40 60],"[-1, -1]",egostistical,0,34,0
+1554,param_7_high_perf,"[0.5, 0.5]",[40 80],"[-1, -1]",pomdp,0,34,4
+1555,param_7_high_perf,"[0.5, 0.5]",[40 80],"[-1, -1]",myopic,0,34,12
+1556,param_7_high_perf,"[0.5, 0.5]",[40 80],"[-1, -1]",egostistical,0,34,0
+1557,param_8_high_perf,"[0.5, 0.5]",[ 40 100],"[-1, -1]",pomdp,0,36,7
+1558,param_8_high_perf,"[0.5, 0.5]",[ 40 100],"[-1, -1]",myopic,0,36,12
+1559,param_8_high_perf,"[0.5, 0.5]",[ 40 100],"[-1, -1]",egostistical,0,36,0
+1560,param_1_high_perf,"[0.5, 0.5]",[20 40],"[-1, 0]",pomdp,0,24,4
+1561,param_1_high_perf,"[0.5, 0.5]",[20 40],"[-1, 0]",myopic,0,27,12
+1562,param_1_high_perf,"[0.5, 0.5]",[20 40],"[-1, 0]",egostistical,0,31,0
+1563,param_2_high_perf,"[0.5, 0.5]",[20 60],"[-1, 0]",pomdp,0,23,4
+1564,param_2_high_perf,"[0.5, 0.5]",[20 60],"[-1, 0]",myopic,0,27,12
+1565,param_2_high_perf,"[0.5, 0.5]",[20 60],"[-1, 0]",egostistical,0,31,0
+1566,param_3_high_perf,"[0.5, 0.5]",[20 80],"[-1, 0]",pomdp,0,23,4
+1567,param_3_high_perf,"[0.5, 0.5]",[20 80],"[-1, 0]",myopic,0,27,12
+1568,param_3_high_perf,"[0.5, 0.5]",[20 80],"[-1, 0]",egostistical,0,33,0
+1569,param_4_high_perf,"[0.5, 0.5]",[ 20 100],"[-1, 0]",pomdp,0,23,4
+1570,param_4_high_perf,"[0.5, 0.5]",[ 20 100],"[-1, 0]",myopic,0,25,12
+1571,param_4_high_perf,"[0.5, 0.5]",[ 20 100],"[-1, 0]",egostistical,0,32,0
+1572,param_5_high_perf,"[0.5, 0.5]",[ 20 120],"[-1, 0]",pomdp,0,23,4
+1573,param_5_high_perf,"[0.5, 0.5]",[ 20 120],"[-1, 0]",myopic,0,24,12
+1574,param_5_high_perf,"[0.5, 0.5]",[ 20 120],"[-1, 0]",egostistical,0,32,0
+1575,param_6_high_perf,"[0.5, 0.5]",[40 60],"[-1, 0]",pomdp,0,27,5
+1576,param_6_high_perf,"[0.5, 0.5]",[40 60],"[-1, 0]",myopic,0,26,12
+1577,param_6_high_perf,"[0.5, 0.5]",[40 60],"[-1, 0]",egostistical,0,34,0
+1578,param_7_high_perf,"[0.5, 0.5]",[40 80],"[-1, 0]",pomdp,0,26,4
+1579,param_7_high_perf,"[0.5, 0.5]",[40 80],"[-1, 0]",myopic,0,30,12
+1580,param_7_high_perf,"[0.5, 0.5]",[40 80],"[-1, 0]",egostistical,0,34,0
+1581,param_8_high_perf,"[0.5, 0.5]",[ 40 100],"[-1, 0]",pomdp,0,26,4
+1582,param_8_high_perf,"[0.5, 0.5]",[ 40 100],"[-1, 0]",myopic,0,30,12
+1583,param_8_high_perf,"[0.5, 0.5]",[ 40 100],"[-1, 0]",egostistical,0,36,0
+1584,param_1_high_perf,"[0.5, 0.5]",[20 40],"[0, -1]",pomdp,0,31,4
+1585,param_1_high_perf,"[0.5, 0.5]",[20 40],"[0, -1]",myopic,0,29,12
+1586,param_1_high_perf,"[0.5, 0.5]",[20 40],"[0, -1]",egostistical,0,31,0
+1587,param_2_high_perf,"[0.5, 0.5]",[20 60],"[0, -1]",pomdp,0,31,4
+1588,param_2_high_perf,"[0.5, 0.5]",[20 60],"[0, -1]",myopic,0,31,12
+1589,param_2_high_perf,"[0.5, 0.5]",[20 60],"[0, -1]",egostistical,0,31,0
+1590,param_3_high_perf,"[0.5, 0.5]",[20 80],"[0, -1]",pomdp,0,33,4
+1591,param_3_high_perf,"[0.5, 0.5]",[20 80],"[0, -1]",myopic,0,31,12
+1592,param_3_high_perf,"[0.5, 0.5]",[20 80],"[0, -1]",egostistical,0,33,0
+1593,param_4_high_perf,"[0.5, 0.5]",[ 20 100],"[0, -1]",pomdp,0,32,4
+1594,param_4_high_perf,"[0.5, 0.5]",[ 20 100],"[0, -1]",myopic,0,33,12
+1595,param_4_high_perf,"[0.5, 0.5]",[ 20 100],"[0, -1]",egostistical,0,32,0
+1596,param_5_high_perf,"[0.5, 0.5]",[ 20 120],"[0, -1]",pomdp,0,32,7
+1597,param_5_high_perf,"[0.5, 0.5]",[ 20 120],"[0, -1]",myopic,0,33,12
+1598,param_5_high_perf,"[0.5, 0.5]",[ 20 120],"[0, -1]",egostistical,0,32,0
+1599,param_6_high_perf,"[0.5, 0.5]",[40 60],"[0, -1]",pomdp,0,34,4
+1600,param_6_high_perf,"[0.5, 0.5]",[40 60],"[0, -1]",myopic,0,29,12
+1601,param_6_high_perf,"[0.5, 0.5]",[40 60],"[0, -1]",egostistical,0,34,0
+1602,param_7_high_perf,"[0.5, 0.5]",[40 80],"[0, -1]",pomdp,0,34,4
+1603,param_7_high_perf,"[0.5, 0.5]",[40 80],"[0, -1]",myopic,0,29,12
+1604,param_7_high_perf,"[0.5, 0.5]",[40 80],"[0, -1]",egostistical,0,34,0
+1605,param_8_high_perf,"[0.5, 0.5]",[ 40 100],"[0, -1]",pomdp,0,36,7
+1606,param_8_high_perf,"[0.5, 0.5]",[ 40 100],"[0, -1]",myopic,0,32,12
+1607,param_8_high_perf,"[0.5, 0.5]",[ 40 100],"[0, -1]",egostistical,0,36,0
+1608,param_1_high_perf,"[0.5, 0.5]",[20 40],"[0, 0]",pomdp,0,24,4
+1609,param_1_high_perf,"[0.5, 0.5]",[20 40],"[0, 0]",myopic,0,26,12
+1610,param_1_high_perf,"[0.5, 0.5]",[20 40],"[0, 0]",egostistical,0,31,0
+1611,param_2_high_perf,"[0.5, 0.5]",[20 60],"[0, 0]",pomdp,0,23,4
+1612,param_2_high_perf,"[0.5, 0.5]",[20 60],"[0, 0]",myopic,0,27,12
+1613,param_2_high_perf,"[0.5, 0.5]",[20 60],"[0, 0]",egostistical,0,31,0
+1614,param_3_high_perf,"[0.5, 0.5]",[20 80],"[0, 0]",pomdp,0,23,4
+1615,param_3_high_perf,"[0.5, 0.5]",[20 80],"[0, 0]",myopic,0,25,12
+1616,param_3_high_perf,"[0.5, 0.5]",[20 80],"[0, 0]",egostistical,0,33,0
+1617,param_4_high_perf,"[0.5, 0.5]",[ 20 100],"[0, 0]",pomdp,0,23,4
+1618,param_4_high_perf,"[0.5, 0.5]",[ 20 100],"[0, 0]",myopic,0,25,12
+1619,param_4_high_perf,"[0.5, 0.5]",[ 20 100],"[0, 0]",egostistical,0,32,0
+1620,param_5_high_perf,"[0.5, 0.5]",[ 20 120],"[0, 0]",pomdp,0,23,4
+1621,param_5_high_perf,"[0.5, 0.5]",[ 20 120],"[0, 0]",myopic,0,24,12
+1622,param_5_high_perf,"[0.5, 0.5]",[ 20 120],"[0, 0]",egostistical,0,32,0
+1623,param_6_high_perf,"[0.5, 0.5]",[40 60],"[0, 0]",pomdp,0,27,5
+1624,param_6_high_perf,"[0.5, 0.5]",[40 60],"[0, 0]",myopic,0,26,12
+1625,param_6_high_perf,"[0.5, 0.5]",[40 60],"[0, 0]",egostistical,0,34,0
+1626,param_7_high_perf,"[0.5, 0.5]",[40 80],"[0, 0]",pomdp,0,26,4
+1627,param_7_high_perf,"[0.5, 0.5]",[40 80],"[0, 0]",myopic,0,25,12
+1628,param_7_high_perf,"[0.5, 0.5]",[40 80],"[0, 0]",egostistical,0,34,0
+1629,param_8_high_perf,"[0.5, 0.5]",[ 40 100],"[0, 0]",pomdp,0,26,4
+1630,param_8_high_perf,"[0.5, 0.5]",[ 40 100],"[0, 0]",myopic,0,24,12
+1631,param_8_high_perf,"[0.5, 0.5]",[ 40 100],"[0, 0]",egostistical,0,36,0
+1632,param_1_high_perf,"[0.5, 0.75]",[20 40],"[-1, -1]",pomdp,0,31,4
+1633,param_1_high_perf,"[0.5, 0.75]",[20 40],"[-1, -1]",myopic,0,31,12
+1634,param_1_high_perf,"[0.5, 0.75]",[20 40],"[-1, -1]",egostistical,0,31,0
+1635,param_2_high_perf,"[0.5, 0.75]",[20 60],"[-1, -1]",pomdp,0,31,4
+1636,param_2_high_perf,"[0.5, 0.75]",[20 60],"[-1, -1]",myopic,0,31,12
+1637,param_2_high_perf,"[0.5, 0.75]",[20 60],"[-1, -1]",egostistical,0,31,0
+1638,param_3_high_perf,"[0.5, 0.75]",[20 80],"[-1, -1]",pomdp,0,33,4
+1639,param_3_high_perf,"[0.5, 0.75]",[20 80],"[-1, -1]",myopic,0,33,12
+1640,param_3_high_perf,"[0.5, 0.75]",[20 80],"[-1, -1]",egostistical,0,33,0
+1641,param_4_high_perf,"[0.5, 0.75]",[ 20 100],"[-1, -1]",pomdp,0,32,4
+1642,param_4_high_perf,"[0.5, 0.75]",[ 20 100],"[-1, -1]",myopic,0,32,12
+1643,param_4_high_perf,"[0.5, 0.75]",[ 20 100],"[-1, -1]",egostistical,0,32,0
+1644,param_5_high_perf,"[0.5, 0.75]",[ 20 120],"[-1, -1]",pomdp,0,32,7
+1645,param_5_high_perf,"[0.5, 0.75]",[ 20 120],"[-1, -1]",myopic,0,32,12
+1646,param_5_high_perf,"[0.5, 0.75]",[ 20 120],"[-1, -1]",egostistical,0,32,0
+1647,param_6_high_perf,"[0.5, 0.75]",[40 60],"[-1, -1]",pomdp,0,34,4
+1648,param_6_high_perf,"[0.5, 0.75]",[40 60],"[-1, -1]",myopic,0,34,12
+1649,param_6_high_perf,"[0.5, 0.75]",[40 60],"[-1, -1]",egostistical,0,34,0
+1650,param_7_high_perf,"[0.5, 0.75]",[40 80],"[-1, -1]",pomdp,0,34,4
+1651,param_7_high_perf,"[0.5, 0.75]",[40 80],"[-1, -1]",myopic,0,34,12
+1652,param_7_high_perf,"[0.5, 0.75]",[40 80],"[-1, -1]",egostistical,0,34,0
+1653,param_8_high_perf,"[0.5, 0.75]",[ 40 100],"[-1, -1]",pomdp,0,36,7
+1654,param_8_high_perf,"[0.5, 0.75]",[ 40 100],"[-1, -1]",myopic,0,36,12
+1655,param_8_high_perf,"[0.5, 0.75]",[ 40 100],"[-1, -1]",egostistical,0,36,0
+1656,param_1_high_perf,"[0.5, 0.75]",[20 40],"[-1, 0]",pomdp,0,24,4
+1657,param_1_high_perf,"[0.5, 0.75]",[20 40],"[-1, 0]",myopic,0,27,12
+1658,param_1_high_perf,"[0.5, 0.75]",[20 40],"[-1, 0]",egostistical,0,31,0
+1659,param_2_high_perf,"[0.5, 0.75]",[20 60],"[-1, 0]",pomdp,0,23,4
+1660,param_2_high_perf,"[0.5, 0.75]",[20 60],"[-1, 0]",myopic,0,27,12
+1661,param_2_high_perf,"[0.5, 0.75]",[20 60],"[-1, 0]",egostistical,0,31,0
+1662,param_3_high_perf,"[0.5, 0.75]",[20 80],"[-1, 0]",pomdp,0,23,4
+1663,param_3_high_perf,"[0.5, 0.75]",[20 80],"[-1, 0]",myopic,0,27,12
+1664,param_3_high_perf,"[0.5, 0.75]",[20 80],"[-1, 0]",egostistical,0,33,0
+1665,param_4_high_perf,"[0.5, 0.75]",[ 20 100],"[-1, 0]",pomdp,0,23,4
+1666,param_4_high_perf,"[0.5, 0.75]",[ 20 100],"[-1, 0]",myopic,0,25,12
+1667,param_4_high_perf,"[0.5, 0.75]",[ 20 100],"[-1, 0]",egostistical,0,32,0
+1668,param_5_high_perf,"[0.5, 0.75]",[ 20 120],"[-1, 0]",pomdp,0,23,4
+1669,param_5_high_perf,"[0.5, 0.75]",[ 20 120],"[-1, 0]",myopic,0,24,12
+1670,param_5_high_perf,"[0.5, 0.75]",[ 20 120],"[-1, 0]",egostistical,0,32,0
+1671,param_6_high_perf,"[0.5, 0.75]",[40 60],"[-1, 0]",pomdp,0,27,5
+1672,param_6_high_perf,"[0.5, 0.75]",[40 60],"[-1, 0]",myopic,0,26,12
+1673,param_6_high_perf,"[0.5, 0.75]",[40 60],"[-1, 0]",egostistical,0,34,0
+1674,param_7_high_perf,"[0.5, 0.75]",[40 80],"[-1, 0]",pomdp,0,26,4
+1675,param_7_high_perf,"[0.5, 0.75]",[40 80],"[-1, 0]",myopic,0,30,12
+1676,param_7_high_perf,"[0.5, 0.75]",[40 80],"[-1, 0]",egostistical,0,34,0
+1677,param_8_high_perf,"[0.5, 0.75]",[ 40 100],"[-1, 0]",pomdp,0,26,4
+1678,param_8_high_perf,"[0.5, 0.75]",[ 40 100],"[-1, 0]",myopic,0,30,12
+1679,param_8_high_perf,"[0.5, 0.75]",[ 40 100],"[-1, 0]",egostistical,0,36,0
+1680,param_1_high_perf,"[0.5, 0.75]",[20 40],"[0, -1]",pomdp,0,31,4
+1681,param_1_high_perf,"[0.5, 0.75]",[20 40],"[0, -1]",myopic,0,29,12
+1682,param_1_high_perf,"[0.5, 0.75]",[20 40],"[0, -1]",egostistical,0,31,0
+1683,param_2_high_perf,"[0.5, 0.75]",[20 60],"[0, -1]",pomdp,0,31,4
+1684,param_2_high_perf,"[0.5, 0.75]",[20 60],"[0, -1]",myopic,0,31,12
+1685,param_2_high_perf,"[0.5, 0.75]",[20 60],"[0, -1]",egostistical,0,31,0
+1686,param_3_high_perf,"[0.5, 0.75]",[20 80],"[0, -1]",pomdp,0,33,4
+1687,param_3_high_perf,"[0.5, 0.75]",[20 80],"[0, -1]",myopic,0,31,12
+1688,param_3_high_perf,"[0.5, 0.75]",[20 80],"[0, -1]",egostistical,0,33,0
+1689,param_4_high_perf,"[0.5, 0.75]",[ 20 100],"[0, -1]",pomdp,0,32,4
+1690,param_4_high_perf,"[0.5, 0.75]",[ 20 100],"[0, -1]",myopic,0,33,12
+1691,param_4_high_perf,"[0.5, 0.75]",[ 20 100],"[0, -1]",egostistical,0,32,0
+1692,param_5_high_perf,"[0.5, 0.75]",[ 20 120],"[0, -1]",pomdp,0,32,7
+1693,param_5_high_perf,"[0.5, 0.75]",[ 20 120],"[0, -1]",myopic,0,33,12
+1694,param_5_high_perf,"[0.5, 0.75]",[ 20 120],"[0, -1]",egostistical,0,32,0
+1695,param_6_high_perf,"[0.5, 0.75]",[40 60],"[0, -1]",pomdp,0,34,4
+1696,param_6_high_perf,"[0.5, 0.75]",[40 60],"[0, -1]",myopic,0,29,12
+1697,param_6_high_perf,"[0.5, 0.75]",[40 60],"[0, -1]",egostistical,0,34,0
+1698,param_7_high_perf,"[0.5, 0.75]",[40 80],"[0, -1]",pomdp,0,34,4
+1699,param_7_high_perf,"[0.5, 0.75]",[40 80],"[0, -1]",myopic,0,29,12
+1700,param_7_high_perf,"[0.5, 0.75]",[40 80],"[0, -1]",egostistical,0,34,0
+1701,param_8_high_perf,"[0.5, 0.75]",[ 40 100],"[0, -1]",pomdp,0,36,7
+1702,param_8_high_perf,"[0.5, 0.75]",[ 40 100],"[0, -1]",myopic,0,32,12
+1703,param_8_high_perf,"[0.5, 0.75]",[ 40 100],"[0, -1]",egostistical,0,36,0
+1704,param_1_high_perf,"[0.5, 0.75]",[20 40],"[0, 0]",pomdp,0,24,4
+1705,param_1_high_perf,"[0.5, 0.75]",[20 40],"[0, 0]",myopic,0,26,12
+1706,param_1_high_perf,"[0.5, 0.75]",[20 40],"[0, 0]",egostistical,0,31,0
+1707,param_2_high_perf,"[0.5, 0.75]",[20 60],"[0, 0]",pomdp,0,23,4
+1708,param_2_high_perf,"[0.5, 0.75]",[20 60],"[0, 0]",myopic,0,27,12
+1709,param_2_high_perf,"[0.5, 0.75]",[20 60],"[0, 0]",egostistical,0,31,0
+1710,param_3_high_perf,"[0.5, 0.75]",[20 80],"[0, 0]",pomdp,0,23,4
+1711,param_3_high_perf,"[0.5, 0.75]",[20 80],"[0, 0]",myopic,0,25,12
+1712,param_3_high_perf,"[0.5, 0.75]",[20 80],"[0, 0]",egostistical,0,33,0
+1713,param_4_high_perf,"[0.5, 0.75]",[ 20 100],"[0, 0]",pomdp,0,23,4
+1714,param_4_high_perf,"[0.5, 0.75]",[ 20 100],"[0, 0]",myopic,0,25,12
+1715,param_4_high_perf,"[0.5, 0.75]",[ 20 100],"[0, 0]",egostistical,0,32,0
+1716,param_5_high_perf,"[0.5, 0.75]",[ 20 120],"[0, 0]",pomdp,0,23,4
+1717,param_5_high_perf,"[0.5, 0.75]",[ 20 120],"[0, 0]",myopic,0,24,12
+1718,param_5_high_perf,"[0.5, 0.75]",[ 20 120],"[0, 0]",egostistical,0,32,0
+1719,param_6_high_perf,"[0.5, 0.75]",[40 60],"[0, 0]",pomdp,0,27,5
+1720,param_6_high_perf,"[0.5, 0.75]",[40 60],"[0, 0]",myopic,0,26,12
+1721,param_6_high_perf,"[0.5, 0.75]",[40 60],"[0, 0]",egostistical,0,34,0
+1722,param_7_high_perf,"[0.5, 0.75]",[40 80],"[0, 0]",pomdp,0,26,4
+1723,param_7_high_perf,"[0.5, 0.75]",[40 80],"[0, 0]",myopic,0,25,12
+1724,param_7_high_perf,"[0.5, 0.75]",[40 80],"[0, 0]",egostistical,0,34,0
+1725,param_8_high_perf,"[0.5, 0.75]",[ 40 100],"[0, 0]",pomdp,0,26,4
+1726,param_8_high_perf,"[0.5, 0.75]",[ 40 100],"[0, 0]",myopic,0,24,12
+1727,param_8_high_perf,"[0.5, 0.75]",[ 40 100],"[0, 0]",egostistical,0,36,0
+1728,param_1_high_perf,"[0.5, 1.0]",[20 40],"[-1, -1]",pomdp,0,31,0
+1729,param_1_high_perf,"[0.5, 1.0]",[20 40],"[-1, -1]",myopic,0,31,12
+1730,param_1_high_perf,"[0.5, 1.0]",[20 40],"[-1, -1]",egostistical,0,31,0
+1731,param_2_high_perf,"[0.5, 1.0]",[20 60],"[-1, -1]",pomdp,0,31,3
+1732,param_2_high_perf,"[0.5, 1.0]",[20 60],"[-1, -1]",myopic,0,31,12
+1733,param_2_high_perf,"[0.5, 1.0]",[20 60],"[-1, -1]",egostistical,0,31,0
+1734,param_3_high_perf,"[0.5, 1.0]",[20 80],"[-1, -1]",pomdp,0,33,3
+1735,param_3_high_perf,"[0.5, 1.0]",[20 80],"[-1, -1]",myopic,0,33,12
+1736,param_3_high_perf,"[0.5, 1.0]",[20 80],"[-1, -1]",egostistical,0,33,0
+1737,param_4_high_perf,"[0.5, 1.0]",[ 20 100],"[-1, -1]",pomdp,0,32,3
+1738,param_4_high_perf,"[0.5, 1.0]",[ 20 100],"[-1, -1]",myopic,0,32,12
+1739,param_4_high_perf,"[0.5, 1.0]",[ 20 100],"[-1, -1]",egostistical,0,32,0
+1740,param_5_high_perf,"[0.5, 1.0]",[ 20 120],"[-1, -1]",pomdp,0,32,6
+1741,param_5_high_perf,"[0.5, 1.0]",[ 20 120],"[-1, -1]",myopic,0,32,12
+1742,param_5_high_perf,"[0.5, 1.0]",[ 20 120],"[-1, -1]",egostistical,0,32,0
+1743,param_6_high_perf,"[0.5, 1.0]",[40 60],"[-1, -1]",pomdp,0,34,3
+1744,param_6_high_perf,"[0.5, 1.0]",[40 60],"[-1, -1]",myopic,0,34,12
+1745,param_6_high_perf,"[0.5, 1.0]",[40 60],"[-1, -1]",egostistical,0,34,0
+1746,param_7_high_perf,"[0.5, 1.0]",[40 80],"[-1, -1]",pomdp,0,34,3
+1747,param_7_high_perf,"[0.5, 1.0]",[40 80],"[-1, -1]",myopic,0,34,12
+1748,param_7_high_perf,"[0.5, 1.0]",[40 80],"[-1, -1]",egostistical,0,34,0
+1749,param_8_high_perf,"[0.5, 1.0]",[ 40 100],"[-1, -1]",pomdp,0,36,6
+1750,param_8_high_perf,"[0.5, 1.0]",[ 40 100],"[-1, -1]",myopic,0,36,12
+1751,param_8_high_perf,"[0.5, 1.0]",[ 40 100],"[-1, -1]",egostistical,0,36,0
+1752,param_1_high_perf,"[0.5, 1.0]",[20 40],"[-1, 0]",pomdp,0,31,0
+1753,param_1_high_perf,"[0.5, 1.0]",[20 40],"[-1, 0]",myopic,0,27,12
+1754,param_1_high_perf,"[0.5, 1.0]",[20 40],"[-1, 0]",egostistical,0,31,0
+1755,param_2_high_perf,"[0.5, 1.0]",[20 60],"[-1, 0]",pomdp,0,31,3
+1756,param_2_high_perf,"[0.5, 1.0]",[20 60],"[-1, 0]",myopic,0,27,12
+1757,param_2_high_perf,"[0.5, 1.0]",[20 60],"[-1, 0]",egostistical,0,31,0
+1758,param_3_high_perf,"[0.5, 1.0]",[20 80],"[-1, 0]",pomdp,0,33,3
+1759,param_3_high_perf,"[0.5, 1.0]",[20 80],"[-1, 0]",myopic,0,27,12
+1760,param_3_high_perf,"[0.5, 1.0]",[20 80],"[-1, 0]",egostistical,0,33,0
+1761,param_4_high_perf,"[0.5, 1.0]",[ 20 100],"[-1, 0]",pomdp,0,32,3
+1762,param_4_high_perf,"[0.5, 1.0]",[ 20 100],"[-1, 0]",myopic,0,25,12
+1763,param_4_high_perf,"[0.5, 1.0]",[ 20 100],"[-1, 0]",egostistical,0,32,0
+1764,param_5_high_perf,"[0.5, 1.0]",[ 20 120],"[-1, 0]",pomdp,0,32,6
+1765,param_5_high_perf,"[0.5, 1.0]",[ 20 120],"[-1, 0]",myopic,0,24,12
+1766,param_5_high_perf,"[0.5, 1.0]",[ 20 120],"[-1, 0]",egostistical,0,32,0
+1767,param_6_high_perf,"[0.5, 1.0]",[40 60],"[-1, 0]",pomdp,0,34,3
+1768,param_6_high_perf,"[0.5, 1.0]",[40 60],"[-1, 0]",myopic,0,26,12
+1769,param_6_high_perf,"[0.5, 1.0]",[40 60],"[-1, 0]",egostistical,0,34,0
+1770,param_7_high_perf,"[0.5, 1.0]",[40 80],"[-1, 0]",pomdp,0,34,3
+1771,param_7_high_perf,"[0.5, 1.0]",[40 80],"[-1, 0]",myopic,0,30,12
+1772,param_7_high_perf,"[0.5, 1.0]",[40 80],"[-1, 0]",egostistical,0,34,0
+1773,param_8_high_perf,"[0.5, 1.0]",[ 40 100],"[-1, 0]",pomdp,0,36,6
+1774,param_8_high_perf,"[0.5, 1.0]",[ 40 100],"[-1, 0]",myopic,0,30,12
+1775,param_8_high_perf,"[0.5, 1.0]",[ 40 100],"[-1, 0]",egostistical,0,36,0
+1776,param_1_high_perf,"[0.5, 1.0]",[20 40],"[0, -1]",pomdp,0,31,0
+1777,param_1_high_perf,"[0.5, 1.0]",[20 40],"[0, -1]",myopic,0,29,12
+1778,param_1_high_perf,"[0.5, 1.0]",[20 40],"[0, -1]",egostistical,0,31,0
+1779,param_2_high_perf,"[0.5, 1.0]",[20 60],"[0, -1]",pomdp,0,31,3
+1780,param_2_high_perf,"[0.5, 1.0]",[20 60],"[0, -1]",myopic,0,31,12
+1781,param_2_high_perf,"[0.5, 1.0]",[20 60],"[0, -1]",egostistical,0,31,0
+1782,param_3_high_perf,"[0.5, 1.0]",[20 80],"[0, -1]",pomdp,0,33,3
+1783,param_3_high_perf,"[0.5, 1.0]",[20 80],"[0, -1]",myopic,0,31,12
+1784,param_3_high_perf,"[0.5, 1.0]",[20 80],"[0, -1]",egostistical,0,33,0
+1785,param_4_high_perf,"[0.5, 1.0]",[ 20 100],"[0, -1]",pomdp,0,32,3
+1786,param_4_high_perf,"[0.5, 1.0]",[ 20 100],"[0, -1]",myopic,0,33,12
+1787,param_4_high_perf,"[0.5, 1.0]",[ 20 100],"[0, -1]",egostistical,0,32,0
+1788,param_5_high_perf,"[0.5, 1.0]",[ 20 120],"[0, -1]",pomdp,0,32,6
+1789,param_5_high_perf,"[0.5, 1.0]",[ 20 120],"[0, -1]",myopic,0,33,12
+1790,param_5_high_perf,"[0.5, 1.0]",[ 20 120],"[0, -1]",egostistical,0,32,0
+1791,param_6_high_perf,"[0.5, 1.0]",[40 60],"[0, -1]",pomdp,0,34,3
+1792,param_6_high_perf,"[0.5, 1.0]",[40 60],"[0, -1]",myopic,0,29,12
+1793,param_6_high_perf,"[0.5, 1.0]",[40 60],"[0, -1]",egostistical,0,34,0
+1794,param_7_high_perf,"[0.5, 1.0]",[40 80],"[0, -1]",pomdp,0,34,3
+1795,param_7_high_perf,"[0.5, 1.0]",[40 80],"[0, -1]",myopic,0,29,12
+1796,param_7_high_perf,"[0.5, 1.0]",[40 80],"[0, -1]",egostistical,0,34,0
+1797,param_8_high_perf,"[0.5, 1.0]",[ 40 100],"[0, -1]",pomdp,0,36,6
+1798,param_8_high_perf,"[0.5, 1.0]",[ 40 100],"[0, -1]",myopic,0,32,12
+1799,param_8_high_perf,"[0.5, 1.0]",[ 40 100],"[0, -1]",egostistical,0,36,0
+1800,param_1_high_perf,"[0.5, 1.0]",[20 40],"[0, 0]",pomdp,0,31,0
+1801,param_1_high_perf,"[0.5, 1.0]",[20 40],"[0, 0]",myopic,0,26,12
+1802,param_1_high_perf,"[0.5, 1.0]",[20 40],"[0, 0]",egostistical,0,31,0
+1803,param_2_high_perf,"[0.5, 1.0]",[20 60],"[0, 0]",pomdp,0,31,3
+1804,param_2_high_perf,"[0.5, 1.0]",[20 60],"[0, 0]",myopic,0,27,12
+1805,param_2_high_perf,"[0.5, 1.0]",[20 60],"[0, 0]",egostistical,0,31,0
+1806,param_3_high_perf,"[0.5, 1.0]",[20 80],"[0, 0]",pomdp,0,33,3
+1807,param_3_high_perf,"[0.5, 1.0]",[20 80],"[0, 0]",myopic,0,25,12
+1808,param_3_high_perf,"[0.5, 1.0]",[20 80],"[0, 0]",egostistical,0,33,0
+1809,param_4_high_perf,"[0.5, 1.0]",[ 20 100],"[0, 0]",pomdp,0,32,3
+1810,param_4_high_perf,"[0.5, 1.0]",[ 20 100],"[0, 0]",myopic,0,25,12
+1811,param_4_high_perf,"[0.5, 1.0]",[ 20 100],"[0, 0]",egostistical,0,32,0
+1812,param_5_high_perf,"[0.5, 1.0]",[ 20 120],"[0, 0]",pomdp,0,32,6
+1813,param_5_high_perf,"[0.5, 1.0]",[ 20 120],"[0, 0]",myopic,0,24,12
+1814,param_5_high_perf,"[0.5, 1.0]",[ 20 120],"[0, 0]",egostistical,0,32,0
+1815,param_6_high_perf,"[0.5, 1.0]",[40 60],"[0, 0]",pomdp,0,34,3
+1816,param_6_high_perf,"[0.5, 1.0]",[40 60],"[0, 0]",myopic,0,26,12
+1817,param_6_high_perf,"[0.5, 1.0]",[40 60],"[0, 0]",egostistical,0,34,0
+1818,param_7_high_perf,"[0.5, 1.0]",[40 80],"[0, 0]",pomdp,0,34,3
+1819,param_7_high_perf,"[0.5, 1.0]",[40 80],"[0, 0]",myopic,0,25,12
+1820,param_7_high_perf,"[0.5, 1.0]",[40 80],"[0, 0]",egostistical,0,34,0
+1821,param_8_high_perf,"[0.5, 1.0]",[ 40 100],"[0, 0]",pomdp,0,36,6
+1822,param_8_high_perf,"[0.5, 1.0]",[ 40 100],"[0, 0]",myopic,0,24,12
+1823,param_8_high_perf,"[0.5, 1.0]",[ 40 100],"[0, 0]",egostistical,0,36,0
+1824,param_1_high_perf,"[0.75, 0.5]",[20 40],"[-1, -1]",pomdp,0,31,4
+1825,param_1_high_perf,"[0.75, 0.5]",[20 40],"[-1, -1]",myopic,0,31,12
+1826,param_1_high_perf,"[0.75, 0.5]",[20 40],"[-1, -1]",egostistical,0,31,0
+1827,param_2_high_perf,"[0.75, 0.5]",[20 60],"[-1, -1]",pomdp,0,31,4
+1828,param_2_high_perf,"[0.75, 0.5]",[20 60],"[-1, -1]",myopic,0,31,12
+1829,param_2_high_perf,"[0.75, 0.5]",[20 60],"[-1, -1]",egostistical,0,31,0
+1830,param_3_high_perf,"[0.75, 0.5]",[20 80],"[-1, -1]",pomdp,0,33,4
+1831,param_3_high_perf,"[0.75, 0.5]",[20 80],"[-1, -1]",myopic,0,33,12
+1832,param_3_high_perf,"[0.75, 0.5]",[20 80],"[-1, -1]",egostistical,0,33,0
+1833,param_4_high_perf,"[0.75, 0.5]",[ 20 100],"[-1, -1]",pomdp,0,32,4
+1834,param_4_high_perf,"[0.75, 0.5]",[ 20 100],"[-1, -1]",myopic,0,32,12
+1835,param_4_high_perf,"[0.75, 0.5]",[ 20 100],"[-1, -1]",egostistical,0,32,0
+1836,param_5_high_perf,"[0.75, 0.5]",[ 20 120],"[-1, -1]",pomdp,0,32,7
+1837,param_5_high_perf,"[0.75, 0.5]",[ 20 120],"[-1, -1]",myopic,0,32,12
+1838,param_5_high_perf,"[0.75, 0.5]",[ 20 120],"[-1, -1]",egostistical,0,32,0
+1839,param_6_high_perf,"[0.75, 0.5]",[40 60],"[-1, -1]",pomdp,0,34,4
+1840,param_6_high_perf,"[0.75, 0.5]",[40 60],"[-1, -1]",myopic,0,34,12
+1841,param_6_high_perf,"[0.75, 0.5]",[40 60],"[-1, -1]",egostistical,0,34,0
+1842,param_7_high_perf,"[0.75, 0.5]",[40 80],"[-1, -1]",pomdp,0,34,4
+1843,param_7_high_perf,"[0.75, 0.5]",[40 80],"[-1, -1]",myopic,0,34,12
+1844,param_7_high_perf,"[0.75, 0.5]",[40 80],"[-1, -1]",egostistical,0,34,0
+1845,param_8_high_perf,"[0.75, 0.5]",[ 40 100],"[-1, -1]",pomdp,0,36,7
+1846,param_8_high_perf,"[0.75, 0.5]",[ 40 100],"[-1, -1]",myopic,0,36,12
+1847,param_8_high_perf,"[0.75, 0.5]",[ 40 100],"[-1, -1]",egostistical,0,36,0
+1848,param_1_high_perf,"[0.75, 0.5]",[20 40],"[-1, 0]",pomdp,0,24,4
+1849,param_1_high_perf,"[0.75, 0.5]",[20 40],"[-1, 0]",myopic,0,27,12
+1850,param_1_high_perf,"[0.75, 0.5]",[20 40],"[-1, 0]",egostistical,0,31,0
+1851,param_2_high_perf,"[0.75, 0.5]",[20 60],"[-1, 0]",pomdp,0,23,4
+1852,param_2_high_perf,"[0.75, 0.5]",[20 60],"[-1, 0]",myopic,0,27,12
+1853,param_2_high_perf,"[0.75, 0.5]",[20 60],"[-1, 0]",egostistical,0,31,0
+1854,param_3_high_perf,"[0.75, 0.5]",[20 80],"[-1, 0]",pomdp,0,23,4
+1855,param_3_high_perf,"[0.75, 0.5]",[20 80],"[-1, 0]",myopic,0,27,12
+1856,param_3_high_perf,"[0.75, 0.5]",[20 80],"[-1, 0]",egostistical,0,33,0
+1857,param_4_high_perf,"[0.75, 0.5]",[ 20 100],"[-1, 0]",pomdp,0,23,4
+1858,param_4_high_perf,"[0.75, 0.5]",[ 20 100],"[-1, 0]",myopic,0,25,12
+1859,param_4_high_perf,"[0.75, 0.5]",[ 20 100],"[-1, 0]",egostistical,0,32,0
+1860,param_5_high_perf,"[0.75, 0.5]",[ 20 120],"[-1, 0]",pomdp,0,23,4
+1861,param_5_high_perf,"[0.75, 0.5]",[ 20 120],"[-1, 0]",myopic,0,24,12
+1862,param_5_high_perf,"[0.75, 0.5]",[ 20 120],"[-1, 0]",egostistical,0,32,0
+1863,param_6_high_perf,"[0.75, 0.5]",[40 60],"[-1, 0]",pomdp,0,27,5
+1864,param_6_high_perf,"[0.75, 0.5]",[40 60],"[-1, 0]",myopic,0,26,12
+1865,param_6_high_perf,"[0.75, 0.5]",[40 60],"[-1, 0]",egostistical,0,34,0
+1866,param_7_high_perf,"[0.75, 0.5]",[40 80],"[-1, 0]",pomdp,0,26,4
+1867,param_7_high_perf,"[0.75, 0.5]",[40 80],"[-1, 0]",myopic,0,30,12
+1868,param_7_high_perf,"[0.75, 0.5]",[40 80],"[-1, 0]",egostistical,0,34,0
+1869,param_8_high_perf,"[0.75, 0.5]",[ 40 100],"[-1, 0]",pomdp,0,26,4
+1870,param_8_high_perf,"[0.75, 0.5]",[ 40 100],"[-1, 0]",myopic,0,30,12
+1871,param_8_high_perf,"[0.75, 0.5]",[ 40 100],"[-1, 0]",egostistical,0,36,0
+1872,param_1_high_perf,"[0.75, 0.5]",[20 40],"[0, -1]",pomdp,0,31,4
+1873,param_1_high_perf,"[0.75, 0.5]",[20 40],"[0, -1]",myopic,0,29,12
+1874,param_1_high_perf,"[0.75, 0.5]",[20 40],"[0, -1]",egostistical,0,31,0
+1875,param_2_high_perf,"[0.75, 0.5]",[20 60],"[0, -1]",pomdp,0,31,4
+1876,param_2_high_perf,"[0.75, 0.5]",[20 60],"[0, -1]",myopic,0,31,12
+1877,param_2_high_perf,"[0.75, 0.5]",[20 60],"[0, -1]",egostistical,0,31,0
+1878,param_3_high_perf,"[0.75, 0.5]",[20 80],"[0, -1]",pomdp,0,33,4
+1879,param_3_high_perf,"[0.75, 0.5]",[20 80],"[0, -1]",myopic,0,31,12
+1880,param_3_high_perf,"[0.75, 0.5]",[20 80],"[0, -1]",egostistical,0,33,0
+1881,param_4_high_perf,"[0.75, 0.5]",[ 20 100],"[0, -1]",pomdp,0,32,4
+1882,param_4_high_perf,"[0.75, 0.5]",[ 20 100],"[0, -1]",myopic,0,33,12
+1883,param_4_high_perf,"[0.75, 0.5]",[ 20 100],"[0, -1]",egostistical,0,32,0
+1884,param_5_high_perf,"[0.75, 0.5]",[ 20 120],"[0, -1]",pomdp,0,32,7
+1885,param_5_high_perf,"[0.75, 0.5]",[ 20 120],"[0, -1]",myopic,0,33,12
+1886,param_5_high_perf,"[0.75, 0.5]",[ 20 120],"[0, -1]",egostistical,0,32,0
+1887,param_6_high_perf,"[0.75, 0.5]",[40 60],"[0, -1]",pomdp,0,34,4
+1888,param_6_high_perf,"[0.75, 0.5]",[40 60],"[0, -1]",myopic,0,29,12
+1889,param_6_high_perf,"[0.75, 0.5]",[40 60],"[0, -1]",egostistical,0,34,0
+1890,param_7_high_perf,"[0.75, 0.5]",[40 80],"[0, -1]",pomdp,0,34,4
+1891,param_7_high_perf,"[0.75, 0.5]",[40 80],"[0, -1]",myopic,0,29,12
+1892,param_7_high_perf,"[0.75, 0.5]",[40 80],"[0, -1]",egostistical,0,34,0
+1893,param_8_high_perf,"[0.75, 0.5]",[ 40 100],"[0, -1]",pomdp,0,36,7
+1894,param_8_high_perf,"[0.75, 0.5]",[ 40 100],"[0, -1]",myopic,0,32,12
+1895,param_8_high_perf,"[0.75, 0.5]",[ 40 100],"[0, -1]",egostistical,0,36,0
+1896,param_1_high_perf,"[0.75, 0.5]",[20 40],"[0, 0]",pomdp,0,24,4
+1897,param_1_high_perf,"[0.75, 0.5]",[20 40],"[0, 0]",myopic,0,26,12
+1898,param_1_high_perf,"[0.75, 0.5]",[20 40],"[0, 0]",egostistical,0,31,0
+1899,param_2_high_perf,"[0.75, 0.5]",[20 60],"[0, 0]",pomdp,0,23,4
+1900,param_2_high_perf,"[0.75, 0.5]",[20 60],"[0, 0]",myopic,0,27,12
+1901,param_2_high_perf,"[0.75, 0.5]",[20 60],"[0, 0]",egostistical,0,31,0
+1902,param_3_high_perf,"[0.75, 0.5]",[20 80],"[0, 0]",pomdp,0,23,4
+1903,param_3_high_perf,"[0.75, 0.5]",[20 80],"[0, 0]",myopic,0,25,12
+1904,param_3_high_perf,"[0.75, 0.5]",[20 80],"[0, 0]",egostistical,0,33,0
+1905,param_4_high_perf,"[0.75, 0.5]",[ 20 100],"[0, 0]",pomdp,0,23,4
+1906,param_4_high_perf,"[0.75, 0.5]",[ 20 100],"[0, 0]",myopic,0,25,12
+1907,param_4_high_perf,"[0.75, 0.5]",[ 20 100],"[0, 0]",egostistical,0,32,0
+1908,param_5_high_perf,"[0.75, 0.5]",[ 20 120],"[0, 0]",pomdp,0,23,4
+1909,param_5_high_perf,"[0.75, 0.5]",[ 20 120],"[0, 0]",myopic,0,24,12
+1910,param_5_high_perf,"[0.75, 0.5]",[ 20 120],"[0, 0]",egostistical,0,32,0
+1911,param_6_high_perf,"[0.75, 0.5]",[40 60],"[0, 0]",pomdp,0,27,5
+1912,param_6_high_perf,"[0.75, 0.5]",[40 60],"[0, 0]",myopic,0,26,12
+1913,param_6_high_perf,"[0.75, 0.5]",[40 60],"[0, 0]",egostistical,0,34,0
+1914,param_7_high_perf,"[0.75, 0.5]",[40 80],"[0, 0]",pomdp,0,26,4
+1915,param_7_high_perf,"[0.75, 0.5]",[40 80],"[0, 0]",myopic,0,25,12
+1916,param_7_high_perf,"[0.75, 0.5]",[40 80],"[0, 0]",egostistical,0,34,0
+1917,param_8_high_perf,"[0.75, 0.5]",[ 40 100],"[0, 0]",pomdp,0,26,4
+1918,param_8_high_perf,"[0.75, 0.5]",[ 40 100],"[0, 0]",myopic,0,24,12
+1919,param_8_high_perf,"[0.75, 0.5]",[ 40 100],"[0, 0]",egostistical,0,36,0
+1920,param_1_high_perf,"[0.75, 0.75]",[20 40],"[-1, -1]",pomdp,0,31,4
+1921,param_1_high_perf,"[0.75, 0.75]",[20 40],"[-1, -1]",myopic,0,31,12
+1922,param_1_high_perf,"[0.75, 0.75]",[20 40],"[-1, -1]",egostistical,0,31,0
+1923,param_2_high_perf,"[0.75, 0.75]",[20 60],"[-1, -1]",pomdp,0,31,4
+1924,param_2_high_perf,"[0.75, 0.75]",[20 60],"[-1, -1]",myopic,0,31,12
+1925,param_2_high_perf,"[0.75, 0.75]",[20 60],"[-1, -1]",egostistical,0,31,0
+1926,param_3_high_perf,"[0.75, 0.75]",[20 80],"[-1, -1]",pomdp,0,33,4
+1927,param_3_high_perf,"[0.75, 0.75]",[20 80],"[-1, -1]",myopic,0,33,12
+1928,param_3_high_perf,"[0.75, 0.75]",[20 80],"[-1, -1]",egostistical,0,33,0
+1929,param_4_high_perf,"[0.75, 0.75]",[ 20 100],"[-1, -1]",pomdp,0,32,4
+1930,param_4_high_perf,"[0.75, 0.75]",[ 20 100],"[-1, -1]",myopic,0,32,12
+1931,param_4_high_perf,"[0.75, 0.75]",[ 20 100],"[-1, -1]",egostistical,0,32,0
+1932,param_5_high_perf,"[0.75, 0.75]",[ 20 120],"[-1, -1]",pomdp,0,32,7
+1933,param_5_high_perf,"[0.75, 0.75]",[ 20 120],"[-1, -1]",myopic,0,32,12
+1934,param_5_high_perf,"[0.75, 0.75]",[ 20 120],"[-1, -1]",egostistical,0,32,0
+1935,param_6_high_perf,"[0.75, 0.75]",[40 60],"[-1, -1]",pomdp,0,34,4
+1936,param_6_high_perf,"[0.75, 0.75]",[40 60],"[-1, -1]",myopic,0,34,12
+1937,param_6_high_perf,"[0.75, 0.75]",[40 60],"[-1, -1]",egostistical,0,34,0
+1938,param_7_high_perf,"[0.75, 0.75]",[40 80],"[-1, -1]",pomdp,0,34,4
+1939,param_7_high_perf,"[0.75, 0.75]",[40 80],"[-1, -1]",myopic,0,34,12
+1940,param_7_high_perf,"[0.75, 0.75]",[40 80],"[-1, -1]",egostistical,0,34,0
+1941,param_8_high_perf,"[0.75, 0.75]",[ 40 100],"[-1, -1]",pomdp,0,36,7
+1942,param_8_high_perf,"[0.75, 0.75]",[ 40 100],"[-1, -1]",myopic,0,36,12
+1943,param_8_high_perf,"[0.75, 0.75]",[ 40 100],"[-1, -1]",egostistical,0,36,0
+1944,param_1_high_perf,"[0.75, 0.75]",[20 40],"[-1, 0]",pomdp,0,24,4
+1945,param_1_high_perf,"[0.75, 0.75]",[20 40],"[-1, 0]",myopic,0,27,12
+1946,param_1_high_perf,"[0.75, 0.75]",[20 40],"[-1, 0]",egostistical,0,31,0
+1947,param_2_high_perf,"[0.75, 0.75]",[20 60],"[-1, 0]",pomdp,0,23,4
+1948,param_2_high_perf,"[0.75, 0.75]",[20 60],"[-1, 0]",myopic,0,27,12
+1949,param_2_high_perf,"[0.75, 0.75]",[20 60],"[-1, 0]",egostistical,0,31,0
+1950,param_3_high_perf,"[0.75, 0.75]",[20 80],"[-1, 0]",pomdp,0,23,4
+1951,param_3_high_perf,"[0.75, 0.75]",[20 80],"[-1, 0]",myopic,0,27,12
+1952,param_3_high_perf,"[0.75, 0.75]",[20 80],"[-1, 0]",egostistical,0,33,0
+1953,param_4_high_perf,"[0.75, 0.75]",[ 20 100],"[-1, 0]",pomdp,0,23,4
+1954,param_4_high_perf,"[0.75, 0.75]",[ 20 100],"[-1, 0]",myopic,0,25,12
+1955,param_4_high_perf,"[0.75, 0.75]",[ 20 100],"[-1, 0]",egostistical,0,32,0
+1956,param_5_high_perf,"[0.75, 0.75]",[ 20 120],"[-1, 0]",pomdp,0,23,4
+1957,param_5_high_perf,"[0.75, 0.75]",[ 20 120],"[-1, 0]",myopic,0,24,12
+1958,param_5_high_perf,"[0.75, 0.75]",[ 20 120],"[-1, 0]",egostistical,0,32,0
+1959,param_6_high_perf,"[0.75, 0.75]",[40 60],"[-1, 0]",pomdp,0,27,5
+1960,param_6_high_perf,"[0.75, 0.75]",[40 60],"[-1, 0]",myopic,0,26,12
+1961,param_6_high_perf,"[0.75, 0.75]",[40 60],"[-1, 0]",egostistical,0,34,0
+1962,param_7_high_perf,"[0.75, 0.75]",[40 80],"[-1, 0]",pomdp,0,26,4
+1963,param_7_high_perf,"[0.75, 0.75]",[40 80],"[-1, 0]",myopic,0,30,12
+1964,param_7_high_perf,"[0.75, 0.75]",[40 80],"[-1, 0]",egostistical,0,34,0
+1965,param_8_high_perf,"[0.75, 0.75]",[ 40 100],"[-1, 0]",pomdp,0,26,4
+1966,param_8_high_perf,"[0.75, 0.75]",[ 40 100],"[-1, 0]",myopic,0,30,12
+1967,param_8_high_perf,"[0.75, 0.75]",[ 40 100],"[-1, 0]",egostistical,0,36,0
+1968,param_1_high_perf,"[0.75, 0.75]",[20 40],"[0, -1]",pomdp,0,31,4
+1969,param_1_high_perf,"[0.75, 0.75]",[20 40],"[0, -1]",myopic,0,29,12
+1970,param_1_high_perf,"[0.75, 0.75]",[20 40],"[0, -1]",egostistical,0,31,0
+1971,param_2_high_perf,"[0.75, 0.75]",[20 60],"[0, -1]",pomdp,0,31,4
+1972,param_2_high_perf,"[0.75, 0.75]",[20 60],"[0, -1]",myopic,0,31,12
+1973,param_2_high_perf,"[0.75, 0.75]",[20 60],"[0, -1]",egostistical,0,31,0
+1974,param_3_high_perf,"[0.75, 0.75]",[20 80],"[0, -1]",pomdp,0,33,4
+1975,param_3_high_perf,"[0.75, 0.75]",[20 80],"[0, -1]",myopic,0,31,12
+1976,param_3_high_perf,"[0.75, 0.75]",[20 80],"[0, -1]",egostistical,0,33,0
+1977,param_4_high_perf,"[0.75, 0.75]",[ 20 100],"[0, -1]",pomdp,0,32,4
+1978,param_4_high_perf,"[0.75, 0.75]",[ 20 100],"[0, -1]",myopic,0,33,12
+1979,param_4_high_perf,"[0.75, 0.75]",[ 20 100],"[0, -1]",egostistical,0,32,0
+1980,param_5_high_perf,"[0.75, 0.75]",[ 20 120],"[0, -1]",pomdp,0,32,7
+1981,param_5_high_perf,"[0.75, 0.75]",[ 20 120],"[0, -1]",myopic,0,33,12
+1982,param_5_high_perf,"[0.75, 0.75]",[ 20 120],"[0, -1]",egostistical,0,32,0
+1983,param_6_high_perf,"[0.75, 0.75]",[40 60],"[0, -1]",pomdp,0,34,4
+1984,param_6_high_perf,"[0.75, 0.75]",[40 60],"[0, -1]",myopic,0,29,12
+1985,param_6_high_perf,"[0.75, 0.75]",[40 60],"[0, -1]",egostistical,0,34,0
+1986,param_7_high_perf,"[0.75, 0.75]",[40 80],"[0, -1]",pomdp,0,34,4
+1987,param_7_high_perf,"[0.75, 0.75]",[40 80],"[0, -1]",myopic,0,29,12
+1988,param_7_high_perf,"[0.75, 0.75]",[40 80],"[0, -1]",egostistical,0,34,0
+1989,param_8_high_perf,"[0.75, 0.75]",[ 40 100],"[0, -1]",pomdp,0,36,7
+1990,param_8_high_perf,"[0.75, 0.75]",[ 40 100],"[0, -1]",myopic,0,32,12
+1991,param_8_high_perf,"[0.75, 0.75]",[ 40 100],"[0, -1]",egostistical,0,36,0
+1992,param_1_high_perf,"[0.75, 0.75]",[20 40],"[0, 0]",pomdp,0,24,4
+1993,param_1_high_perf,"[0.75, 0.75]",[20 40],"[0, 0]",myopic,0,26,12
+1994,param_1_high_perf,"[0.75, 0.75]",[20 40],"[0, 0]",egostistical,0,31,0
+1995,param_2_high_perf,"[0.75, 0.75]",[20 60],"[0, 0]",pomdp,0,23,4
+1996,param_2_high_perf,"[0.75, 0.75]",[20 60],"[0, 0]",myopic,0,27,12
+1997,param_2_high_perf,"[0.75, 0.75]",[20 60],"[0, 0]",egostistical,0,31,0
+1998,param_3_high_perf,"[0.75, 0.75]",[20 80],"[0, 0]",pomdp,0,23,4
+1999,param_3_high_perf,"[0.75, 0.75]",[20 80],"[0, 0]",myopic,0,25,12
+2000,param_3_high_perf,"[0.75, 0.75]",[20 80],"[0, 0]",egostistical,0,33,0
+2001,param_4_high_perf,"[0.75, 0.75]",[ 20 100],"[0, 0]",pomdp,0,23,4
+2002,param_4_high_perf,"[0.75, 0.75]",[ 20 100],"[0, 0]",myopic,0,25,12
+2003,param_4_high_perf,"[0.75, 0.75]",[ 20 100],"[0, 0]",egostistical,0,32,0
+2004,param_5_high_perf,"[0.75, 0.75]",[ 20 120],"[0, 0]",pomdp,0,23,4
+2005,param_5_high_perf,"[0.75, 0.75]",[ 20 120],"[0, 0]",myopic,0,24,12
+2006,param_5_high_perf,"[0.75, 0.75]",[ 20 120],"[0, 0]",egostistical,0,32,0
+2007,param_6_high_perf,"[0.75, 0.75]",[40 60],"[0, 0]",pomdp,0,27,5
+2008,param_6_high_perf,"[0.75, 0.75]",[40 60],"[0, 0]",myopic,0,26,12
+2009,param_6_high_perf,"[0.75, 0.75]",[40 60],"[0, 0]",egostistical,0,34,0
+2010,param_7_high_perf,"[0.75, 0.75]",[40 80],"[0, 0]",pomdp,0,26,4
+2011,param_7_high_perf,"[0.75, 0.75]",[40 80],"[0, 0]",myopic,0,25,12
+2012,param_7_high_perf,"[0.75, 0.75]",[40 80],"[0, 0]",egostistical,0,34,0
+2013,param_8_high_perf,"[0.75, 0.75]",[ 40 100],"[0, 0]",pomdp,0,26,4
+2014,param_8_high_perf,"[0.75, 0.75]",[ 40 100],"[0, 0]",myopic,0,24,12
+2015,param_8_high_perf,"[0.75, 0.75]",[ 40 100],"[0, 0]",egostistical,0,36,0
+2016,param_1_high_perf,"[0.75, 1.0]",[20 40],"[-1, -1]",pomdp,0,31,0
+2017,param_1_high_perf,"[0.75, 1.0]",[20 40],"[-1, -1]",myopic,0,31,12
+2018,param_1_high_perf,"[0.75, 1.0]",[20 40],"[-1, -1]",egostistical,0,31,0
+2019,param_2_high_perf,"[0.75, 1.0]",[20 60],"[-1, -1]",pomdp,0,31,3
+2020,param_2_high_perf,"[0.75, 1.0]",[20 60],"[-1, -1]",myopic,0,31,12
+2021,param_2_high_perf,"[0.75, 1.0]",[20 60],"[-1, -1]",egostistical,0,31,0
+2022,param_3_high_perf,"[0.75, 1.0]",[20 80],"[-1, -1]",pomdp,0,33,3
+2023,param_3_high_perf,"[0.75, 1.0]",[20 80],"[-1, -1]",myopic,0,33,12
+2024,param_3_high_perf,"[0.75, 1.0]",[20 80],"[-1, -1]",egostistical,0,33,0
+2025,param_4_high_perf,"[0.75, 1.0]",[ 20 100],"[-1, -1]",pomdp,0,32,3
+2026,param_4_high_perf,"[0.75, 1.0]",[ 20 100],"[-1, -1]",myopic,0,32,12
+2027,param_4_high_perf,"[0.75, 1.0]",[ 20 100],"[-1, -1]",egostistical,0,32,0
+2028,param_5_high_perf,"[0.75, 1.0]",[ 20 120],"[-1, -1]",pomdp,0,32,6
+2029,param_5_high_perf,"[0.75, 1.0]",[ 20 120],"[-1, -1]",myopic,0,32,12
+2030,param_5_high_perf,"[0.75, 1.0]",[ 20 120],"[-1, -1]",egostistical,0,32,0
+2031,param_6_high_perf,"[0.75, 1.0]",[40 60],"[-1, -1]",pomdp,0,34,3
+2032,param_6_high_perf,"[0.75, 1.0]",[40 60],"[-1, -1]",myopic,0,34,12
+2033,param_6_high_perf,"[0.75, 1.0]",[40 60],"[-1, -1]",egostistical,0,34,0
+2034,param_7_high_perf,"[0.75, 1.0]",[40 80],"[-1, -1]",pomdp,0,34,3
+2035,param_7_high_perf,"[0.75, 1.0]",[40 80],"[-1, -1]",myopic,0,34,12
+2036,param_7_high_perf,"[0.75, 1.0]",[40 80],"[-1, -1]",egostistical,0,34,0
+2037,param_8_high_perf,"[0.75, 1.0]",[ 40 100],"[-1, -1]",pomdp,0,36,6
+2038,param_8_high_perf,"[0.75, 1.0]",[ 40 100],"[-1, -1]",myopic,0,36,12
+2039,param_8_high_perf,"[0.75, 1.0]",[ 40 100],"[-1, -1]",egostistical,0,36,0
+2040,param_1_high_perf,"[0.75, 1.0]",[20 40],"[-1, 0]",pomdp,0,31,0
+2041,param_1_high_perf,"[0.75, 1.0]",[20 40],"[-1, 0]",myopic,0,27,12
+2042,param_1_high_perf,"[0.75, 1.0]",[20 40],"[-1, 0]",egostistical,0,31,0
+2043,param_2_high_perf,"[0.75, 1.0]",[20 60],"[-1, 0]",pomdp,0,31,3
+2044,param_2_high_perf,"[0.75, 1.0]",[20 60],"[-1, 0]",myopic,0,27,12
+2045,param_2_high_perf,"[0.75, 1.0]",[20 60],"[-1, 0]",egostistical,0,31,0
+2046,param_3_high_perf,"[0.75, 1.0]",[20 80],"[-1, 0]",pomdp,0,33,3
+2047,param_3_high_perf,"[0.75, 1.0]",[20 80],"[-1, 0]",myopic,0,27,12
+2048,param_3_high_perf,"[0.75, 1.0]",[20 80],"[-1, 0]",egostistical,0,33,0
+2049,param_4_high_perf,"[0.75, 1.0]",[ 20 100],"[-1, 0]",pomdp,0,32,3
+2050,param_4_high_perf,"[0.75, 1.0]",[ 20 100],"[-1, 0]",myopic,0,25,12
+2051,param_4_high_perf,"[0.75, 1.0]",[ 20 100],"[-1, 0]",egostistical,0,32,0
+2052,param_5_high_perf,"[0.75, 1.0]",[ 20 120],"[-1, 0]",pomdp,0,32,6
+2053,param_5_high_perf,"[0.75, 1.0]",[ 20 120],"[-1, 0]",myopic,0,24,12
+2054,param_5_high_perf,"[0.75, 1.0]",[ 20 120],"[-1, 0]",egostistical,0,32,0
+2055,param_6_high_perf,"[0.75, 1.0]",[40 60],"[-1, 0]",pomdp,0,34,3
+2056,param_6_high_perf,"[0.75, 1.0]",[40 60],"[-1, 0]",myopic,0,26,12
+2057,param_6_high_perf,"[0.75, 1.0]",[40 60],"[-1, 0]",egostistical,0,34,0
+2058,param_7_high_perf,"[0.75, 1.0]",[40 80],"[-1, 0]",pomdp,0,34,3
+2059,param_7_high_perf,"[0.75, 1.0]",[40 80],"[-1, 0]",myopic,0,30,12
+2060,param_7_high_perf,"[0.75, 1.0]",[40 80],"[-1, 0]",egostistical,0,34,0
+2061,param_8_high_perf,"[0.75, 1.0]",[ 40 100],"[-1, 0]",pomdp,0,36,6
+2062,param_8_high_perf,"[0.75, 1.0]",[ 40 100],"[-1, 0]",myopic,0,30,12
+2063,param_8_high_perf,"[0.75, 1.0]",[ 40 100],"[-1, 0]",egostistical,0,36,0
+2064,param_1_high_perf,"[0.75, 1.0]",[20 40],"[0, -1]",pomdp,0,31,0
+2065,param_1_high_perf,"[0.75, 1.0]",[20 40],"[0, -1]",myopic,0,29,12
+2066,param_1_high_perf,"[0.75, 1.0]",[20 40],"[0, -1]",egostistical,0,31,0
+2067,param_2_high_perf,"[0.75, 1.0]",[20 60],"[0, -1]",pomdp,0,31,3
+2068,param_2_high_perf,"[0.75, 1.0]",[20 60],"[0, -1]",myopic,0,31,12
+2069,param_2_high_perf,"[0.75, 1.0]",[20 60],"[0, -1]",egostistical,0,31,0
+2070,param_3_high_perf,"[0.75, 1.0]",[20 80],"[0, -1]",pomdp,0,33,3
+2071,param_3_high_perf,"[0.75, 1.0]",[20 80],"[0, -1]",myopic,0,31,12
+2072,param_3_high_perf,"[0.75, 1.0]",[20 80],"[0, -1]",egostistical,0,33,0
+2073,param_4_high_perf,"[0.75, 1.0]",[ 20 100],"[0, -1]",pomdp,0,32,3
+2074,param_4_high_perf,"[0.75, 1.0]",[ 20 100],"[0, -1]",myopic,0,33,12
+2075,param_4_high_perf,"[0.75, 1.0]",[ 20 100],"[0, -1]",egostistical,0,32,0
+2076,param_5_high_perf,"[0.75, 1.0]",[ 20 120],"[0, -1]",pomdp,0,32,6
+2077,param_5_high_perf,"[0.75, 1.0]",[ 20 120],"[0, -1]",myopic,0,33,12
+2078,param_5_high_perf,"[0.75, 1.0]",[ 20 120],"[0, -1]",egostistical,0,32,0
+2079,param_6_high_perf,"[0.75, 1.0]",[40 60],"[0, -1]",pomdp,0,34,3
+2080,param_6_high_perf,"[0.75, 1.0]",[40 60],"[0, -1]",myopic,0,29,12
+2081,param_6_high_perf,"[0.75, 1.0]",[40 60],"[0, -1]",egostistical,0,34,0
+2082,param_7_high_perf,"[0.75, 1.0]",[40 80],"[0, -1]",pomdp,0,34,3
+2083,param_7_high_perf,"[0.75, 1.0]",[40 80],"[0, -1]",myopic,0,29,12
+2084,param_7_high_perf,"[0.75, 1.0]",[40 80],"[0, -1]",egostistical,0,34,0
+2085,param_8_high_perf,"[0.75, 1.0]",[ 40 100],"[0, -1]",pomdp,0,36,6
+2086,param_8_high_perf,"[0.75, 1.0]",[ 40 100],"[0, -1]",myopic,0,32,12
+2087,param_8_high_perf,"[0.75, 1.0]",[ 40 100],"[0, -1]",egostistical,0,36,0
+2088,param_1_high_perf,"[0.75, 1.0]",[20 40],"[0, 0]",pomdp,0,31,0
+2089,param_1_high_perf,"[0.75, 1.0]",[20 40],"[0, 0]",myopic,0,26,12
+2090,param_1_high_perf,"[0.75, 1.0]",[20 40],"[0, 0]",egostistical,0,31,0
+2091,param_2_high_perf,"[0.75, 1.0]",[20 60],"[0, 0]",pomdp,0,31,3
+2092,param_2_high_perf,"[0.75, 1.0]",[20 60],"[0, 0]",myopic,0,27,12
+2093,param_2_high_perf,"[0.75, 1.0]",[20 60],"[0, 0]",egostistical,0,31,0
+2094,param_3_high_perf,"[0.75, 1.0]",[20 80],"[0, 0]",pomdp,0,33,3
+2095,param_3_high_perf,"[0.75, 1.0]",[20 80],"[0, 0]",myopic,0,25,12
+2096,param_3_high_perf,"[0.75, 1.0]",[20 80],"[0, 0]",egostistical,0,33,0
+2097,param_4_high_perf,"[0.75, 1.0]",[ 20 100],"[0, 0]",pomdp,0,32,3
+2098,param_4_high_perf,"[0.75, 1.0]",[ 20 100],"[0, 0]",myopic,0,25,12
+2099,param_4_high_perf,"[0.75, 1.0]",[ 20 100],"[0, 0]",egostistical,0,32,0
+2100,param_5_high_perf,"[0.75, 1.0]",[ 20 120],"[0, 0]",pomdp,0,32,6
+2101,param_5_high_perf,"[0.75, 1.0]",[ 20 120],"[0, 0]",myopic,0,24,12
+2102,param_5_high_perf,"[0.75, 1.0]",[ 20 120],"[0, 0]",egostistical,0,32,0
+2103,param_6_high_perf,"[0.75, 1.0]",[40 60],"[0, 0]",pomdp,0,34,3
+2104,param_6_high_perf,"[0.75, 1.0]",[40 60],"[0, 0]",myopic,0,26,12
+2105,param_6_high_perf,"[0.75, 1.0]",[40 60],"[0, 0]",egostistical,0,34,0
+2106,param_7_high_perf,"[0.75, 1.0]",[40 80],"[0, 0]",pomdp,0,34,3
+2107,param_7_high_perf,"[0.75, 1.0]",[40 80],"[0, 0]",myopic,0,25,12
+2108,param_7_high_perf,"[0.75, 1.0]",[40 80],"[0, 0]",egostistical,0,34,0
+2109,param_8_high_perf,"[0.75, 1.0]",[ 40 100],"[0, 0]",pomdp,0,36,6
+2110,param_8_high_perf,"[0.75, 1.0]",[ 40 100],"[0, 0]",myopic,0,24,12
+2111,param_8_high_perf,"[0.75, 1.0]",[ 40 100],"[0, 0]",egostistical,0,36,0
+2112,param_1_high_perf,"[1.0, 0.5]",[20 40],"[-1, -1]",pomdp,0,31,4
+2113,param_1_high_perf,"[1.0, 0.5]",[20 40],"[-1, -1]",myopic,0,31,12
+2114,param_1_high_perf,"[1.0, 0.5]",[20 40],"[-1, -1]",egostistical,0,31,0
+2115,param_2_high_perf,"[1.0, 0.5]",[20 60],"[-1, -1]",pomdp,0,31,4
+2116,param_2_high_perf,"[1.0, 0.5]",[20 60],"[-1, -1]",myopic,0,31,12
+2117,param_2_high_perf,"[1.0, 0.5]",[20 60],"[-1, -1]",egostistical,0,31,0
+2118,param_3_high_perf,"[1.0, 0.5]",[20 80],"[-1, -1]",pomdp,0,33,4
+2119,param_3_high_perf,"[1.0, 0.5]",[20 80],"[-1, -1]",myopic,0,33,12
+2120,param_3_high_perf,"[1.0, 0.5]",[20 80],"[-1, -1]",egostistical,0,33,0
+2121,param_4_high_perf,"[1.0, 0.5]",[ 20 100],"[-1, -1]",pomdp,0,32,4
+2122,param_4_high_perf,"[1.0, 0.5]",[ 20 100],"[-1, -1]",myopic,0,32,12
+2123,param_4_high_perf,"[1.0, 0.5]",[ 20 100],"[-1, -1]",egostistical,0,32,0
+2124,param_5_high_perf,"[1.0, 0.5]",[ 20 120],"[-1, -1]",pomdp,0,32,7
+2125,param_5_high_perf,"[1.0, 0.5]",[ 20 120],"[-1, -1]",myopic,0,32,12
+2126,param_5_high_perf,"[1.0, 0.5]",[ 20 120],"[-1, -1]",egostistical,0,32,0
+2127,param_6_high_perf,"[1.0, 0.5]",[40 60],"[-1, -1]",pomdp,0,34,4
+2128,param_6_high_perf,"[1.0, 0.5]",[40 60],"[-1, -1]",myopic,0,34,12
+2129,param_6_high_perf,"[1.0, 0.5]",[40 60],"[-1, -1]",egostistical,0,34,0
+2130,param_7_high_perf,"[1.0, 0.5]",[40 80],"[-1, -1]",pomdp,0,34,4
+2131,param_7_high_perf,"[1.0, 0.5]",[40 80],"[-1, -1]",myopic,0,34,12
+2132,param_7_high_perf,"[1.0, 0.5]",[40 80],"[-1, -1]",egostistical,0,34,0
+2133,param_8_high_perf,"[1.0, 0.5]",[ 40 100],"[-1, -1]",pomdp,0,36,7
+2134,param_8_high_perf,"[1.0, 0.5]",[ 40 100],"[-1, -1]",myopic,0,36,12
+2135,param_8_high_perf,"[1.0, 0.5]",[ 40 100],"[-1, -1]",egostistical,0,36,0
+2136,param_1_high_perf,"[1.0, 0.5]",[20 40],"[-1, 0]",pomdp,0,24,4
+2137,param_1_high_perf,"[1.0, 0.5]",[20 40],"[-1, 0]",myopic,0,27,12
+2138,param_1_high_perf,"[1.0, 0.5]",[20 40],"[-1, 0]",egostistical,0,31,0
+2139,param_2_high_perf,"[1.0, 0.5]",[20 60],"[-1, 0]",pomdp,0,23,4
+2140,param_2_high_perf,"[1.0, 0.5]",[20 60],"[-1, 0]",myopic,0,27,12
+2141,param_2_high_perf,"[1.0, 0.5]",[20 60],"[-1, 0]",egostistical,0,31,0
+2142,param_3_high_perf,"[1.0, 0.5]",[20 80],"[-1, 0]",pomdp,0,23,4
+2143,param_3_high_perf,"[1.0, 0.5]",[20 80],"[-1, 0]",myopic,0,27,12
+2144,param_3_high_perf,"[1.0, 0.5]",[20 80],"[-1, 0]",egostistical,0,33,0
+2145,param_4_high_perf,"[1.0, 0.5]",[ 20 100],"[-1, 0]",pomdp,0,23,4
+2146,param_4_high_perf,"[1.0, 0.5]",[ 20 100],"[-1, 0]",myopic,0,25,12
+2147,param_4_high_perf,"[1.0, 0.5]",[ 20 100],"[-1, 0]",egostistical,0,32,0
+2148,param_5_high_perf,"[1.0, 0.5]",[ 20 120],"[-1, 0]",pomdp,0,23,4
+2149,param_5_high_perf,"[1.0, 0.5]",[ 20 120],"[-1, 0]",myopic,0,24,12
+2150,param_5_high_perf,"[1.0, 0.5]",[ 20 120],"[-1, 0]",egostistical,0,32,0
+2151,param_6_high_perf,"[1.0, 0.5]",[40 60],"[-1, 0]",pomdp,0,27,5
+2152,param_6_high_perf,"[1.0, 0.5]",[40 60],"[-1, 0]",myopic,0,26,12
+2153,param_6_high_perf,"[1.0, 0.5]",[40 60],"[-1, 0]",egostistical,0,34,0
+2154,param_7_high_perf,"[1.0, 0.5]",[40 80],"[-1, 0]",pomdp,0,26,4
+2155,param_7_high_perf,"[1.0, 0.5]",[40 80],"[-1, 0]",myopic,0,30,12
+2156,param_7_high_perf,"[1.0, 0.5]",[40 80],"[-1, 0]",egostistical,0,34,0
+2157,param_8_high_perf,"[1.0, 0.5]",[ 40 100],"[-1, 0]",pomdp,0,26,4
+2158,param_8_high_perf,"[1.0, 0.5]",[ 40 100],"[-1, 0]",myopic,0,30,12
+2159,param_8_high_perf,"[1.0, 0.5]",[ 40 100],"[-1, 0]",egostistical,0,36,0
+2160,param_1_high_perf,"[1.0, 0.5]",[20 40],"[0, -1]",pomdp,0,31,4
+2161,param_1_high_perf,"[1.0, 0.5]",[20 40],"[0, -1]",myopic,0,29,12
+2162,param_1_high_perf,"[1.0, 0.5]",[20 40],"[0, -1]",egostistical,0,31,0
+2163,param_2_high_perf,"[1.0, 0.5]",[20 60],"[0, -1]",pomdp,0,31,4
+2164,param_2_high_perf,"[1.0, 0.5]",[20 60],"[0, -1]",myopic,0,31,12
+2165,param_2_high_perf,"[1.0, 0.5]",[20 60],"[0, -1]",egostistical,0,31,0
+2166,param_3_high_perf,"[1.0, 0.5]",[20 80],"[0, -1]",pomdp,0,33,4
+2167,param_3_high_perf,"[1.0, 0.5]",[20 80],"[0, -1]",myopic,0,31,12
+2168,param_3_high_perf,"[1.0, 0.5]",[20 80],"[0, -1]",egostistical,0,33,0
+2169,param_4_high_perf,"[1.0, 0.5]",[ 20 100],"[0, -1]",pomdp,0,32,4
+2170,param_4_high_perf,"[1.0, 0.5]",[ 20 100],"[0, -1]",myopic,0,33,12
+2171,param_4_high_perf,"[1.0, 0.5]",[ 20 100],"[0, -1]",egostistical,0,32,0
+2172,param_5_high_perf,"[1.0, 0.5]",[ 20 120],"[0, -1]",pomdp,0,32,7
+2173,param_5_high_perf,"[1.0, 0.5]",[ 20 120],"[0, -1]",myopic,0,33,12
+2174,param_5_high_perf,"[1.0, 0.5]",[ 20 120],"[0, -1]",egostistical,0,32,0
+2175,param_6_high_perf,"[1.0, 0.5]",[40 60],"[0, -1]",pomdp,0,34,4
+2176,param_6_high_perf,"[1.0, 0.5]",[40 60],"[0, -1]",myopic,0,29,12
+2177,param_6_high_perf,"[1.0, 0.5]",[40 60],"[0, -1]",egostistical,0,34,0
+2178,param_7_high_perf,"[1.0, 0.5]",[40 80],"[0, -1]",pomdp,0,34,4
+2179,param_7_high_perf,"[1.0, 0.5]",[40 80],"[0, -1]",myopic,0,29,12
+2180,param_7_high_perf,"[1.0, 0.5]",[40 80],"[0, -1]",egostistical,0,34,0
+2181,param_8_high_perf,"[1.0, 0.5]",[ 40 100],"[0, -1]",pomdp,0,36,7
+2182,param_8_high_perf,"[1.0, 0.5]",[ 40 100],"[0, -1]",myopic,0,32,12
+2183,param_8_high_perf,"[1.0, 0.5]",[ 40 100],"[0, -1]",egostistical,0,36,0
+2184,param_1_high_perf,"[1.0, 0.5]",[20 40],"[0, 0]",pomdp,0,24,4
+2185,param_1_high_perf,"[1.0, 0.5]",[20 40],"[0, 0]",myopic,0,26,12
+2186,param_1_high_perf,"[1.0, 0.5]",[20 40],"[0, 0]",egostistical,0,31,0
+2187,param_2_high_perf,"[1.0, 0.5]",[20 60],"[0, 0]",pomdp,0,23,4
+2188,param_2_high_perf,"[1.0, 0.5]",[20 60],"[0, 0]",myopic,0,27,12
+2189,param_2_high_perf,"[1.0, 0.5]",[20 60],"[0, 0]",egostistical,0,31,0
+2190,param_3_high_perf,"[1.0, 0.5]",[20 80],"[0, 0]",pomdp,0,23,4
+2191,param_3_high_perf,"[1.0, 0.5]",[20 80],"[0, 0]",myopic,0,25,12
+2192,param_3_high_perf,"[1.0, 0.5]",[20 80],"[0, 0]",egostistical,0,33,0
+2193,param_4_high_perf,"[1.0, 0.5]",[ 20 100],"[0, 0]",pomdp,0,23,4
+2194,param_4_high_perf,"[1.0, 0.5]",[ 20 100],"[0, 0]",myopic,0,25,12
+2195,param_4_high_perf,"[1.0, 0.5]",[ 20 100],"[0, 0]",egostistical,0,32,0
+2196,param_5_high_perf,"[1.0, 0.5]",[ 20 120],"[0, 0]",pomdp,0,23,4
+2197,param_5_high_perf,"[1.0, 0.5]",[ 20 120],"[0, 0]",myopic,0,24,12
+2198,param_5_high_perf,"[1.0, 0.5]",[ 20 120],"[0, 0]",egostistical,0,32,0
+2199,param_6_high_perf,"[1.0, 0.5]",[40 60],"[0, 0]",pomdp,0,27,5
+2200,param_6_high_perf,"[1.0, 0.5]",[40 60],"[0, 0]",myopic,0,26,12
+2201,param_6_high_perf,"[1.0, 0.5]",[40 60],"[0, 0]",egostistical,0,34,0
+2202,param_7_high_perf,"[1.0, 0.5]",[40 80],"[0, 0]",pomdp,0,26,4
+2203,param_7_high_perf,"[1.0, 0.5]",[40 80],"[0, 0]",myopic,0,25,12
+2204,param_7_high_perf,"[1.0, 0.5]",[40 80],"[0, 0]",egostistical,0,34,0
+2205,param_8_high_perf,"[1.0, 0.5]",[ 40 100],"[0, 0]",pomdp,0,26,4
+2206,param_8_high_perf,"[1.0, 0.5]",[ 40 100],"[0, 0]",myopic,0,24,12
+2207,param_8_high_perf,"[1.0, 0.5]",[ 40 100],"[0, 0]",egostistical,0,36,0
+2208,param_1_high_perf,"[1.0, 0.75]",[20 40],"[-1, -1]",pomdp,0,31,4
+2209,param_1_high_perf,"[1.0, 0.75]",[20 40],"[-1, -1]",myopic,0,31,12
+2210,param_1_high_perf,"[1.0, 0.75]",[20 40],"[-1, -1]",egostistical,0,31,0
+2211,param_2_high_perf,"[1.0, 0.75]",[20 60],"[-1, -1]",pomdp,0,31,4
+2212,param_2_high_perf,"[1.0, 0.75]",[20 60],"[-1, -1]",myopic,0,31,12
+2213,param_2_high_perf,"[1.0, 0.75]",[20 60],"[-1, -1]",egostistical,0,31,0
+2214,param_3_high_perf,"[1.0, 0.75]",[20 80],"[-1, -1]",pomdp,0,33,4
+2215,param_3_high_perf,"[1.0, 0.75]",[20 80],"[-1, -1]",myopic,0,33,12
+2216,param_3_high_perf,"[1.0, 0.75]",[20 80],"[-1, -1]",egostistical,0,33,0
+2217,param_4_high_perf,"[1.0, 0.75]",[ 20 100],"[-1, -1]",pomdp,0,32,4
+2218,param_4_high_perf,"[1.0, 0.75]",[ 20 100],"[-1, -1]",myopic,0,32,12
+2219,param_4_high_perf,"[1.0, 0.75]",[ 20 100],"[-1, -1]",egostistical,0,32,0
+2220,param_5_high_perf,"[1.0, 0.75]",[ 20 120],"[-1, -1]",pomdp,0,32,7
+2221,param_5_high_perf,"[1.0, 0.75]",[ 20 120],"[-1, -1]",myopic,0,32,12
+2222,param_5_high_perf,"[1.0, 0.75]",[ 20 120],"[-1, -1]",egostistical,0,32,0
+2223,param_6_high_perf,"[1.0, 0.75]",[40 60],"[-1, -1]",pomdp,0,34,4
+2224,param_6_high_perf,"[1.0, 0.75]",[40 60],"[-1, -1]",myopic,0,34,12
+2225,param_6_high_perf,"[1.0, 0.75]",[40 60],"[-1, -1]",egostistical,0,34,0
+2226,param_7_high_perf,"[1.0, 0.75]",[40 80],"[-1, -1]",pomdp,0,34,4
+2227,param_7_high_perf,"[1.0, 0.75]",[40 80],"[-1, -1]",myopic,0,34,12
+2228,param_7_high_perf,"[1.0, 0.75]",[40 80],"[-1, -1]",egostistical,0,34,0
+2229,param_8_high_perf,"[1.0, 0.75]",[ 40 100],"[-1, -1]",pomdp,0,36,7
+2230,param_8_high_perf,"[1.0, 0.75]",[ 40 100],"[-1, -1]",myopic,0,36,12
+2231,param_8_high_perf,"[1.0, 0.75]",[ 40 100],"[-1, -1]",egostistical,0,36,0
+2232,param_1_high_perf,"[1.0, 0.75]",[20 40],"[-1, 0]",pomdp,0,24,4
+2233,param_1_high_perf,"[1.0, 0.75]",[20 40],"[-1, 0]",myopic,0,27,12
+2234,param_1_high_perf,"[1.0, 0.75]",[20 40],"[-1, 0]",egostistical,0,31,0
+2235,param_2_high_perf,"[1.0, 0.75]",[20 60],"[-1, 0]",pomdp,0,23,4
+2236,param_2_high_perf,"[1.0, 0.75]",[20 60],"[-1, 0]",myopic,0,27,12
+2237,param_2_high_perf,"[1.0, 0.75]",[20 60],"[-1, 0]",egostistical,0,31,0
+2238,param_3_high_perf,"[1.0, 0.75]",[20 80],"[-1, 0]",pomdp,0,23,4
+2239,param_3_high_perf,"[1.0, 0.75]",[20 80],"[-1, 0]",myopic,0,27,12
+2240,param_3_high_perf,"[1.0, 0.75]",[20 80],"[-1, 0]",egostistical,0,33,0
+2241,param_4_high_perf,"[1.0, 0.75]",[ 20 100],"[-1, 0]",pomdp,0,23,4
+2242,param_4_high_perf,"[1.0, 0.75]",[ 20 100],"[-1, 0]",myopic,0,25,12
+2243,param_4_high_perf,"[1.0, 0.75]",[ 20 100],"[-1, 0]",egostistical,0,32,0
+2244,param_5_high_perf,"[1.0, 0.75]",[ 20 120],"[-1, 0]",pomdp,0,23,4
+2245,param_5_high_perf,"[1.0, 0.75]",[ 20 120],"[-1, 0]",myopic,0,24,12
+2246,param_5_high_perf,"[1.0, 0.75]",[ 20 120],"[-1, 0]",egostistical,0,32,0
+2247,param_6_high_perf,"[1.0, 0.75]",[40 60],"[-1, 0]",pomdp,0,27,5
+2248,param_6_high_perf,"[1.0, 0.75]",[40 60],"[-1, 0]",myopic,0,26,12
+2249,param_6_high_perf,"[1.0, 0.75]",[40 60],"[-1, 0]",egostistical,0,34,0
+2250,param_7_high_perf,"[1.0, 0.75]",[40 80],"[-1, 0]",pomdp,0,26,4
+2251,param_7_high_perf,"[1.0, 0.75]",[40 80],"[-1, 0]",myopic,0,30,12
+2252,param_7_high_perf,"[1.0, 0.75]",[40 80],"[-1, 0]",egostistical,0,34,0
+2253,param_8_high_perf,"[1.0, 0.75]",[ 40 100],"[-1, 0]",pomdp,0,26,4
+2254,param_8_high_perf,"[1.0, 0.75]",[ 40 100],"[-1, 0]",myopic,0,30,12
+2255,param_8_high_perf,"[1.0, 0.75]",[ 40 100],"[-1, 0]",egostistical,0,36,0
+2256,param_1_high_perf,"[1.0, 0.75]",[20 40],"[0, -1]",pomdp,0,31,4
+2257,param_1_high_perf,"[1.0, 0.75]",[20 40],"[0, -1]",myopic,0,29,12
+2258,param_1_high_perf,"[1.0, 0.75]",[20 40],"[0, -1]",egostistical,0,31,0
+2259,param_2_high_perf,"[1.0, 0.75]",[20 60],"[0, -1]",pomdp,0,31,4
+2260,param_2_high_perf,"[1.0, 0.75]",[20 60],"[0, -1]",myopic,0,31,12
+2261,param_2_high_perf,"[1.0, 0.75]",[20 60],"[0, -1]",egostistical,0,31,0
+2262,param_3_high_perf,"[1.0, 0.75]",[20 80],"[0, -1]",pomdp,0,33,4
+2263,param_3_high_perf,"[1.0, 0.75]",[20 80],"[0, -1]",myopic,0,31,12
+2264,param_3_high_perf,"[1.0, 0.75]",[20 80],"[0, -1]",egostistical,0,33,0
+2265,param_4_high_perf,"[1.0, 0.75]",[ 20 100],"[0, -1]",pomdp,0,32,4
+2266,param_4_high_perf,"[1.0, 0.75]",[ 20 100],"[0, -1]",myopic,0,33,12
+2267,param_4_high_perf,"[1.0, 0.75]",[ 20 100],"[0, -1]",egostistical,0,32,0
+2268,param_5_high_perf,"[1.0, 0.75]",[ 20 120],"[0, -1]",pomdp,0,32,7
+2269,param_5_high_perf,"[1.0, 0.75]",[ 20 120],"[0, -1]",myopic,0,33,12
+2270,param_5_high_perf,"[1.0, 0.75]",[ 20 120],"[0, -1]",egostistical,0,32,0
+2271,param_6_high_perf,"[1.0, 0.75]",[40 60],"[0, -1]",pomdp,0,34,4
+2272,param_6_high_perf,"[1.0, 0.75]",[40 60],"[0, -1]",myopic,0,29,12
+2273,param_6_high_perf,"[1.0, 0.75]",[40 60],"[0, -1]",egostistical,0,34,0
+2274,param_7_high_perf,"[1.0, 0.75]",[40 80],"[0, -1]",pomdp,0,34,4
+2275,param_7_high_perf,"[1.0, 0.75]",[40 80],"[0, -1]",myopic,0,29,12
+2276,param_7_high_perf,"[1.0, 0.75]",[40 80],"[0, -1]",egostistical,0,34,0
+2277,param_8_high_perf,"[1.0, 0.75]",[ 40 100],"[0, -1]",pomdp,0,36,7
+2278,param_8_high_perf,"[1.0, 0.75]",[ 40 100],"[0, -1]",myopic,0,32,12
+2279,param_8_high_perf,"[1.0, 0.75]",[ 40 100],"[0, -1]",egostistical,0,36,0
+2280,param_1_high_perf,"[1.0, 0.75]",[20 40],"[0, 0]",pomdp,0,24,4
+2281,param_1_high_perf,"[1.0, 0.75]",[20 40],"[0, 0]",myopic,0,26,12
+2282,param_1_high_perf,"[1.0, 0.75]",[20 40],"[0, 0]",egostistical,0,31,0
+2283,param_2_high_perf,"[1.0, 0.75]",[20 60],"[0, 0]",pomdp,0,23,4
+2284,param_2_high_perf,"[1.0, 0.75]",[20 60],"[0, 0]",myopic,0,27,12
+2285,param_2_high_perf,"[1.0, 0.75]",[20 60],"[0, 0]",egostistical,0,31,0
+2286,param_3_high_perf,"[1.0, 0.75]",[20 80],"[0, 0]",pomdp,0,23,4
+2287,param_3_high_perf,"[1.0, 0.75]",[20 80],"[0, 0]",myopic,0,25,12
+2288,param_3_high_perf,"[1.0, 0.75]",[20 80],"[0, 0]",egostistical,0,33,0
+2289,param_4_high_perf,"[1.0, 0.75]",[ 20 100],"[0, 0]",pomdp,0,23,4
+2290,param_4_high_perf,"[1.0, 0.75]",[ 20 100],"[0, 0]",myopic,0,25,12
+2291,param_4_high_perf,"[1.0, 0.75]",[ 20 100],"[0, 0]",egostistical,0,32,0
+2292,param_5_high_perf,"[1.0, 0.75]",[ 20 120],"[0, 0]",pomdp,0,23,4
+2293,param_5_high_perf,"[1.0, 0.75]",[ 20 120],"[0, 0]",myopic,0,24,12
+2294,param_5_high_perf,"[1.0, 0.75]",[ 20 120],"[0, 0]",egostistical,0,32,0
+2295,param_6_high_perf,"[1.0, 0.75]",[40 60],"[0, 0]",pomdp,0,27,5
+2296,param_6_high_perf,"[1.0, 0.75]",[40 60],"[0, 0]",myopic,0,26,12
+2297,param_6_high_perf,"[1.0, 0.75]",[40 60],"[0, 0]",egostistical,0,34,0
+2298,param_7_high_perf,"[1.0, 0.75]",[40 80],"[0, 0]",pomdp,0,26,4
+2299,param_7_high_perf,"[1.0, 0.75]",[40 80],"[0, 0]",myopic,0,25,12
+2300,param_7_high_perf,"[1.0, 0.75]",[40 80],"[0, 0]",egostistical,0,34,0
+2301,param_8_high_perf,"[1.0, 0.75]",[ 40 100],"[0, 0]",pomdp,0,26,4
+2302,param_8_high_perf,"[1.0, 0.75]",[ 40 100],"[0, 0]",myopic,0,24,12
+2303,param_8_high_perf,"[1.0, 0.75]",[ 40 100],"[0, 0]",egostistical,0,36,0
+2304,param_1_high_perf,"[1.0, 1.0]",[20 40],"[-1, -1]",pomdp,0,31,0
+2305,param_1_high_perf,"[1.0, 1.0]",[20 40],"[-1, -1]",myopic,0,31,12
+2306,param_1_high_perf,"[1.0, 1.0]",[20 40],"[-1, -1]",egostistical,0,31,0
+2307,param_2_high_perf,"[1.0, 1.0]",[20 60],"[-1, -1]",pomdp,0,31,3
+2308,param_2_high_perf,"[1.0, 1.0]",[20 60],"[-1, -1]",myopic,0,31,12
+2309,param_2_high_perf,"[1.0, 1.0]",[20 60],"[-1, -1]",egostistical,0,31,0
+2310,param_3_high_perf,"[1.0, 1.0]",[20 80],"[-1, -1]",pomdp,0,33,3
+2311,param_3_high_perf,"[1.0, 1.0]",[20 80],"[-1, -1]",myopic,0,33,12
+2312,param_3_high_perf,"[1.0, 1.0]",[20 80],"[-1, -1]",egostistical,0,33,0
+2313,param_4_high_perf,"[1.0, 1.0]",[ 20 100],"[-1, -1]",pomdp,0,32,3
+2314,param_4_high_perf,"[1.0, 1.0]",[ 20 100],"[-1, -1]",myopic,0,32,12
+2315,param_4_high_perf,"[1.0, 1.0]",[ 20 100],"[-1, -1]",egostistical,0,32,0
+2316,param_5_high_perf,"[1.0, 1.0]",[ 20 120],"[-1, -1]",pomdp,0,32,6
+2317,param_5_high_perf,"[1.0, 1.0]",[ 20 120],"[-1, -1]",myopic,0,32,12
+2318,param_5_high_perf,"[1.0, 1.0]",[ 20 120],"[-1, -1]",egostistical,0,32,0
+2319,param_6_high_perf,"[1.0, 1.0]",[40 60],"[-1, -1]",pomdp,0,34,3
+2320,param_6_high_perf,"[1.0, 1.0]",[40 60],"[-1, -1]",myopic,0,34,12
+2321,param_6_high_perf,"[1.0, 1.0]",[40 60],"[-1, -1]",egostistical,0,34,0
+2322,param_7_high_perf,"[1.0, 1.0]",[40 80],"[-1, -1]",pomdp,0,34,3
+2323,param_7_high_perf,"[1.0, 1.0]",[40 80],"[-1, -1]",myopic,0,34,12
+2324,param_7_high_perf,"[1.0, 1.0]",[40 80],"[-1, -1]",egostistical,0,34,0
+2325,param_8_high_perf,"[1.0, 1.0]",[ 40 100],"[-1, -1]",pomdp,0,36,6
+2326,param_8_high_perf,"[1.0, 1.0]",[ 40 100],"[-1, -1]",myopic,0,36,12
+2327,param_8_high_perf,"[1.0, 1.0]",[ 40 100],"[-1, -1]",egostistical,0,36,0
+2328,param_1_high_perf,"[1.0, 1.0]",[20 40],"[-1, 0]",pomdp,0,31,0
+2329,param_1_high_perf,"[1.0, 1.0]",[20 40],"[-1, 0]",myopic,0,27,12
+2330,param_1_high_perf,"[1.0, 1.0]",[20 40],"[-1, 0]",egostistical,0,31,0
+2331,param_2_high_perf,"[1.0, 1.0]",[20 60],"[-1, 0]",pomdp,0,31,3
+2332,param_2_high_perf,"[1.0, 1.0]",[20 60],"[-1, 0]",myopic,0,27,12
+2333,param_2_high_perf,"[1.0, 1.0]",[20 60],"[-1, 0]",egostistical,0,31,0
+2334,param_3_high_perf,"[1.0, 1.0]",[20 80],"[-1, 0]",pomdp,0,33,3
+2335,param_3_high_perf,"[1.0, 1.0]",[20 80],"[-1, 0]",myopic,0,27,12
+2336,param_3_high_perf,"[1.0, 1.0]",[20 80],"[-1, 0]",egostistical,0,33,0
+2337,param_4_high_perf,"[1.0, 1.0]",[ 20 100],"[-1, 0]",pomdp,0,32,3
+2338,param_4_high_perf,"[1.0, 1.0]",[ 20 100],"[-1, 0]",myopic,0,25,12
+2339,param_4_high_perf,"[1.0, 1.0]",[ 20 100],"[-1, 0]",egostistical,0,32,0
+2340,param_5_high_perf,"[1.0, 1.0]",[ 20 120],"[-1, 0]",pomdp,0,32,6
+2341,param_5_high_perf,"[1.0, 1.0]",[ 20 120],"[-1, 0]",myopic,0,24,12
+2342,param_5_high_perf,"[1.0, 1.0]",[ 20 120],"[-1, 0]",egostistical,0,32,0
+2343,param_6_high_perf,"[1.0, 1.0]",[40 60],"[-1, 0]",pomdp,0,34,3
+2344,param_6_high_perf,"[1.0, 1.0]",[40 60],"[-1, 0]",myopic,0,26,12
+2345,param_6_high_perf,"[1.0, 1.0]",[40 60],"[-1, 0]",egostistical,0,34,0
+2346,param_7_high_perf,"[1.0, 1.0]",[40 80],"[-1, 0]",pomdp,0,34,3
+2347,param_7_high_perf,"[1.0, 1.0]",[40 80],"[-1, 0]",myopic,0,30,12
+2348,param_7_high_perf,"[1.0, 1.0]",[40 80],"[-1, 0]",egostistical,0,34,0
+2349,param_8_high_perf,"[1.0, 1.0]",[ 40 100],"[-1, 0]",pomdp,0,36,6
+2350,param_8_high_perf,"[1.0, 1.0]",[ 40 100],"[-1, 0]",myopic,0,30,12
+2351,param_8_high_perf,"[1.0, 1.0]",[ 40 100],"[-1, 0]",egostistical,0,36,0
+2352,param_1_high_perf,"[1.0, 1.0]",[20 40],"[0, -1]",pomdp,0,31,0
+2353,param_1_high_perf,"[1.0, 1.0]",[20 40],"[0, -1]",myopic,0,29,12
+2354,param_1_high_perf,"[1.0, 1.0]",[20 40],"[0, -1]",egostistical,0,31,0
+2355,param_2_high_perf,"[1.0, 1.0]",[20 60],"[0, -1]",pomdp,0,31,3
+2356,param_2_high_perf,"[1.0, 1.0]",[20 60],"[0, -1]",myopic,0,31,12
+2357,param_2_high_perf,"[1.0, 1.0]",[20 60],"[0, -1]",egostistical,0,31,0
+2358,param_3_high_perf,"[1.0, 1.0]",[20 80],"[0, -1]",pomdp,0,33,3
+2359,param_3_high_perf,"[1.0, 1.0]",[20 80],"[0, -1]",myopic,0,31,12
+2360,param_3_high_perf,"[1.0, 1.0]",[20 80],"[0, -1]",egostistical,0,33,0
+2361,param_4_high_perf,"[1.0, 1.0]",[ 20 100],"[0, -1]",pomdp,0,32,3
+2362,param_4_high_perf,"[1.0, 1.0]",[ 20 100],"[0, -1]",myopic,0,33,12
+2363,param_4_high_perf,"[1.0, 1.0]",[ 20 100],"[0, -1]",egostistical,0,32,0
+2364,param_5_high_perf,"[1.0, 1.0]",[ 20 120],"[0, -1]",pomdp,0,32,6
+2365,param_5_high_perf,"[1.0, 1.0]",[ 20 120],"[0, -1]",myopic,0,33,12
+2366,param_5_high_perf,"[1.0, 1.0]",[ 20 120],"[0, -1]",egostistical,0,32,0
+2367,param_6_high_perf,"[1.0, 1.0]",[40 60],"[0, -1]",pomdp,0,34,3
+2368,param_6_high_perf,"[1.0, 1.0]",[40 60],"[0, -1]",myopic,0,29,12
+2369,param_6_high_perf,"[1.0, 1.0]",[40 60],"[0, -1]",egostistical,0,34,0
+2370,param_7_high_perf,"[1.0, 1.0]",[40 80],"[0, -1]",pomdp,0,34,3
+2371,param_7_high_perf,"[1.0, 1.0]",[40 80],"[0, -1]",myopic,0,29,12
+2372,param_7_high_perf,"[1.0, 1.0]",[40 80],"[0, -1]",egostistical,0,34,0
+2373,param_8_high_perf,"[1.0, 1.0]",[ 40 100],"[0, -1]",pomdp,0,36,6
+2374,param_8_high_perf,"[1.0, 1.0]",[ 40 100],"[0, -1]",myopic,0,32,12
+2375,param_8_high_perf,"[1.0, 1.0]",[ 40 100],"[0, -1]",egostistical,0,36,0
+2376,param_1_high_perf,"[1.0, 1.0]",[20 40],"[0, 0]",pomdp,0,31,0
+2377,param_1_high_perf,"[1.0, 1.0]",[20 40],"[0, 0]",myopic,0,26,12
+2378,param_1_high_perf,"[1.0, 1.0]",[20 40],"[0, 0]",egostistical,0,31,0
+2379,param_2_high_perf,"[1.0, 1.0]",[20 60],"[0, 0]",pomdp,0,31,3
+2380,param_2_high_perf,"[1.0, 1.0]",[20 60],"[0, 0]",myopic,0,27,12
+2381,param_2_high_perf,"[1.0, 1.0]",[20 60],"[0, 0]",egostistical,0,31,0
+2382,param_3_high_perf,"[1.0, 1.0]",[20 80],"[0, 0]",pomdp,0,33,3
+2383,param_3_high_perf,"[1.0, 1.0]",[20 80],"[0, 0]",myopic,0,25,12
+2384,param_3_high_perf,"[1.0, 1.0]",[20 80],"[0, 0]",egostistical,0,33,0
+2385,param_4_high_perf,"[1.0, 1.0]",[ 20 100],"[0, 0]",pomdp,0,32,3
+2386,param_4_high_perf,"[1.0, 1.0]",[ 20 100],"[0, 0]",myopic,0,25,12
+2387,param_4_high_perf,"[1.0, 1.0]",[ 20 100],"[0, 0]",egostistical,0,32,0
+2388,param_5_high_perf,"[1.0, 1.0]",[ 20 120],"[0, 0]",pomdp,0,32,6
+2389,param_5_high_perf,"[1.0, 1.0]",[ 20 120],"[0, 0]",myopic,0,24,12
+2390,param_5_high_perf,"[1.0, 1.0]",[ 20 120],"[0, 0]",egostistical,0,32,0
+2391,param_6_high_perf,"[1.0, 1.0]",[40 60],"[0, 0]",pomdp,0,34,3
+2392,param_6_high_perf,"[1.0, 1.0]",[40 60],"[0, 0]",myopic,0,26,12
+2393,param_6_high_perf,"[1.0, 1.0]",[40 60],"[0, 0]",egostistical,0,34,0
+2394,param_7_high_perf,"[1.0, 1.0]",[40 80],"[0, 0]",pomdp,0,34,3
+2395,param_7_high_perf,"[1.0, 1.0]",[40 80],"[0, 0]",myopic,0,25,12
+2396,param_7_high_perf,"[1.0, 1.0]",[40 80],"[0, 0]",egostistical,0,34,0
+2397,param_8_high_perf,"[1.0, 1.0]",[ 40 100],"[0, 0]",pomdp,0,36,6
+2398,param_8_high_perf,"[1.0, 1.0]",[ 40 100],"[0, 0]",myopic,0,24,12
+2399,param_8_high_perf,"[1.0, 1.0]",[ 40 100],"[0, 0]",egostistical,0,36,0

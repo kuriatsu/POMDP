@@ -207,17 +207,17 @@ class MDP:
         target_likelihood = state_value[target_index]
 
         if target_likelihood > 0.5:
-            int_risk_prob = 0.8
+            int_norisk_prob = 0.2
         elif target_likelihood < 0.5:
-            int_risk_prob = 0.2
+            int_norisk_prob = 0.8
         else:
-            int_risk_prob = 0.5
+            int_norisk_prob = 0.5
 
         for [int_acc, acc_prob] in int_acc_prob_list:
             if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
 
                 # print("transition if target is judged as norisk")
-                transition_prob = int_risk_prob * acc_prob
+                transition_prob = int_norisk_prob * acc_prob
                 buf_state_value_noint = copy.deepcopy(state_value)
                 buf_state_value_noint[target_index] = (1.0 - int_acc) * 0.5 
                 _, v, x = self.ego_vehicle_transition(buf_state_value_noint)
@@ -225,7 +225,7 @@ class MDP:
                 buf_state_value_noint[self.ego_state_index+1] = v 
                 out_index_list.append([transition_prob, self.to_index(buf_state_value_noint)]) 
                 # print("transition if target is judged as risk")
-                transition_prob = (1.0 - int_risk_prob) * acc_prob
+                transition_prob = (1.0 - int_norisk_prob) * acc_prob
                 buf_state_value_int = copy.deepcopy(state_value)
                 buf_state_value_int[target_index] = (1.0 + int_acc) * 0.5 
                 _, v, x = self.ego_vehicle_transition(buf_state_value_int)
@@ -260,7 +260,7 @@ class MDP:
             if dist >= 0.0 and dist < closest_target_dist:
                 is_deceleration_target = False
                 if i == state[self.int_state_index+1]:
-                    is_deceleration_target = state[target_index] > 0.0
+                    is_deceleration_target = state[target_index] >= 0.0
                 else:
                     is_deceleration_target = state[target_index] >= 0.5
 

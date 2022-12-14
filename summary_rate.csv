@@ -1,0 +1,10 @@
+theta_accuracy,agent,improve,trav_imp,req_imp,same,degrade
+high,w_perf_pomdp,0.7125,0.7325,0.815,0.915,1
+low,w_perf_pomdp,0.705,0.75375,0.93125,0.93125,1
+mid,w_perf_pomdp,0.70125,0.71625,0.8225,0.925,1
+high,wo_perf_pomdp,0.597619048,0.63,0.796190476,0.87047619,1
+low,wo_perf_pomdp,0.597619048,0.63,0.796190476,0.87047619,1
+mid,wo_perf_pomdp,0.597619048,0.63,0.796190476,0.87047619,1
+mid,pomdp,0.7575,0.7575,0.96875,0.9925,1
+low,pomdp,0.68,0.7125,0.9675,0.9675,1
+high,pomdp,0.77875,0.77875,1,1,1
