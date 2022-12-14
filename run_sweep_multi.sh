@@ -24,3 +24,4 @@ python3 ras_value_iteration_sweep_wo_perf.py param_18_wo_perf.yaml &
 python3 ras_value_iteration_sweep_wo_perf.py param_19_wo_perf.yaml &
 python3 ras_value_iteration_sweep_wo_perf.py param_20_wo_perf.yaml &
 python3 ras_value_iteration_sweep_wo_perf.py param_21_wo_perf.yaml &
+
