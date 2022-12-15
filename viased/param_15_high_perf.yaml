@@ -17,7 +17,7 @@ min_time: 2
 min_time_var: 0.5
 acc_time_min: 0.75
 acc_time_var: 0.2
-acc_time_slope: 0.25
+acc_time_slope: 0.5
 
 risk_positions: [20, 140]
 
