@@ -7,8 +7,8 @@ import seaborn as sns
 import pandas as pd
 import pickle
 import yaml
-# from w_perf.ras_value_iteration_sweep import MDP
-from wo_perf.ras_value_iteration_sweep_wo_perf import MDP
+from w_perf.ras_value_iteration_sweep import MDP
+# from wo_perf.ras_value_iteration_sweep_wo_perf import MDP
 # from viased.ras_value_iteration_sweep_vias_intprob_huge import MDP
 from myopic_agent import myopic_policy
 import sys
@@ -19,7 +19,7 @@ risk_colors = ["red", "blue", "green"]
 trajectory_color = "green"
 
 # mdp.init_state_space()
-def plot(mdp, ax, indexes, policies, intervention, risk_num, cumlative_risk, travel_time, request_time, title):
+def plot(mdp, ax, indexes, policies, reward, risk_num, cumlative_risk, travel_time, request_time, title):
     # plot vehicle speed change (state_transition index : -1=noint, 0=int)
     ax_risk = ax.twinx()
     ax_risk.set_ylim((0.0, 1.0))
@@ -43,9 +43,10 @@ def plot(mdp, ax, indexes, policies, intervention, risk_num, cumlative_risk, tra
             ax_risk.plot(mdp.index_value(indexes[i], 0), 0.5, c="grey", marker="x")
 
 
-    ax.annotate("travel time: "+str(travel_time), xy=(10, 5), size=10)
-    ax.annotate("request time: "+str(request_time), xy=(10, 4), size=10)
-    ax.annotate("cumulative ambiguity: "+str(cumlative_risk), xy=(10, 3), size=10, color="red")
+    ax.annotate("travel time: "+str(travel_time), xy=(10, 5), size=8)
+    ax.annotate("request time: "+str(request_time), xy=(10, 4), size=8)
+    ax.annotate("# of risk omissions: "+str(cumlative_risk), xy=(10, 3), size=8)
+    ax.annotate("reward: "+str(reward), xy=(10, 2), size=8)
     ax.set_xlabel("distance [m]", fontsize=14) 
     ax.set_ylabel("speed [m/s]", fontsize=14) 
     ax.set_title(title, fontsize=14, y=-0.25)
@@ -66,14 +67,17 @@ def get_cumlative_risk(mdp, indexes):
     return cumlative_risk
 
 
-def pomdp_agent(mdp, policy, initial_state, intervention_list):
+def pomdp_agent(mdp, policy, value, initial_state, intervention_list):
     index = tuple(mdp.to_index(initial_state))
     indexes = []
     policies = []
+    reward = 0
     # cumlative_risk = 0
     while not mdp.final_state(index):
-        p = policy[index]
-
+        # p = policy[index]
+        p = [-1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1][len(policies)]
+        print(mdp.action_value(p, index), mdp.action_value(policy[index], index))
+        reward += value[index]
         # get intervention or not from list if request state is not -1
         intervention = 0 if mdp.index_value(index, mdp.int_state_index+1) == -1 else intervention_list[int(mdp.index_value(index, mdp.int_state_index+1))]
         index_after_list =  mdp.state_transition(p, index)
@@ -125,17 +129,19 @@ def pomdp_agent(mdp, policy, initial_state, intervention_list):
 
     travel_time = len(indexes)
     request_time = len([p for p in policies if p!=-1])
-    return indexes, policies, travel_time, request_time
+    return indexes, policies, reward, travel_time, request_time
     # return indexes, policies, cumlative_risk, travel_time, request_time
 
 
-def egotistical_agent(mdp, initial_state, intervention_list):
+def egotistical_agent(mdp, value, initial_state, intervention_list):
     index = tuple(mdp.to_index(initial_state))
     indexes = []
     policies = []
     # cumlative_risk = 0
+    reward = 0
     while not mdp.final_state(index):
         policy = -1 
+        reward += value[index]
 
         intervention = 0 if mdp.index_value(index, mdp.int_state_index+1) == -1 else intervention_list[int(mdp.index_value(index, mdp.int_state_index+1))]
         index_after_list =  mdp.state_transition(policy, index)
@@ -156,7 +162,7 @@ def egotistical_agent(mdp, initial_state, intervention_list):
 
     travel_time = len(indexes)
     request_time = len([p for p in policies if p!=-1])
-    return indexes, policies, travel_time, request_time
+    return indexes, policies, reward, travel_time, request_time
     # return indexes, policies, cumlative_risk, travel_time, request_time
 
 def visualize_speed(scenario_list, dir):
@@ -165,9 +171,9 @@ def visualize_speed(scenario_list, dir):
 
 
     for scenario in scenario_list:
-        fig = plt.figure(figsize=[6, 8])
-        axes = fig.subplots(3, 1, sharex="all", sharey="all")
-        fig.subplots_adjust(left=0.1, bottom=0.1, right=0.90, top=0.95, wspace=0.3, hspace=0.3)
+        # fig = plt.figure(figsize=[6, 8])
+        # axes = fig.subplots(3, 1, sharex="all", sharey="all")
+        # fig.subplots_adjust(left=0.1, bottom=0.1, right=0.90, top=0.95, wspace=0.3, hspace=0.3)
         intervention_list = scenario[2]
         initial_state = scenario[1]
         param_file = scenario[0]
@@ -179,26 +185,24 @@ def visualize_speed(scenario_list, dir):
         print(param_file)
         with open(dir+f"{filename}_p.pkl", "rb") as f:
             p = pickle.load(f)
+        with open(dir+f"{filename}_v.pkl", "rb") as f:
+            v = pickle.load(f)
 
-        indexes, policies, travel_time, request_time = pomdp_agent(mdp, p, initial_state, intervention_list)
+        indexes, policies, reward, travel_time, request_time = pomdp_agent(mdp, p, v, initial_state, intervention_list)
         cumlative_risk = get_cumlative_risk(mdp, indexes)
-        plot(mdp, axes[0], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, filename)
+        # plot(mdp, axes[0], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, filename)
+        print(policies, reward)
 
-        indexes, policies, travel_time, request_time = myopic_policy(mdp, 5, initial_state, intervention_list)
+        indexes, policies, reward, travel_time, request_time = myopic_policy(mdp, 5, v, initial_state, intervention_list)
         cumlative_risk = get_cumlative_risk(mdp, indexes)
-        plot(mdp, axes[1], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "myopic")
+        # plot(mdp, axes[1], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "myopic")
 
-        indexes, policies, travel_time, request_time = egotistical_agent(mdp, initial_state, intervention_list)
+        indexes, policies, reward, travel_time, request_time = egotistical_agent(mdp, v, initial_state, intervention_list)
         cumlative_risk = get_cumlative_risk(mdp, indexes)
-        plot(mdp, axes[2], indexes, policies, 0, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "egostistical")
+        # plot(mdp, axes[2], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "egostistical")
 
-        # result_list = pd.concat([result_list, buf_list], ignore_index=True)
-        # sns.lineplot(buf_list, x="agent", y="cumlative_risk", ax=ax_eval[0], label=str(initial_state[-2:])+str(intervention_list)) 
-        # sns.lineplot(buf_list, x="agent", y="travel_time", ax=ax_eval[1], label=str(initial_state[-2:])+str(intervention_list)) 
-        # sns.lineplot(buf_list, x="agent", y="request_time", ax=ax_eval[2], label=str(initial_state[-2:])+str(intervention_list)) 
-
-        plt.savefig(dir+f"{filename}_{str(scenario)}_speed.svg")
-        plt.show()
+        # plt.savefig(dir+f"{filename}_{str(scenario)}_speed.svg")
+        # plt.show()
 
 def simulation(initial_states, dir, param_list, out_file):
 
@@ -393,27 +397,27 @@ if __name__ == "__main__":
     # simulation
     ####################################
     param_list = [
-            "param_1.yaml",
-            "param_2.yaml",
-            "param_3.yaml",
-            "param_4.yaml",
-            "param_5.yaml",
-            "param_6.yaml",
-            "param_7.yaml",
-            "param_8.yaml",
-            # "param_9.yaml",
-            # "param_10.yaml",
-            # "param_11.yaml",
-            # "param_12.yaml",
-            # "param_13.yaml",
-            # "param_14.yaml",
-            # "param_15.yaml",
-            # "param_16.yaml",
-            # "param_17.yaml",
-            # "param_18.yaml",
-            # "param_19.yaml",
-            # "param_20.yaml",
-            # "param_21.yaml",
+            "param_1_low_perf.yaml",
+            "param_2_low_perf.yaml",
+            "param_3_low_perf.yaml",
+            "param_4_low_perf.yaml",
+            "param_5_low_perf.yaml",
+            "param_6_low_perf.yaml",
+            "param_7_low_perf.yaml",
+            "param_8_low_perf.yaml",
+            "param_9_low_perf.yaml",
+            "param_10_low_perf.yaml",
+            "param_11_low_perf.yaml",
+            "param_12_low_perf.yaml",
+            "param_13_low_perf.yaml",
+            "param_14_low_perf.yaml",
+            "param_15_low_perf.yaml",
+            "param_16_low_perf.yaml",
+            "param_17_low_perf.yaml",
+            "param_18_low_perf.yaml",
+            "param_19_low_perf.yaml",
+            "param_20_low_perf.yaml",
+            "param_21_low_perf.yaml",
             ]
     initial_states = [
             [0, 11.2, 0, -1, 0.0, 0.0],
@@ -452,30 +456,7 @@ if __name__ == "__main__":
     ####################################
     # comparison
     ####################################
-    processing_target = {
-        "param_1": 1,
-        "param_2": 2,
-        "param_3": 3,
-        "param_4": 4,
-        "param_5": 5,
-        "param_6": 6,
-        "param_7": 6,
-        "param_8": 6,
-        "param_9": 6,
-        "param_10": 6,
-        "param_11": 6,
-        "param_12": 6,
-        "param_13": 6,
-        "param_14": 6,
-        "param_15": 6,
-        "param_16": 6,
-        "param_17": 6,
-        "param_18": 6,
-        "param_19": 6,
-        "param_20": 6,
-        "param_21": 6,
-        }
-    # analyze("w_perf/result_mid.csv", "w_perf/result_comparison_mid.csv", "w_perf/result_summary_mid.csv", "w_perf/result_summary_rate_mid.csv")
+    # analyze("wo_perf/result_low.csv", "wo_perf/result_comparison_low.csv", "wo_perf/result_summary_low.csv", "wo_perf/result_summary_rate_low.csv")
     # analyze("w_perf/result_high.csv", "w_perf/result_comparison_high.csv", "w_perf/result_summary_high.csv", "w_perf/result_summary_rate_high.csv")
     # analyze("w_perf/result_low.csv", "w_perf/result_comparison_low.csv", "w_perf/result_summary_low.csv", "w_perf/result_summary_rate_low.csv")
 
@@ -489,5 +470,5 @@ if __name__ == "__main__":
             ["param_9.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
             ["param_9.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
             ]
-    visualize_speed(scenario_list, "wo_perf/") 
+    visualize_speed(scenario_list, "w_perf/") 
 

@@ -8,7 +8,7 @@ import yaml
 from ras_value_iteration_sweep import MDP
 import sys
 
-def myopic_policy(mdp, int_time, initial_state, intervention_list):
+def myopic_policy(mdp, int_time, value, initial_state, intervention_list):
 
     index = tuple(mdp.to_index(initial_state))
     indexes = []
@@ -18,12 +18,14 @@ def myopic_policy(mdp, int_time, initial_state, intervention_list):
         
     # cumlative_risk = 0
     travel_time = 0
+    reward = 0
 
     while not mdp.final_state(index):
         # decel_dist = (5.6**2 - 1.4**2)/(2*9.8*mdp.ordinary_G)
         decel_dist = (mdp.index_value(index, 1)**2 - 1.4**2)/(2*9.8*mdp.ordinary_G)
         int_request_dist = decel_dist + mdp.index_value(index, 1)*int_time + mdp.safety_margin + 8
         intervention = intervention_list[target_list[0]] if target_list else 0
+        reward += value[index]
         
         if target_list and mdp.index_value(index, 2) >= int_time and mdp.index_value(index, 3) == target_list[0]:
             target_list.pop(0)    
@@ -89,7 +91,7 @@ def myopic_policy(mdp, int_time, initial_state, intervention_list):
     travel_time = len(indexes)*1
     request_time = len([p for p in policies if p!=-1])
     # return indexes, policies, cumlative_risk, travel_time, request_time
-    return indexes, policies, travel_time, request_time
+    return indexes, policies, reward, travel_time, request_time
 
 if __name__ == "__main__":
     with open(sys.argv[1]) as f:
