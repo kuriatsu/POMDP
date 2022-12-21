@@ -5,24 +5,25 @@ ideal_speed: 11.2
 min_speed: 2.8
 ordinary_G: 0.2
 
-p_efficiency: -100
-p_ambiguity: -100
-p_bad_int_request: -10000
-p_int_request: -5
+p_efficiency: -1
+p_comfort: -0.5
+p_ambiguity: -1
+p_bad_int_request: 0
+p_int_request: 0
 p_delta_t: 0
 goal_value: 0
 
 operator_int_prob: 0.5
-min_time: 3
+min_time: 1
 min_time_var: 0.5
 acc_time_min: 0.5
 acc_time_var: 0.2
-acc_time_slope: 0.25
+acc_time_slope: 0.5
 
-risk_positions: [40, 120]
+risk_positions: [120]
 
 # risk, inttime, target
-visualize_elem: "[:, :, 1, 2, 1, 1]"
+visualize_elem: "[:, 8, 0, :, 0]"
 
 # desctiption
 # basic situation with decent operator performance

@@ -180,17 +180,20 @@ def visualize_speed(scenario_list, dir):
         with open(dir+param_file) as f:
             param = yaml.safe_load(f)
 
+
         mdp = MDP(param)
         filename = param_file.split("/")[-1].split(".")[0]
-        print(param_file)
+        print(dir+param_file)
         with open(dir+f"{filename}_p.pkl", "rb") as f:
             p = pickle.load(f)
         with open(dir+f"{filename}_v.pkl", "rb") as f:
             v = pickle.load(f)
 
+
         indexes, policies, reward, travel_time, request_time = pomdp_agent(mdp, p, v, initial_state, intervention_list)
         cumlative_risk = get_cumlative_risk(mdp, indexes)
         plot(mdp, axes[0], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, filename)
+        print([mdp.index_value(i, 1) for i in indexes])
         print(policies, reward)
 
         indexes, policies, reward, travel_time, request_time = myopic_policy(mdp, 5, v, initial_state, intervention_list)
@@ -203,6 +206,14 @@ def visualize_speed(scenario_list, dir):
 
         plt.savefig(dir+f"{filename}_{str(scenario)}_speed.svg")
         # plt.show()
+
+        axes, fig = plt.subplots()
+        viz_v = eval("v" + param["visualize_elem"])
+        print(viz_v[60, :])
+        sns.heatmap(np.rot90(viz_v), square=False)
+        plt.title(f"{filename}value")
+        # plt.savefig(f"{filename}_value.svg")
+        plt.show()
 
 def simulation(initial_states, dir, param_list, out_file):
 
@@ -465,10 +476,30 @@ if __name__ == "__main__":
     ####################################
     # -1:judged as risk 0:no risk
     scenario_list = [
-            ["param_9_4.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            ["param_9_4.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            ["param_9_4.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            ["param_9_4.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
+            # ["param_9_4.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
+            # ["param_9_4.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
+            # ["param_9_4.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
+            # ["param_9_4.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
+            # ["param_9_1.yaml", [0, 11.2, 0, -1, 0.75], [0]],
+            # ["param_9_1.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
+            # ["param_9_1.yaml", [0, 11.2, 0, -1, 0.25], [0]],
+            # ["param_9_1.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
+            # ["param_9_2.yaml", [0, 11.2, 0, -1, 0.75], [0]],
+            # ["param_9_2.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
+            # ["param_9_2.yaml", [0, 11.2, 0, -1, 0.25], [0]],
+            # ["param_9_2.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
+            ["param_9_4.yaml", [0, 11.2, 0, -1, 0.75], [0]],
+            ["param_9_4.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
+            ["param_9_4.yaml", [0, 11.2, 0, -1, 0.25], [0]],
+            ["param_9_4.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
+            ["param_9_3.yaml", [0, 11.2, 0, -1, 0.75], [0]],
+            ["param_9_3.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
+            ["param_9_3.yaml", [0, 11.2, 0, -1, 0.25], [0]],
+            ["param_9_3.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
+            # ["param_9_6.yaml", [0, 11.2, 0, -1, 0.75], [0]],
+            # ["param_9_6.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
+            # ["param_9_6.yaml", [0, 11.2, 0, -1, 0.25], [0]],
+            # ["param_9_6.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
             ]
     visualize_speed(scenario_list, "./") 
 

@@ -23,6 +23,7 @@ class MDP:
         # self.max_G = 1.0 
 
         self.p_efficiency = param["p_efficiency"] # -1
+        self.p_comfort = param["p_comfort"] # -10
         self.p_ambiguity = param["p_ambiguity"] # -10
         self.p_bad_int_request = param["p_bad_int_request"] # -10
         self.p_int_request = param["p_int_request"] # -1
@@ -133,33 +134,39 @@ class MDP:
         value = 0.0
         for prob, index_after in self.state_transition(action, index):
             ambiguity = 0.0
+            comfort = 0.0
             efficiency = 0.0
             bad_int_request = False
             int_request_penalty = False
             # state reward
             for i, risk_position in enumerate(self.risk_positions):
-                # when passed the target with crossing risk with 10km/h or higher
-                # evaluate efficiency, ambiguity
                 # TODO consider multiple object at the same place
                 # if self.index_value(index, self.ego_state_index) <= risk_position <= self.index_value(index_after, self.ego_state_index) and self.index_value(index, self.ego_state_index+1) > self.min_speed:
                 if self.index_value(index, self.ego_state_index) <= risk_position <= self.index_value(index_after, self.ego_state_index):
                     ego_speed = self.index_value(index_after, self.ego_state_index+1) 
                     risk_prob = self.index_value(index_after, self.risk_state_index + i)
                     ambiguity = (0.5 - abs(risk_prob - 0.5))*2
-            
-            # alternative method to calculating jerk (it requires including acceleration into state space)
-            efficiency = abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1)) > 2.5*9.8 
+                    # if (risk_prob == 1.0 and ego_speed != self.min_speed) or (risk_prob == 0.0 and ego_speed != self.ideal_speed):
+                    if risk_prob == 1.0 and ego_speed != self.min_speed:
+                        efficiency = 1.0
+                    elif risk_prob == 0.0:
+                        efficiency = (self.ideal_speed - ego_speed)/(self.ideal_speed - self.min_speed)
+            if action != -1:
+                # alternative method to calculating jerk (it requires including acceleration into state space)
+                comfort = abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1))/self.delta_t > 0.2*9.8 
                     
             # when change the intervention target, judge the action decision
-            if action not in [-1, self.index_value(index, self.int_state_index+1)]:
+            if self.index_value(index, self.int_state_index+1) not in [-1, action]:
                 int_time = self.index_value(index, self.int_state_index) 
 
-                # int_acc = self.get_int_performance(int_time)
-                # bad_int_request = int_acc is None
-                for [int_acc, acc_prob] in self.operator_model.get_acc_prob(int_time):
-                    if int_acc is None:
-                        bad_int_request = acc_prob
-            
+                int_acc = self.get_int_performance(int_time)
+                bad_int_request = int_acc is None
+                # for [int_acc, acc_prob] in self.operator_model.get_acc_prob(int_time):
+                #     if int_acc is None:
+                #         bad_int_request = acc_prob
+                # if bad_int_request: 
+                #     print("bad_request", self.index_value(index, self.int_state_index+1),"->",  action)
+
             # if intervention after passing the obstacles
             if self.index_value(index_after, self.ego_state_index) >= self.risk_positions[int(self.index_value(index_after, self.int_state_index+1))]:
                 bad_int_request = True
@@ -168,13 +175,14 @@ class MDP:
             if action != -1:
                 int_request_penalty = True
 
-            # print("value_", self.index_value(index, self.ego_state_index), efficiency, ambiguity, bad_int_request)
             action_value = self.p_efficiency*efficiency \
                          + self.p_ambiguity*ambiguity \
-                         + self.p_bad_int_request*bad_int_request \
-                         + self.p_int_request*int_request_penalty \
-                         + self.p_delta_t*self.delta_t \
-                         + self.goal_value*self.final_state(index_after)
+                         + self.p_comfort*comfort \
+                         + self.p_delta_t*self.delta_t
+                         # + self.p_int_request*int_request_penalty \
+                         # + self.p_bad_int_request*bad_int_request \
+                         # + self.goal_value*self.final_state(index_after)
+            # print("action_value", index, action_value, self.p_efficiency*efficiency, self.p_ambiguity*ambiguity, self.p_bad_int_request*bad_int_request)
             value += prob * (self.value_function[tuple(index_after)] + action_value) * self.discount_factor
             # value += prob * (action_value) 
             
