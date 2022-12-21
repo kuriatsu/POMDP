@@ -59,7 +59,7 @@ class OperatorModel:
         if int_time < self.min_time:
             acc = None
         else:
-            acc = self.min_time + self.acc_time_slope*(int_time - self.min_time)
+            acc = self.acc_time_min + self.acc_time_slope*(int_time - self.min_time)
             acc = min(acc, 1.0)
         
         return [[acc, 1.0]]

@@ -37,11 +37,12 @@ def plot(mdp, ax, indexes, policies, reward, risk_num, cumlative_risk, travel_ti
         ax_risk.plot([mdp.index_value(i, 0) for i in indexes], [mdp.index_value(i, mdp.risk_state_index+r) for i in indexes], alpha=0.5, c=risk_colors[r], label="risk prob")
 
     # plot intervention request
-    for i, p in enumerate(policies):
-        if p != -1:
-            ax_risk.plot(mdp.index_value(indexes[i], 0), 0.5, c=risk_colors[p], marker="x", label="int request")
+    for index in indexes:
+        target = int(mdp.index_value(index, mdp.int_state_index+1))
+        if target != -1:
+            ax_risk.plot(mdp.index_value(index, 0), 0.5, c=risk_colors[target], marker="x", label="int request")
         else:
-            ax_risk.plot(mdp.index_value(indexes[i], 0), 0.5, c="grey", marker="x")
+            ax_risk.plot(mdp.index_value(index, 0), 0.5, c="grey", marker="x")
 
 
     ax.annotate("travel time: "+str(travel_time), xy=(10, 5), size=8)
@@ -496,10 +497,10 @@ if __name__ == "__main__":
             ["param_9_3.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
             ["param_9_3.yaml", [0, 11.2, 0, -1, 0.25], [0]],
             ["param_9_3.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
-            # ["param_9_6.yaml", [0, 11.2, 0, -1, 0.75], [0]],
-            # ["param_9_6.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
-            # ["param_9_6.yaml", [0, 11.2, 0, -1, 0.25], [0]],
-            # ["param_9_6.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
+            ["param_9_5.yaml", [0, 11.2, 0, -1, 0.75], [0]],
+            ["param_9_5.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
+            ["param_9_5.yaml", [0, 11.2, 0, -1, 0.25], [0]],
+            ["param_9_5.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
             ]
     visualize_speed(scenario_list, "./") 
 

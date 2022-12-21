@@ -143,17 +143,17 @@ class MDP:
                 # TODO consider multiple object at the same place
                 # if self.index_value(index, self.ego_state_index) <= risk_position <= self.index_value(index_after, self.ego_state_index) and self.index_value(index, self.ego_state_index+1) > self.min_speed:
                 if self.index_value(index, self.ego_state_index) <= risk_position <= self.index_value(index_after, self.ego_state_index):
-                    ego_speed = self.index_value(index_after, self.ego_state_index+1) 
-                    risk_prob = self.index_value(index_after, self.risk_state_index + i)
+                    ego_speed = self.index_value(index, self.ego_state_index+1) 
+                    risk_prob = self.index_value(index, self.risk_state_index + i)
                     ambiguity = (0.5 - abs(risk_prob - 0.5))*2
-                    # if (risk_prob == 1.0 and ego_speed != self.min_speed) or (risk_prob == 0.0 and ego_speed != self.ideal_speed):
                     if risk_prob == 1.0 and ego_speed != self.min_speed:
                         efficiency = 1.0
                     elif risk_prob == 0.0:
                         efficiency = (self.ideal_speed - ego_speed)/(self.ideal_speed - self.min_speed)
+
             if action != -1:
                 # alternative method to calculating jerk (it requires including acceleration into state space)
-                comfort = abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1))/self.delta_t > 0.2*9.8 
+                comfort = abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1))/self.delta_t > self.ordinary_G*9.8 
                     
             # when change the intervention target, judge the action decision
             if self.index_value(index, self.int_state_index+1) not in [-1, action]:
@@ -168,19 +168,20 @@ class MDP:
                 #     print("bad_request", self.index_value(index, self.int_state_index+1),"->",  action)
 
             # if intervention after passing the obstacles
-            if self.index_value(index_after, self.ego_state_index) >= self.risk_positions[int(self.index_value(index_after, self.int_state_index+1))]:
-                bad_int_request = True
+            # if self.index_value(index_after, self.ego_state_index) >= self.risk_positions[int(self.index_value(index_after, self.int_state_index+1))]:
+            #     bad_int_request = True
 
             # intervention request penalty
+            # if self.index_value(index, self.int_state_index+1) not in [-1, action]:
             if action != -1:
                 int_request_penalty = True
 
             action_value = self.p_efficiency*efficiency \
                          + self.p_ambiguity*ambiguity \
                          + self.p_comfort*comfort \
+                         + self.p_int_request*int_request_penalty \
+                         + self.p_bad_int_request*bad_int_request \
                          + self.p_delta_t*self.delta_t
-                         # + self.p_int_request*int_request_penalty \
-                         # + self.p_bad_int_request*bad_int_request \
                          # + self.goal_value*self.final_state(index_after)
             # print("action_value", index, action_value, self.p_efficiency*efficiency, self.p_ambiguity*ambiguity, self.p_bad_int_request*bad_int_request)
             value += prob * (self.value_function[tuple(index_after)] + action_value) * self.discount_factor
@@ -197,7 +198,7 @@ class MDP:
         if action == self.index_value(index, self.int_state_index+1):
             state_value[self.int_state_index] += self.delta_t
         else:
-            state_value[self.int_state_index] = 0
+            state_value[self.int_state_index] = 1
             state_value[self.int_state_index+1] = action
 
         # print("risk_state and ego_vehicle state") 
@@ -271,7 +272,7 @@ class MDP:
                 a = -self.ordinary_G*9.8
         else:
             # when over the deceleration distance, acc gets higher than ordinaly Geven the car has sufficient gap
-            if closest_target_dist > deceleration_distance+10:
+            if closest_target_dist > deceleration_distance+20:
                 if current_v < self.ideal_speed:
                     a = self.ordinary_G*9.8  
                 elif current_v == self.ideal_speed:
