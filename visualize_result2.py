@@ -7,7 +7,8 @@ import seaborn as sns
 import pandas as pd
 import pickle
 import yaml
-from w_perf.ras_value_iteration_sweep import MDP
+from ras_value_iteration_sweep import MDP
+# from w_perf.ras_value_iteration_sweep import MDP
 # from wo_perf.ras_value_iteration_sweep_wo_perf import MDP
 # from viased.ras_value_iteration_sweep_vias_intprob_huge import MDP
 from myopic_agent import myopic_policy
@@ -74,9 +75,8 @@ def pomdp_agent(mdp, policy, value, initial_state, intervention_list):
     reward = 0
     # cumlative_risk = 0
     while not mdp.final_state(index):
-        # p = policy[index]
-        p = [-1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1][len(policies)]
-        print(mdp.action_value(p, index), mdp.action_value(policy[index], index))
+        p = policy[index]
+        # p = [-1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1][len(policies)]
         reward += value[index]
         # get intervention or not from list if request state is not -1
         intervention = 0 if mdp.index_value(index, mdp.int_state_index+1) == -1 else intervention_list[int(mdp.index_value(index, mdp.int_state_index+1))]
@@ -171,8 +171,8 @@ def visualize_speed(scenario_list, dir):
 
 
     for scenario in scenario_list:
-        # fig = plt.figure(figsize=[6, 8])
-        # axes = fig.subplots(3, 1, sharex="all", sharey="all")
+        fig = plt.figure(figsize=[6, 8])
+        axes = fig.subplots(3, 1, sharex="all", sharey="all")
         # fig.subplots_adjust(left=0.1, bottom=0.1, right=0.90, top=0.95, wspace=0.3, hspace=0.3)
         intervention_list = scenario[2]
         initial_state = scenario[1]
@@ -190,18 +190,18 @@ def visualize_speed(scenario_list, dir):
 
         indexes, policies, reward, travel_time, request_time = pomdp_agent(mdp, p, v, initial_state, intervention_list)
         cumlative_risk = get_cumlative_risk(mdp, indexes)
-        # plot(mdp, axes[0], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, filename)
+        plot(mdp, axes[0], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, filename)
         print(policies, reward)
 
         indexes, policies, reward, travel_time, request_time = myopic_policy(mdp, 5, v, initial_state, intervention_list)
         cumlative_risk = get_cumlative_risk(mdp, indexes)
-        # plot(mdp, axes[1], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "myopic")
+        plot(mdp, axes[1], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "myopic")
 
         indexes, policies, reward, travel_time, request_time = egotistical_agent(mdp, v, initial_state, intervention_list)
         cumlative_risk = get_cumlative_risk(mdp, indexes)
-        # plot(mdp, axes[2], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "egostistical")
+        plot(mdp, axes[2], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk, travel_time, request_time, "egostistical")
 
-        # plt.savefig(dir+f"{filename}_{str(scenario)}_speed.svg")
+        plt.savefig(dir+f"{filename}_{str(scenario)}_speed.svg")
         # plt.show()
 
 def simulation(initial_states, dir, param_list, out_file):
@@ -465,10 +465,10 @@ if __name__ == "__main__":
     ####################################
     # -1:judged as risk 0:no risk
     scenario_list = [
-            ["param_9.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            ["param_9.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            ["param_9.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            ["param_9.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
+            ["param_9_4.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
+            ["param_9_4.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
+            ["param_9_4.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
+            ["param_9_4.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
             ]
-    visualize_speed(scenario_list, "w_perf/") 
+    visualize_speed(scenario_list, "./") 
 

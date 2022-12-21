@@ -141,18 +141,17 @@ class MDP:
                 # when passed the target with crossing risk with 10km/h or higher
                 # evaluate efficiency, ambiguity
                 # TODO consider multiple object at the same place
-                if self.index_value(index, self.ego_state_index) <= risk_position <= self.index_value(index_after, self.ego_state_index) and self.index_value(index, self.ego_state_index+1) > self.min_speed:
+                # if self.index_value(index, self.ego_state_index) <= risk_position <= self.index_value(index_after, self.ego_state_index) and self.index_value(index, self.ego_state_index+1) > self.min_speed:
+                if self.index_value(index, self.ego_state_index) <= risk_position <= self.index_value(index_after, self.ego_state_index):
                     ego_speed = self.index_value(index_after, self.ego_state_index+1) 
                     risk_prob = self.index_value(index_after, self.risk_state_index + i)
                     ambiguity = (0.5 - abs(risk_prob - 0.5))*2
             
             # alternative method to calculating jerk (it requires including acceleration into state space)
-            efficiency = min(abs(self.ideal_speed - self.index_value(index_after, self.ego_state_index)), 
-                             abs(self.index_value(index_after, self.ego_state_index) - self.min_speed)) \
-                         / self.ideal_speed 
+            efficiency = abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1)) > 2.5*9.8 
                     
             # when change the intervention target, judge the action decision
-            if action not in  [-1, self.index_value(index, self.int_state_index+1)]:
+            if action not in [-1, self.index_value(index, self.int_state_index+1)]:
                 int_time = self.index_value(index, self.int_state_index) 
 
                 # int_acc = self.get_int_performance(int_time)
@@ -195,8 +194,8 @@ class MDP:
 
         # print("risk_state and ego_vehicle state") 
         int_time = self.index_value(index, self.int_state_index) 
-        # int_acc_prob_list = self.operator_model.int_acc(int_time)
-        int_acc_prob_list = self.operator_model.get_acc_prob(int_time)
+        int_acc_prob_list = self.operator_model.int_acc(int_time)
+        # int_acc_prob_list = self.operator_model.get_acc_prob(int_time)
         target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1))
 
         for [int_acc, acc_prob] in int_acc_prob_list:
