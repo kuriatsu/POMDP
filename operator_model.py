@@ -74,11 +74,11 @@ if __name__=="__main__":
     # acc_time_slope = 0.2
     int_time_list = [0, 1, 2, 3, 4, 5, 6]
     param_list = [
-            "default_deceleration_model/param_1.yaml",
-            # "param_3_1.yaml",
+            "param_9_4.yaml",
+            "param_9_3.yaml",
             # "param_4_1.yaml",
-            "result_high_perf/param_1.yaml",
-            "param_1_low_perf.yaml",
+            # "result_high_perf/param_1.yaml",
+            # "param_1_low_perf.yaml",
             ]
     fig, axes = plt.subplots(1, len(param_list))
     for i, param in enumerate(param_list):
@@ -95,7 +95,7 @@ if __name__=="__main__":
             int_time_list,
             )
         acc = operator_model.get_acc_prob(4)
-        print(acc)
+        print(operator_model.int_acc(4))
         operator_model.acc_list = np.arange(0.0, 1.25, 0.25).tolist()
         operator_model.init_performance_model()
         

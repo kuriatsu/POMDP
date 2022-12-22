@@ -7,7 +7,7 @@ ordinary_G: 0.2
 
 p_efficiency: -1
 p_comfort: -0.5
-p_ambiguity: -5
+p_ambiguity: -1
 p_bad_int_request: 0
 p_int_request: -0.1
 p_delta_t: 0

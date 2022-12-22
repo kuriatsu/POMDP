@@ -254,11 +254,10 @@ def simulation(initial_states, dir, param_list, out_file):
                     ]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
 
-                # mdp_wo_perf = MDPWoPerf(param)
-                # filename = param_file.split("/")[-1].split(".")[0]
-                # with open(wo_perf_dir+f"{filename}_p.pkl", "rb") as f:
+                # filename_wo_perf = "param_"+filename.split("_")[1]+"_p.pkl"
+                # with open(f"wo_perf/{filename_wo_perf}", "rb") as f:
                 #     p = pickle.load(f)
-                # indexes, policies, cumlative_risk, travel_time, request_time = pomdp_agent(mdp_wo_perf, p, initial_state, intervention_list)
+                # indexes, policies, travel_time, request_time = pomdp_agent(mdp, p, initial_state, intervention_list)
                 # buf = pd.DataFrame([[
                 #     filename, 
                 #     str(initial_state[-2:]), 

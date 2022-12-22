@@ -213,7 +213,8 @@ class MDP:
                 # print("transition if target is judged as norisk")
                 transition_prob = self.operator_int_prob * acc_prob
                 buf_state_value_noint = copy.deepcopy(state_value)
-                buf_state_value_noint[target_index] = (1.0 - int_acc) * 0.5 
+                buf_state_value_noint[target_index] = 1.0 - int_acc 
+                # buf_state_value_noint[target_index] = (1.0 - int_acc) * 0.5 
                 _, v, x = self.ego_vehicle_transition(buf_state_value_noint)
                 buf_state_value_noint[self.ego_state_index] = x
                 buf_state_value_noint[self.ego_state_index+1] = v 
@@ -221,7 +222,8 @@ class MDP:
                 # print("transition if target is judged as risk")
                 transition_prob = (1.0 - self.operator_int_prob) * acc_prob
                 buf_state_value_int = copy.deepcopy(state_value)
-                buf_state_value_int[target_index] = (1.0 + int_acc) * 0.5 
+                buf_state_value_int[target_index] = int_acc 
+                # buf_state_value_int[target_index] = (1.0 + int_acc) * 0.5 
                 _, v, x = self.ego_vehicle_transition(buf_state_value_int)
                 buf_state_value_int[self.ego_state_index] = x
                 buf_state_value_int[self.ego_state_index+1] = v 
