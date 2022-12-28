@@ -42,6 +42,7 @@ class MDP:
         self.ego_state_min = np.array([0, 0]).T
         self.ego_state_max = np.array([self.prediction_horizon, self.ideal_speed]).T
         self.ego_state_width = np.array([2, 1.4]).T # min speed=10km/h=2.8m/s, delta_t=1.0s, 1.4=5km/h
+        # self.ego_state_width = np.array([1, 0.1]).T # min speed=10km/h=2.8m/s, delta_t=1.0s, 1.4=5km/h
 
         # risks state: likelihood 0:norisk, 1:risk ,  
         self.risk_state_min = np.array([0.0]*len(self.risk_positions)).T
@@ -133,39 +134,42 @@ class MDP:
     def action_value(self, action, index):
         value = 0.0
         for prob, index_after in self.state_transition(action, index):
-            ambiguity = 0.0
-            comfort = 0.0
-            efficiency = 0.0
-            bad_int_request = False
-            int_request_penalty = False
-            # state reward
-            for i, risk_position in enumerate(self.risk_positions):
-                # TODO consider multiple object at the same place
-                # if self.index_value(index, self.ego_state_index) <= risk_position <= self.index_value(index_after, self.ego_state_index) and self.index_value(index, self.ego_state_index+1) > self.min_speed:
-                if self.index_value(index, self.ego_state_index) <= risk_position <= self.index_value(index_after, self.ego_state_index):
-                    ego_speed = self.index_value(index, self.ego_state_index+1) 
-                    risk_prob = self.index_value(index, self.risk_state_index + i)
-                    ambiguity = (0.5 - abs(risk_prob - 0.5))*2
-                    if risk_prob == 1.0 and ego_speed != self.min_speed:
-                        efficiency = 1.0
-                    elif risk_prob == 0.0:
-                        efficiency = (self.ideal_speed - ego_speed)/(self.ideal_speed - self.min_speed)
+            p_efficiency = 0.0
+            p_int_request_penalty = False
+            p_ambiguity = 0.0 
 
-            if action != -1:
-                # alternative method to calculating jerk (it requires including acceleration into state space)
-                comfort = abs(self.index_value(index_after, self.ego_state_index+1) - self.index_value(index, self.ego_state_index+1))/self.delta_t > self.ordinary_G*9.8 
+            ego_x_before = self.index_value(index, self.ego_state_index)
+            ego_v_before = self.index_value(index, self.ego_state_index+1)
+            ego_x_after = self.index_value(index_after, self.ego_state_index)
+            ego_v_after = self.index_value(index_after, self.ego_state_index+1)
+
+            closest_target = None
+            min_dist = self.prediction_horizon
+            for i, risk_position in enumerate(self.risk_positions):
+                dist = risk_position - ego_x_before 
+                if 0.0 < dist < min_dist:
+                    min_dist = dist
+                    closest_target = i
+
+                if ego_x_before <= risk_position <= ego_x_after and ego_v_before > self.min_speed:
+                    risk_prob = self.index_value(index_after, self.risk_state_index + i)
+                    p_ambiguity = (0.5 - abs(risk_prob - 0.5))*2
+
+            if closest_target is not None:
+                risk_prob = self.index_value(index_after, self.risk_state_index+closest_target)
+                ambiguity = (0.5 - abs(risk_prob - 0.5))*2
+                acceleration_rate = (ego_v_after - ego_v_before) / (self.ordinary_G*9.8)
+                p_efficiency = acceleration_rate**2 * ambiguity
+                # p_efficiency = acceleration_rate**2 * ambiguity if acceleration_rate < 0.0 else 0.0
                     
             # when change the intervention target, judge the action decision
-            if self.index_value(index, self.int_state_index+1) not in [-1, action]:
-                int_time = self.index_value(index, self.int_state_index) 
-
-                int_acc = self.get_int_performance(int_time)
-                bad_int_request = int_acc is None
-                # for [int_acc, acc_prob] in self.operator_model.get_acc_prob(int_time):
-                #     if int_acc is None:
-                #         bad_int_request = acc_prob
-                # if bad_int_request: 
-                #     print("bad_request", self.index_value(index, self.int_state_index+1),"->",  action)
+            # if self.index_value(index, self.int_state_index+1) not in [-1, action]:
+            #     int_time = self.index_value(index, self.int_state_index) 
+            #     int_acc_list = self.operator_model.get_acc_prob(int_time)
+            #     int_acc_list = self.get_int_performance(int_time)
+            #     for [int_acc, acc_prob] in :
+            #         if int_acc is None:
+            #             bad_int_request = acc_prob
 
             # if intervention after passing the obstacles
             # if self.index_value(index_after, self.ego_state_index) >= self.risk_positions[int(self.index_value(index_after, self.int_state_index+1))]:
@@ -174,14 +178,14 @@ class MDP:
             # intervention request penalty
             # if self.index_value(index, self.int_state_index+1) not in [-1, action]:
             if action != -1:
-                int_request_penalty = True
+                p_int_request_penalty = True
 
-            action_value = self.p_efficiency*efficiency \
-                         + self.p_ambiguity*ambiguity \
-                         + self.p_comfort*comfort \
-                         + self.p_int_request*int_request_penalty \
-                         + self.p_bad_int_request*bad_int_request \
-                         + self.p_delta_t*self.delta_t
+            action_value = self.p_efficiency*p_efficiency \
+                         + self.p_ambiguity*p_ambiguity \
+                         + self.p_delta_t*self.delta_t \
+                         + self.p_int_request*p_int_request_penalty
+                         # + self.p_bad_int_request*bad_int_request \
+                         # + self.p_comfort*comfort \
                          # + self.goal_value*self.final_state(index_after)
             # print("action_value", index, action_value, self.p_efficiency*efficiency, self.p_ambiguity*ambiguity, self.p_bad_int_request*bad_int_request)
             value += prob * (self.value_function[tuple(index_after)] + action_value) * self.discount_factor
@@ -214,7 +218,6 @@ class MDP:
                 transition_prob = self.operator_int_prob * acc_prob
                 buf_state_value_noint = copy.deepcopy(state_value)
                 buf_state_value_noint[target_index] = 1.0 - int_acc 
-                # buf_state_value_noint[target_index] = (1.0 - int_acc) * 0.5 
                 _, v, x = self.ego_vehicle_transition(buf_state_value_noint)
                 buf_state_value_noint[self.ego_state_index] = x
                 buf_state_value_noint[self.ego_state_index+1] = v 
@@ -223,7 +226,6 @@ class MDP:
                 transition_prob = (1.0 - self.operator_int_prob) * acc_prob
                 buf_state_value_int = copy.deepcopy(state_value)
                 buf_state_value_int[target_index] = int_acc 
-                # buf_state_value_int[target_index] = (1.0 + int_acc) * 0.5 
                 _, v, x = self.ego_vehicle_transition(buf_state_value_int)
                 buf_state_value_int[self.ego_state_index] = x
                 buf_state_value_int[self.ego_state_index+1] = v 
@@ -244,79 +246,62 @@ class MDP:
 
     def ego_vehicle_transition(self, state):
         # closest object
-        closest_target_dist = self.prediction_horizon 
-        closest_target = None
         current_v = state[self.ego_state_index+1]
         current_pose = state[self.ego_state_index] 
-        
-        # get target for deceleration
-        for i, pose in enumerate(self.risk_positions):
-            dist = pose - current_pose
-            target_index = int(self.risk_state_index + i)
-            if dist >= 0.0 and dist < closest_target_dist:
-                is_deceleration_target = False
-                if i == state[self.int_state_index+1]:
-                    is_deceleration_target = state[target_index] >= 0.0
-                else:
-                    is_deceleration_target = state[target_index] >= 0.5
+        acc_list = [] 
 
-                if is_deceleration_target:
-                    closest_target_dist = dist
-                    closest_target = i
-
-        deceleration_distance = (current_v**2 - self.min_speed**2)/(2*9.8*self.ordinary_G) + self.safety_margin 
-        if closest_target is None:
-            if current_v < self.ideal_speed:
-                a = self.ordinary_G*9.8  
-            elif current_v == self.ideal_speed:
-                a = 0.0 
-            else:
-                a = -self.ordinary_G*9.8
+        if current_v < self.ideal_speed:
+            acc_list.append(self.ordinary_G*9.8)
+        elif current_v == self.ideal_speed:
+            acc_list.append(0.0)
         else:
-            # when over the deceleration distance, acc gets higher than ordinaly Geven the car has sufficient gap
-            if closest_target_dist > deceleration_distance+20:
-                if current_v < self.ideal_speed:
-                    a = self.ordinary_G*9.8  
-                elif current_v == self.ideal_speed:
-                    a = 0.0 
-                else:
-                    a = -self.ordinary_G*9.8
+            acc_list.append(-self.ordinary_G*9.8)
+
+        # get acceleration value
+        for i, pose in enumerate(self.risk_positions):
+            target_index = int(self.risk_state_index + i)
+            dist = pose - current_pose
+            
+            if dist < 0.0: # remove target
+                is_deceleration_target = False
+            elif i == state[self.int_state_index+1]: # intervention target
+                is_deceleration_target = state[target_index] >= 0.0
+            else:
+                is_deceleration_target = state[target_index] >= 0.5
+
+            if not is_deceleration_target:
+                continue
+
+            a = 0.0
+            deceleration_distance = (current_v**2 - self.min_speed**2)/(2*9.8*self.ordinary_G) + self.safety_margin 
+            # keep speed 
+            if dist > deceleration_distance+20:
+                continue
+
             # deceleration to the target
             else:
-                if closest_target_dist > self.safety_margin:
-                    a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist-self.safety_margin))
+                if dist > self.safety_margin:
+                    a = (self.min_speed**2-current_v**2)/(2*(dist-self.safety_margin))
                 # if within safety margin, keep speed (expect already min_speed)
                 else:
-                    # a = (self.min_speed**2-current_v**2)/(2*(closest_target_dist))
+                    # a = (self.min_speed**2-current_v**2)/(2*(dist))
                     a = 0.0
-                    
-        v = (current_v + a * self.delta_t)
+
+            acc_list.append(a)
+
+        # min speed or max speed
+        a = min(acc_list)
+        v = current_v + a*self.delta_t
         if v <= self.min_speed:
             v = self.min_speed
             a = 0.0
         elif v >= self.ideal_speed:
             v = self.ideal_speed
             a = 0.0
-
         x = current_pose + current_v * self.delta_t + 0.5 * a * self.delta_t**2
         # print("a, v, x, current_v, current_x",a, v, x, current_v, current_pose)
         return a, v, x
                
-    @staticmethod
-    def get_int_performance(int_time):
-        # TODO output acc distribution (acc list and probability)
-        # operator state: intercept_time, intercept_acc, slope
-        intercept_time = 3
-        intercept_acc = 0.5
-        slope = 0.25
-
-        if int_time < intercept_time:
-            acc = None
-        else:
-            acc = intercept_acc + slope*(int_time-intercept_time)
-            acc = min(acc, 1.0)
-        
-        return acc
 
     def to_index(self, state):
         out_index = []
@@ -354,13 +339,13 @@ def trial_until_sat():
         with open(f"{filename}_v.pkl", "wb") as f:
             pickle.dump(dp.value_function, f)
 
-            v = eval("dp.value_function" + param["visualize_elem"])
+            # v = eval("dp.value_function" + param["visualize_elem"])
             # v = dp.value_function[:, :, param["visualize_elems"]]
             # sns.heatmap(v.T, square=False)
             # plt.title(f"{filename}value")
             # plt.savefig(f"{filename}_value.svg")
 
-            p = eval("dp.policy" + param["visualize_elem"])
+            # p = eval("dp.policy" + param["visualize_elem"])
             # p = dp.policy[:, :, param["visualize_elems"]]
             # sns.heatmap(p.T, square=False)
             # plt.title(f"{filename}_policy")
