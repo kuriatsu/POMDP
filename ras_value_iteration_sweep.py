@@ -143,24 +143,24 @@ class MDP:
             ego_x_after = self.index_value(index_after, self.ego_state_index)
             ego_v_after = self.index_value(index_after, self.ego_state_index+1)
 
-            closest_target = None
+            closest_amb_target = None
+            closest_amb = 0.0 
             min_dist = self.prediction_horizon
             for i, risk_position in enumerate(self.risk_positions):
-                dist = risk_position - ego_x_before 
-                if 0.0 < dist < min_dist:
-                    min_dist = dist
-                    closest_target = i
-
+                dist = risk_position - ego_x_before
+                risk_prob = self.index_value(index_after, self.risk_state_index+i)
+                amb = (0.5 - abs(risk_prob - 0.5))*2
+                if 0.0 < dist < min_dist and amb > 0.0:
+                    min_dist = dist 
+                    closest_amb_target = i
+                    closest_amb = amb 
+                    
                 if ego_x_before <= risk_position <= ego_x_after and ego_v_before > self.min_speed:
-                    risk_prob = self.index_value(index_after, self.risk_state_index + i)
-                    p_ambiguity = (0.5 - abs(risk_prob - 0.5))*2
+                    p_ambiguity = amb 
 
-            if closest_target is not None:
-                risk_prob = self.index_value(index_after, self.risk_state_index+closest_target)
-                ambiguity = (0.5 - abs(risk_prob - 0.5))*2
+            if closest_amb_target is not None:
                 acceleration_rate = (ego_v_after - ego_v_before) / (self.ordinary_G*9.8)
-                p_efficiency = acceleration_rate**2 * ambiguity
-                # p_efficiency = acceleration_rate**2 * ambiguity if acceleration_rate < 0.0 else 0.0
+                p_efficiency = acceleration_rate**2 * closest_amb
                     
             # when change the intervention target, judge the action decision
             # if self.index_value(index, self.int_state_index+1) not in [-1, action]:

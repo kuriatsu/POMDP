@@ -34,8 +34,8 @@ def myopic_policy(mdp, int_time, value, initial_state, intervention_list):
             dist_to_target = mdp.risk_positions[target_list[0]] - mdp.index_value(index, 0)
             if mdp.index_value(index, 3) != -1 and mdp.index_value(index, 2) < int_time:
                 policy = mdp.index_value(index, 3) 
-            elif dist_to_target > int_request_dist:
-                policy = -1
+            # elif dist_to_target > int_request_dist:
+            #     policy = -1
             elif target_list:
                 policy = target_list[0]
             # print(mdp.index_value(index, 1), dist_to_target, decel_dist, int_request_dist, target_list[0], policy)

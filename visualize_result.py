@@ -15,7 +15,6 @@ from myopic_agent import myopic_policy
 import sys
 import random
 
-
 risk_colors = ["red", "blue", "green"]
 trajectory_color = "green"
 
@@ -198,7 +197,7 @@ def visualize_speed(scenario_list, dir):
 
         indexes, policies, reward, travel_time, request_time, request_count = egotistical_agent(mdp, v, initial_state, intervention_list)
         cumlative_risk_low, cumlative_risk_high = get_cumlative_risk(mdp, indexes)
-        plot(mdp, axes[2], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk_low+cumlative_risk_high, travel_time, request_time, "egostistical")
+        plot(mdp, axes[2], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk_low+cumlative_risk_high, travel_time, request_time, "egoistical")
 
         filename_wo_perf = "param_"+filename.split("_")[1]+"_p.pkl"
         with open(f"wo_perf/{filename_wo_perf}", "rb") as f:
@@ -281,7 +280,7 @@ def simulation(initial_states, dir, param_list, out_file):
                     ]], columns=result_list.columns)
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
 
-                # egoistiscal
+                # egoistical
                 indexes, policies, reward, travel_time, request_time, request_count = egotistical_agent(mdp, v, initial_state, intervention_list)
                 cumlative_risk_low, cumlative_risk_high = get_cumlative_risk(mdp, indexes)
                 buf = pd.DataFrame([[
@@ -289,7 +288,7 @@ def simulation(initial_states, dir, param_list, out_file):
                     str(initial_state[-2:]), 
                     str(mdp.risk_positions), 
                     str(intervention_list), 
-                    "egostistical", 
+                    "egoistical", 
                     cumlative_risk_low+cumlative_risk_high,
                     cumlative_risk_low, 
                     cumlative_risk_high,
@@ -327,11 +326,18 @@ def simulation(initial_states, dir, param_list, out_file):
 
 
 def analyze(in_file, out_comp_file, out_summary_file, imp_rate_file):
+    sns.set(context='paper', style='whitegrid')
     df = pd.read_csv(in_file)
     target_scenario_df = df 
     
-    # comparison
-    result_df = pd.DataFrame(columns=[
+    fig, axes = plt.subplots(3, 1)
+    sns.histplot(data=target_scenario_df[target_scenario_df.agent.isin(["egoistical", "myopic", "pomdp"])], x="travel_time", hue="agent", hue_order=["egoistical", "myopic", "pomdp"], kde=True, ax=axes[0])
+    sns.histplot(data=target_scenario_df[target_scenario_df.agent.isin(["egoistical", "myopic", "pomdp"])], x="request_time", hue="agent", hue_order=["egoistical", "myopic", "pomdp"], kde=True, ax=axes[1])
+    sns.histplot(data=target_scenario_df[target_scenario_df.agent.isin(["egoistical", "myopic", "pomdp"])], x="cumlative_risk", hue="agent", hue_order=["egoistical", "myopic", "pomdp"], kde=True, ax=axes[2])
+    plt.show()
+
+    # comparison myopic vs pomdp
+    comp_myopic_pomdp_df = pd.DataFrame(columns=[
         "param", 
         "initial_risk", 
         "intervention", 
@@ -357,20 +363,14 @@ def analyze(in_file, out_comp_file, out_summary_file, imp_rate_file):
                     cumlative_risk, 
                     travel_time, 
                     request_time, 
-                    ]], columns=result_df.columns)
+                    ]], columns=comp_myopic_pomdp_df.columns)
                 # print(target_df)
-                result_df = pd.concat([result_df, buf], ignore_index=True)
-    result_df.to_csv(out_comp_file)
+                comp_myopic_pomdp_df = pd.concat([comp_myopic_pomdp_df, buf], ignore_index=True)
+    comp_myopic_pomdp_df.to_csv(out_comp_file)
 
-    # g = sns.jointplot(data=result_df, x="travel_time", y="request_time", hue="cumlative_risk", s=50.0, alpha=1.0, ylim=(-12.5, 12.5), palette=["blue", "green", "gray", "orange", "red"], marginal_ticks=True)
-    g = sns.jointplot(data=result_df, x="travel_time", y="request_time", hue="cumlative_risk", s=50.0, alpha=1.0, ylim=(-12.5, 12.5), palette=["gray", "orange", "red"], marginal_ticks=True)
+    g = sns.jointplot(data=comp_myopic_pomdp_df, x="travel_time", y="request_time", hue="cumlative_risk", s=50.0, alpha=1.0, ylim=(-12.5, 12.5), palette=["blue", "green", "gray", "orange", "red"], marginal_ticks=True)
+    # g = sns.jointplot(data=comp_myopic_pomdp_df, x="travel_time", y="request_time", hue="cumlative_risk", s=50.0, alpha=1.0, ylim=(-12.5, 12.5), palette=["gray", "orange", "red"], marginal_ticks=True)
     g.plot(sns.scatterplot, sns.histplot)
-    plt.show()
-
-    sns.scatterplot(data=result_df, x="cumlative_risk", y="request_time", hue="initial_risk", style="intervention", s=50.0, alpha=1.0)
-    plt.show()
-
-    sns.scatterplot(data=result_df, x="cumlative_risk", y="travel_time", hue="initial_risk", style="intervention", s=50.0, alpha=1.0)
     plt.show()
 
     # summary
@@ -416,26 +416,31 @@ def analyze(in_file, out_comp_file, out_summary_file, imp_rate_file):
     summary_df.to_csv(out_summary_file)
 
 
-    improve = 0
-    trav_imp = 0
-    req_imp = 0
-    same = 0
-    total = 0
-    for idx, row in target_scenario_df[target_scenario_df.agent=="pomdp"].iterrows():
-        myopic = target_scenario_df[
-                (target_scenario_df.agent=="myopic") &
-                (target_scenario_df.risk == row.risk) &
-                (target_scenario_df.position == row.position) &
-                (target_scenario_df.intervention == row.intervention)
-                ].iloc[-1]
-        improve += ((row.travel_time < myopic.travel_time and row.request_time <= myopic.request_time) or
-                    (row.travel_time <= myopic.travel_time and row.request_time < myopic.request_time)) 
-        trav_imp += (row.travel_time < myopic.travel_time and row.request_time > myopic.request_time)
-        req_imp +=  (row.travel_time > myopic.travel_time and row.request_time < myopic.request_time)
-        same +=  (row.travel_time == myopic.travel_time and row.request_time == myopic.request_time)
-        total += 1
+    # 2 policies comparison
+    imp_rate_df = pd.DataFrame(columns=["target-agent", "improve", "trav_imp", "req_imp", "same", "degrade"])
+    target_agent_list = [["egoistical", "myopic"], ["egoistical", "pomdp"], ["myopic", "pomdp"]]
+    for target, agent in target_agent_list:
+        improve = 0
+        trav_imp = 0
+        req_imp = 0
+        same = 0
+        total = 0
+        for idx, row in target_scenario_df[target_scenario_df.agent==agent].iterrows():
+            target_df = target_scenario_df[
+                    (target_scenario_df.agent==target) &
+                    (target_scenario_df.risk == row.risk) &
+                    (target_scenario_df.position == row.position) &
+                    (target_scenario_df.intervention == row.intervention)
+                    ].iloc[-1]
+            improve += ((row.travel_time < target_df.travel_time and row.request_time < target_df.request_time) or
+                        (row.travel_time < target_df.travel_time and row.request_time < target_df.request_time)) 
+            trav_imp += (row.travel_time < target_df.travel_time and row.request_time >= target_df.request_time)
+            req_imp +=  (row.travel_time >= target_df.travel_time and row.request_time < target_df.request_time)
+            same +=  (row.travel_time == target_df.travel_time and row.request_time == target_df.request_time)
+            total += 1
 
-    imp_rate_df = pd.DataFrame([[improve/total, trav_imp/total, req_imp/total, same/total, (total-improve-trav_imp-req_imp-same)/total]], columns=["improve", "trav_imp", "req_imp", "same", "degrade"])
+        buf_df = pd.DataFrame([[f"{target}-{agent}", improve/total, trav_imp/total, req_imp/total, same/total, (total-improve-trav_imp-req_imp-same)/total]], columns=imp_rate_df.columns)
+        imp_rate_df = pd.concat([imp_rate_df, buf_df], ignore_index=True)
     imp_rate_df.to_csv(imp_rate_file)        
 
 
@@ -444,27 +449,27 @@ if __name__ == "__main__":
     # simulation
     ####################################
     param_list = [
-            "param_1.yaml",
-            "param_2.yaml",
-            "param_3.yaml",
-            "param_4.yaml",
-            "param_5.yaml",
-            "param_6.yaml",
-            "param_7.yaml",
-            "param_8.yaml",
-            "param_9.yaml",
-            "param_10.yaml",
-            "param_11.yaml",
-            "param_12.yaml",
-            "param_13.yaml",
-            "param_14.yaml",
-            "param_15.yaml",
-            "param_16.yaml",
-            "param_17.yaml",
-            "param_18.yaml",
-            "param_19.yaml",
-            "param_20.yaml",
-            "param_21.yaml",
+            "param_1_low.yaml",
+            "param_2_low.yaml",
+            "param_3_low.yaml",
+            "param_4_low.yaml",
+            "param_5_low.yaml",
+            "param_6_low.yaml",
+            "param_7_low.yaml",
+            "param_8_low.yaml",
+            "param_9_low.yaml",
+            "param_10_low.yaml",
+            "param_11_low.yaml",
+            "param_12_low.yaml",
+            "param_13_low.yaml",
+            "param_14_low.yaml",
+            "param_15_low.yaml",
+            "param_16_low.yaml",
+            "param_17_low.yaml",
+            "param_18_low.yaml",
+            "param_19_low.yaml",
+            "param_20_low.yaml",
+            "param_21_low.yaml",
             ]
     initial_states = [
             [0, 11.2, 0, -1, 0.0, 0.0],
@@ -496,172 +501,128 @@ if __name__ == "__main__":
             [0, 11.2, 0, -1, 1.0, 0.75],
             [0, 11.2, 0, -1, 1.0, 1.0],
             ]
-    # simulation(initial_states, "./", param_list, "result_mid.csv")
+    # simulation(initial_states, "./", param_list, "result_low.csv")
 
     ####################################
     # comparison
     ####################################
+    # analyze("result_low.csv", "result_comparison_low.csv", "result_summary_low.csv", "result_summary_rate_low.csv")
     # analyze("result_mid.csv", "result_comparison_mid.csv", "result_summary_mid.csv", "result_summary_rate_mid.csv")
-    # analyze("w_perf/result_high.csv", "w_perf/result_comparison_high.csv", "w_perf/result_summary_high.csv", "w_perf/result_summary_rate_high.csv")
-    # analyze("w_perf/result_low.csv", "w_perf/result_comparison_low.csv", "w_perf/result_summary_low.csv", "w_perf/result_summary_rate_low.csv")
+    # analyze("result_low.csv", "result_comparison_low.csv", "result_summary_low.csv", "result_summary_rate_low.csv")
 
     ####################################
     # visualization
     ####################################
     # -1:judged as risk 0:no risk
     scenario_list = [
-            # ["param_1.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            # ["param_1.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            # ["param_1.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            # ["param_1.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            # ["param_2.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            # ["param_2.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            # ["param_2.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            # ["param_2.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            # ["param_3.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            # ["param_3.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            # ["param_3.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            # ["param_3.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            # ["param_3.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            # ["param_4.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            # ["param_4.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            # ["param_4.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            # ["param_4.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            # ["param_5.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            # ["param_5.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            # ["param_5.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            # ["param_5.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            # ["param_6.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            # ["param_6.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            # ["param_6.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            # ["param_6.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            # ["param_7.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            # ["param_7.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            # ["param_7.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            # ["param_7.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            # ["param_8.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            # ["param_8.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            # ["param_8.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            # ["param_8.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            # ["param_9_1.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
-            # ["param_9_1.yaml", [0, 11.2, 0, -1, 0.5], [-1]],
-            # ["param_9_1.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
-            # ["param_9_2.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
-            # ["param_9_2.yaml", [0, 11.2, 0, -1, 0.5], [-1]],
-            # ["param_9_2.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
-            # ["param_9_3.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
-            # ["param_9_3.yaml", [0, 11.2, 0, -1, 0.5], [-1]],
-            # ["param_9_3.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
-            # ["param_9_4.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
-            # ["param_9_4.yaml", [0, 11.2, 0, -1, 0.5], [-1]],
-            # ["param_9_4.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
-            # ["param_9_1.yaml", [0, 11.2, 0, -1, 0.5], [0]],
-            # ["param_9_1.yaml", [0, 11.2, 0, -1, 0.75], [0]],
-            # ["param_9_2.yaml", [0, 11.2, 0, -1, 0.25], [0]],
-            # ["param_9_2.yaml", [0, 11.2, 0, -1, 0.5], [0]],
-            # ["param_9_2.yaml", [0, 11.2, 0, -1, 0.75], [0]],
-            # ["param_9_3.yaml", [0, 11.2, 0, -1, 0.25], [0]],
-            # ["param_9_3.yaml", [0, 11.2, 0, -1, 0.5], [0]],
-            # ["param_9_3.yaml", [0, 11.2, 0, -1, 0.75], [0]],
-            # ["param_9_4.yaml", [0, 11.2, 0, -1, 0.25], [0]],
-            # ["param_9_4.yaml", [0, 11.2, 0, -1, 0.5], [0]],
-            # ["param_9_4.yaml", [0, 11.2, 0, -1, 0.75], [0]],
-            # ["param_9_4.yaml", [0, 11.2, 0, -1, 0.25], [0]],
-            # ["param_9_high_perf_1.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
-            # ["param_9_high_perf_1.yaml", [0, 11.2, 0, -1, 0.5], [-1]],
-            # ["param_9_high_perf_1.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
-            # ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
-            # ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.5], [-1]],
-            # ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
-            # ["param_9_high_perf_3.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
-            # ["param_9_high_perf_3.yaml", [0, 11.2, 0, -1, 0.5], [-1]],
-            # ["param_9_high_perf_3.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
-            # ["param_9_high_perf_4.yaml", [0, 11.2, 0, -1, 0.25], [-1]],
-            # ["param_9_high_perf_4.yaml", [0, 11.2, 0, -1, 0.5], [-1]],
-            # ["param_9_high_perf_4.yaml", [0, 11.2, 0, -1, 0.75], [-1]],
-            # ["param_9_high_perf_1.yaml", [0, 11.2, 0, -1, 0.25], [0]],
-            # ["param_9_high_perf_1.yaml", [0, 11.2, 0, -1, 0.75], [0]],
-            # ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.25], [0]],
-            # ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.5], [0]],
-            # ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.75], [0]],
-            # ["param_9_high_perf_3.yaml", [0, 11.2, 0, -1, 0.25], [0]],
-            # ["param_9_high_perf_3.yaml", [0, 11.2, 0, -1, 0.5], [0]],
-            # ["param_9_high_perf_3.yaml", [0, 11.2, 0, -1, 0.75], [0]],
-            # ["param_9_high_perf_4.yaml", [0, 11.2, 0, -1, 0.25], [0]],
-            # ["param_9_high_perf_4.yaml", [0, 11.2, 0, -1, 0.5], [0]],
-            # ["param_9_high_perf_4.yaml", [0, 11.2, 0, -1, 0.75], [0]],
+            # ["param_9_mid_delta_t.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
+            # ["param_9_mid_delta_t.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
+            # ["param_9_mid_delta_t.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
+            # ["param_9_mid_delta_t.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
+            # ["param_9_mid_delta_t.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
+            # ["param_9_mid_delta_t.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
+            # ["param_9_mid_delta_t.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
+            # ["param_9_mid_delta_t.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
+            ["param_9_mid.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
+            ["param_9_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
+            ["param_9_mid.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
+            ["param_9_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
+            ["param_9_mid.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
+            ["param_9_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
+            ["param_9_mid.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
+            ["param_9_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
+            ["param_9_low.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
+            ["param_9_low.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
+            ["param_9_low.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
+            ["param_9_low.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
+            ["param_9_low.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
+            ["param_9_low.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
+            ["param_9_low.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
+            ["param_9_low.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
+            ["param_12_low.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
+            ["param_12_low.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
+            ["param_12_low.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
+            ["param_12_low.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
+            ["param_12_low.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
+            ["param_12_low.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
+            ["param_12_low.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
+            ["param_12_low.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
+            ["param_9_high.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
+            ["param_9_high.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
+            ["param_9_high.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
+            ["param_9_high.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
+            ["param_9_high.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
+            ["param_9_high.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
+            ["param_9_high.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
+            ["param_9_high.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
+            ["param_12_high.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
+            ["param_12_high.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
+            ["param_12_high.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
+            ["param_12_high.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
+            ["param_12_high.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
+            ["param_12_high.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
+            ["param_12_high.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
+            ["param_12_high.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
+            # ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
+            # ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
+            # ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
+            # ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
+            # ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
 
-            ["param_9_1.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            ["param_9_1.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            ["param_9_1.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            ["param_9_1.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            ["param_9_1.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
-            ["param_9_1.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
-            ["param_9_1.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
-            ["param_9_1.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
+            # both ok without risk
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.5], [-1, 0]],
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
+            ["param_13_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
+            ["param_13_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.5], [-1, 0]],
+            ["param_13_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
+            ["param_14_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
+            ["param_14_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.5], [-1, 0]],
+            ["param_14_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
+            ["param_16_mid.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
+            ["param_16_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.25], [0, -1]],
+            ["param_16_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
 
-            ["param_9_2.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            ["param_9_2.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            ["param_9_2.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            ["param_9_2.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            ["param_9_2.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
-            ["param_9_2.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
-            ["param_9_2.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
-            ["param_9_2.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
+            # both bad 
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.5], [0, -1]],
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.5], [0, 0]],
+            ["param_13_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.5], [0, -1]],
+            ["param_13_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.75], [0, -1]],
+            ["param_13_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.5], [0, 0]],
+            ["param_13_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.75], [0, 0]],
+            ["param_17_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.5], [0, -1]],
+            ["param_17_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.75], [0, -1]],
+            ["param_17_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.5], [0, -1]],
+            ["param_17_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.5], [0, -1]],
+            ["param_17_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.5], [0, 0]],
+            ["param_17_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.75], [0, 0]],
+            ["param_17_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.5], [0, 0]],
+            ["param_17_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.5], [0, 0]],
 
-            ["param_9_low_perf_1.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            ["param_9_low_perf_1.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            ["param_9_low_perf_1.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            ["param_9_low_perf_1.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            ["param_9_low_perf_1.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
-            ["param_9_low_perf_1.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
-            ["param_9_low_perf_1.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
-            ["param_9_low_perf_1.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
-            
-            ["param_9_low_perf_2.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            ["param_9_low_perf_2.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            ["param_9_low_perf_2.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            ["param_9_low_perf_2.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            ["param_9_low_perf_2.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
-            ["param_9_low_perf_2.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
-            ["param_9_low_perf_2.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
-            ["param_9_low_perf_2.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
-
-            ["param_9_high_perf_1.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            ["param_9_high_perf_1.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            ["param_9_high_perf_1.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            ["param_9_high_perf_1.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            ["param_9_high_perf_1.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
-            ["param_9_high_perf_1.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
-            ["param_9_high_perf_1.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
-            ["param_9_high_perf_1.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
-
-            ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-            ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
-            ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
-            ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
-            ["param_9_high_perf_2.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
-
-            ["param_11_high_perf_1.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
-            ["param_11_high_perf_1.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
-            ["param_11_high_perf_1.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
-            ["param_11_high_perf_1.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
-            ["param_11_high_perf_1.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            ["param_11_high_perf_1.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            ["param_11_high_perf_1.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            ["param_11_high_perf_1.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
-
-            ["param_11_high_perf_2.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
-            ["param_11_high_perf_2.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [-1, 0]],
-            ["param_11_high_perf_2.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
-            ["param_11_high_perf_2.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [-1, 0]],
-            ["param_11_high_perf_2.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [0, -1]],
-            ["param_11_high_perf_2.yaml", [0, 11.2, 0, -1, 0.25, 0.75], [0, -1]],
-            ["param_11_high_perf_2.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [0, -1]],
-            ["param_11_high_perf_2.yaml", [0, 11.2, 0, -1, 0.25, 0.25], [0, -1]],
+            # trave good
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.25], [-1, 0]],
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.5], [-1, 0]],
+            ["param_12_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.75], [-1, 0]],
+            ["param_13_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.25], [-1, 0]],
+            ["param_13_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.5], [-1, 0]],
+            ["param_13_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.75], [-1, 0]],
+            ["param_14_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.25], [-1, 0]],
+            ["param_14_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.5], [-1, 0]],
+            ["param_14_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.75], [-1, 0]],
+            ["param_18_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.25], [-1, 0]],
+            ["param_18_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.5], [-1, 0]],
+            ["param_18_mid.yaml", [0, 11.2, 0, -1, 0.5, 0.75], [-1, 0]],
+            ["param_18_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.25], [-1, 0]],
+            ["param_18_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.5], [-1, 0]],
+            ["param_18_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
             ]
 
     visualize_speed(scenario_list, "./")
