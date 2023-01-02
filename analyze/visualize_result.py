@@ -199,15 +199,15 @@ def visualize_speed(scenario_list, dir):
         cumlative_risk_low, cumlative_risk_high = get_cumlative_risk(mdp, indexes)
         plot(mdp, axes[2], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk_low+cumlative_risk_high, travel_time, request_time, "egoistical")
 
-        filename_wo_perf = "param_"+filename.split("_")[1]+"_p.pkl"
-        with open(f"wo_perf/{filename_wo_perf}", "rb") as f:
-            p = pickle.load(f)
-        indexes, policies, reward, travel_time, request_time, request_count = pomdp_agent(mdp, p, v, initial_state, intervention_list)
-        cumlative_risk_low, cumlative_risk_high = get_cumlative_risk(mdp, indexes)
-        plot(mdp, axes[3], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk_low+cumlative_risk_high, travel_time, request_time, "POMDP w/o perf")
+        # filename_wo_perf = "param_"+filename.split("_")[1]+"_p.pkl"
+        # with open(f"wo_perf/{filename_wo_perf}", "rb") as f:
+        #     p = pickle.load(f)
+        # indexes, policies, reward, travel_time, request_time, request_count = pomdp_agent(mdp, p, v, initial_state, intervention_list)
+        # cumlative_risk_low, cumlative_risk_high = get_cumlative_risk(mdp, indexes)
+        # plot(mdp, axes[3], indexes, policies, reward, len(mdp.risk_positions), cumlative_risk_low+cumlative_risk_high, travel_time, request_time, "POMDP w/o perf")
 
-        plt.title(filename)
-        plt.savefig(dir+f"{filename}_{str(scenario)}_speed.svg")
+        # plt.title(filename)
+        # plt.savefig(dir+f"{filename}_{str(scenario)}_speed.svg")
         # plt.show()
 
         # axes, fig = plt.subplots()
@@ -299,25 +299,25 @@ def simulation(initial_states, dir, param_list, out_file):
                 buf_list = pd.concat([buf_list, buf], ignore_index=True)
 
                 # w/o perf pomdp
-                filename_wo_perf = "param_"+filename.split("_")[1]+"_p.pkl"
-                with open(f"wo_perf/{filename_wo_perf}", "rb") as f:
-                    p = pickle.load(f)
-                indexes, policies,reward,  travel_time, request_time, request_count = pomdp_agent(mdp, p, v, initial_state, intervention_list)
-                cumlative_risk_low, cumlative_risk_high = get_cumlative_risk(mdp, indexes)
-                buf = pd.DataFrame([[
-                    filename, 
-                    str(initial_state[-2:]), 
-                    str(mdp.risk_positions), 
-                    str(intervention_list), 
-                    "pomdp_wo_perf", 
-                    cumlative_risk_low+cumlative_risk_high,
-                    cumlative_risk_low, 
-                    cumlative_risk_high,
-                    travel_time, 
-                    request_time,
-                    request_count
-                    ]], columns=result_list.columns)
-                buf_list = pd.concat([buf_list, buf], ignore_index=True)
+                # filename_wo_perf = "param_"+filename.split("_")[1]+"_p.pkl"
+                # with open(f"wo_perf/{filename_wo_perf}", "rb") as f:
+                #     p = pickle.load(f)
+                # indexes, policies,reward,  travel_time, request_time, request_count = pomdp_agent(mdp, p, v, initial_state, intervention_list)
+                # cumlative_risk_low, cumlative_risk_high = get_cumlative_risk(mdp, indexes)
+                # buf = pd.DataFrame([[
+                #     filename, 
+                #     str(initial_state[-2:]), 
+                #     str(mdp.risk_positions), 
+                #     str(intervention_list), 
+                #     "pomdp_wo_perf", 
+                #     cumlative_risk_low+cumlative_risk_high,
+                #     cumlative_risk_low, 
+                #     cumlative_risk_high,
+                #     travel_time, 
+                #     request_time,
+                #     request_count
+                #     ]], columns=result_list.columns)
+                # buf_list = pd.concat([buf_list, buf], ignore_index=True)
 
                 # concat all agent
                 result_list = pd.concat([result_list, buf_list], ignore_index=True)
@@ -349,10 +349,6 @@ def analyze(in_file, out_comp_file, out_summary_file, imp_rate_file):
         for intervention in target_scenario_df.intervention.drop_duplicates():
             for risk in target_scenario_df.risk.drop_duplicates():
                 target_df = target_scenario_df[(target_scenario_df.risk == risk) & (target_scenario_df.intervention == intervention) & (target_scenario_df.param == param)]
-                # initial_risk = ",".join(scenario.split(",")[:2])
-                # operator_intervention = ",".join(scenario.split(",")[2:])
-                # if target_df.intervention.iloc[-1] in ["[-1, 0]", "[0, -1]"]:
-                #     continue
                 cumlative_risk = target_df[target_df.agent=="pomdp"].cumlative_risk.iloc[-1] - target_df[target_df.agent=="myopic"].cumlative_risk.iloc[-1]
                 travel_time = target_df[target_df.agent=="pomdp"].travel_time.iloc[-1] - target_df[target_df.agent=="myopic"].travel_time.iloc[-1]
                 request_time = target_df[target_df.agent=="pomdp"].request_time.iloc[-1] - target_df[target_df.agent=="myopic"].request_time.iloc[-1]
@@ -369,6 +365,7 @@ def analyze(in_file, out_comp_file, out_summary_file, imp_rate_file):
     comp_myopic_pomdp_df.to_csv(out_comp_file)
 
     g = sns.jointplot(data=comp_myopic_pomdp_df, x="travel_time", y="request_time", hue="cumlative_risk", s=50.0, alpha=1.0, ylim=(-12.5, 12.5), palette=["blue", "green", "gray", "orange", "red"], marginal_ticks=True)
+    # when mid/high model, myopic doesn't omit risks
     # g = sns.jointplot(data=comp_myopic_pomdp_df, x="travel_time", y="request_time", hue="cumlative_risk", s=50.0, alpha=1.0, ylim=(-12.5, 12.5), palette=["gray", "orange", "red"], marginal_ticks=True)
     g.plot(sns.scatterplot, sns.histplot)
     plt.show()
@@ -391,12 +388,6 @@ def analyze(in_file, out_comp_file, out_summary_file, imp_rate_file):
     for agent in target_scenario_df.agent.drop_duplicates():
         target_df = target_scenario_df[(target_scenario_df.agent == agent)]
 
-        # initial_risk = ",".join(str(target_df.scenario).split(",")[:2])
-        # operator_intervention = ",".join(str(target_df.scenario).split(",")[2:])
-
-        ## remove unnecesary intervention
-        # if target_df.intervention.str in ["[-1, 0]", "[0, -1]"]:
-        #     continue
         buf = pd.DataFrame([[
             agent, 
             target_df.cumlative_risk_low.sum()/(len(target_df)*2),
@@ -501,14 +492,12 @@ if __name__ == "__main__":
             [0, 11.2, 0, -1, 1.0, 0.75],
             [0, 11.2, 0, -1, 1.0, 1.0],
             ]
-    # simulation(initial_states, "./", param_list, "result_low.csv")
+    simulation(initial_states, "params/", param_list, "result_low.csv")
 
     ####################################
     # comparison
     ####################################
-    # analyze("result_low.csv", "result_comparison_low.csv", "result_summary_low.csv", "result_summary_rate_low.csv")
-    # analyze("result_mid.csv", "result_comparison_mid.csv", "result_summary_mid.csv", "result_summary_rate_mid.csv")
-    # analyze("result_low.csv", "result_comparison_low.csv", "result_summary_low.csv", "result_summary_rate_low.csv")
+    analyze("result_low.csv", "result_comparison_low.csv", "result_summary_low.csv", "result_summary_rate_low.csv")
 
     ####################################
     # visualization
@@ -625,4 +614,4 @@ if __name__ == "__main__":
             ["param_18_mid.yaml", [0, 11.2, 0, -1, 0.75, 0.75], [-1, 0]],
             ]
 
-    visualize_speed(scenario_list, "./")
+    visualize_speed(scenario_list, "params/")

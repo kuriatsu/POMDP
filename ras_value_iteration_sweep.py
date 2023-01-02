@@ -42,7 +42,6 @@ class MDP:
         self.ego_state_min = np.array([0, 0]).T
         self.ego_state_max = np.array([self.prediction_horizon, self.ideal_speed]).T
         self.ego_state_width = np.array([2, 1.4]).T # min speed=10km/h=2.8m/s, delta_t=1.0s, 1.4=5km/h
-        # self.ego_state_width = np.array([1, 0.1]).T # min speed=10km/h=2.8m/s, delta_t=1.0s, 1.4=5km/h
 
         # risks state: likelihood 0:norisk, 1:risk ,  
         self.risk_state_min = np.array([0.0]*len(self.risk_positions)).T
@@ -83,14 +82,10 @@ class MDP:
 
     def init_state_space(self):
 
-        # indexes
+        # list of index for value iteration
         self.indexes = list(itertools.product(*tuple(range(x) for x in self.index_nums)))
-        print("indexes size [byte]", self.indexes.__sizeof__())
-
         self.value_function, self.final_state_flag = self.init_value_function()
-        print("value_function size [byte]", self.value_function.__sizeof__())
         self.policy = self.init_policy()
-        print("policy size [byte]", self.policy.__sizeof__())
 
     def init_value_function(self):
         v = np.empty(self.index_nums)
@@ -245,11 +240,14 @@ class MDP:
 
 
     def ego_vehicle_transition(self, state):
-        # closest object
+        """move ego vehile (mainly calcurate acceleration)
+        state : state value (not index)
+        """
         current_v = state[self.ego_state_index+1]
         current_pose = state[self.ego_state_index] 
         acc_list = [] 
 
+        # acceleration to keep ideal speed 
         if current_v < self.ideal_speed:
             acc_list.append(self.ordinary_G*9.8)
         elif current_v == self.ideal_speed:
@@ -257,16 +255,17 @@ class MDP:
         else:
             acc_list.append(-self.ordinary_G*9.8)
 
-        # get acceleration value
+        # get deceleration value against target
         for i, pose in enumerate(self.risk_positions):
             target_index = int(self.risk_state_index + i)
             dist = pose - current_pose
             
-            if dist < 0.0: # remove target
+            # find deceleration target
+            if dist < 0.0: # passed target
                 is_deceleration_target = False
             elif i == state[self.int_state_index+1]: # intervention target
                 is_deceleration_target = state[target_index] >= 0.0
-            else:
+            else: # not intervention target
                 is_deceleration_target = state[target_index] >= 0.5
 
             if not is_deceleration_target:
@@ -274,7 +273,7 @@ class MDP:
 
             a = 0.0
             deceleration_distance = (current_v**2 - self.min_speed**2)/(2*9.8*self.ordinary_G) + self.safety_margin 
-            # keep speed 
+            # keep speed, 20=discretization eps
             if dist > deceleration_distance+20:
                 continue
 
@@ -289,7 +288,7 @@ class MDP:
 
             acc_list.append(a)
 
-        # min speed or max speed
+        # clip to min speed or max speed
         a = min(acc_list)
         v = current_v + a*self.delta_t
         if v <= self.min_speed:
@@ -299,11 +298,12 @@ class MDP:
             v = self.ideal_speed
             a = 0.0
         x = current_pose + current_v * self.delta_t + 0.5 * a * self.delta_t**2
-        # print("a, v, x, current_v, current_x",a, v, x, current_v, current_pose)
         return a, v, x
                
 
     def to_index(self, state):
+        """ get index from state value
+        """
         out_index = []
         for i in range(len(state)):
             out_index.append(int((min(max(state[i], self.state_min[i]), self.state_max[i]) - self.state_min[i]) // self.state_width[i]))
@@ -312,6 +312,8 @@ class MDP:
 
 
     def index_value(self, index, i):
+        """ get state value from index
+        """
         return index[i] * self.state_width[i] + self.state_min[i]
 
 def trial_until_sat():
@@ -319,7 +321,7 @@ def trial_until_sat():
     with open(sys.argv[1]) as f:
         param = yaml.safe_load(f)
     
-    filename = sys.argv[1].split("/")[-1].split(".")[0]
+    filename = sys.argv[1].split(".")[]
     dp = MDP(param)
     dp.init_state_space()
     delta = 1e100
@@ -339,6 +341,7 @@ def trial_until_sat():
         with open(f"{filename}_v.pkl", "wb") as f:
             pickle.dump(dp.value_function, f)
 
+            ## visualize optimal policy and value function
             # v = eval("dp.value_function" + param["visualize_elem"])
             # v = dp.value_function[:, :, param["visualize_elems"]]
             # sns.heatmap(v.T, square=False)
