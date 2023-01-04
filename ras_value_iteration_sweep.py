@@ -23,12 +23,8 @@ class MDP:
         # self.max_G = 1.0 
 
         self.p_efficiency = param["p_efficiency"] # -1
-        self.p_comfort = param["p_comfort"] # -10
         self.p_ambiguity = param["p_ambiguity"] # -10
-        self.p_bad_int_request = param["p_bad_int_request"] # -10
         self.p_int_request = param["p_int_request"] # -1
-        self.p_delta_t = param["p_delta_t"] # -1
-        self.goal_value = param["goal_value"] # 100
 
         self.operator_int_prob = param["operator_int_prob"] #0.5
         
@@ -156,22 +152,7 @@ class MDP:
             if closest_amb_target is not None:
                 acceleration_rate = (ego_v_after - ego_v_before) / (self.ordinary_G*9.8)
                 p_efficiency = acceleration_rate**2 * closest_amb
-                    
-            # when change the intervention target, judge the action decision
-            # if self.index_value(index, self.int_state_index+1) not in [-1, action]:
-            #     int_time = self.index_value(index, self.int_state_index) 
-            #     int_acc_list = self.operator_model.get_acc_prob(int_time)
-            #     int_acc_list = self.get_int_performance(int_time)
-            #     for [int_acc, acc_prob] in :
-            #         if int_acc is None:
-            #             bad_int_request = acc_prob
 
-            # if intervention after passing the obstacles
-            # if self.index_value(index_after, self.ego_state_index) >= self.risk_positions[int(self.index_value(index_after, self.int_state_index+1))]:
-            #     bad_int_request = True
-
-            # intervention request penalty
-            # if self.index_value(index, self.int_state_index+1) not in [-1, action]:
             if action != -1:
                 p_int_request_penalty = True
 
@@ -179,12 +160,7 @@ class MDP:
                          + self.p_ambiguity*p_ambiguity \
                          + self.p_delta_t*self.delta_t \
                          + self.p_int_request*p_int_request_penalty
-                         # + self.p_bad_int_request*bad_int_request \
-                         # + self.p_comfort*comfort \
-                         # + self.goal_value*self.final_state(index_after)
-            # print("action_value", index, action_value, self.p_efficiency*efficiency, self.p_ambiguity*ambiguity, self.p_bad_int_request*bad_int_request)
             value += prob * (self.value_function[tuple(index_after)] + action_value) * self.discount_factor
-            # value += prob * (action_value) 
             
         return value
 
@@ -340,19 +316,6 @@ def trial_until_sat():
 
         with open(f"{filename}_v.pkl", "wb") as f:
             pickle.dump(dp.value_function, f)
-
-            ## visualize optimal policy and value function
-            # v = eval("dp.value_function" + param["visualize_elem"])
-            # v = dp.value_function[:, :, param["visualize_elems"]]
-            # sns.heatmap(v.T, square=False)
-            # plt.title(f"{filename}value")
-            # plt.savefig(f"{filename}_value.svg")
-
-            # p = eval("dp.policy" + param["visualize_elem"])
-            # p = dp.policy[:, :, param["visualize_elems"]]
-            # sns.heatmap(p.T, square=False)
-            # plt.title(f"{filename}_policy")
-            # plt.savefig(f"{filename}_policy.svg")
 
 if __name__ == "__main__":
     trial_until_sat()

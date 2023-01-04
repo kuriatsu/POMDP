@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import pickle
 import yaml
-from ras_value_iteration_sweep import MDP
+from ras_value_iteration_sweep_multi import MDP
 import sys
 
 def myopic_policy(mdp, int_time, value, initial_state, intervention_list):
