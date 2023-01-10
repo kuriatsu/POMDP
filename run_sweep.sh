@@ -1,5 +1,6 @@
 #!/bin/bash
 
+<<<<<<< HEAD
 # python3 ras_value_iteration_sweep.py param_2_1.yaml &
 # python3 ras_value_iteration_sweep.py param_2_2.yaml &
 # python3 ras_value_iteration_sweep.py param_2_3.yaml &
@@ -208,3 +209,17 @@ python3 ras_value_iteration_sweep.py param_17_12.yaml &
 python3 ras_value_iteration_sweep.py param_17_13.yaml &
 python3 ras_value_iteration_sweep.py param_17_14.yaml &
 python3 ras_value_iteration_sweep.py param_17_15.yaml &
+=======
+python3 ras_value_iteration_sweep.py param_9_1.yaml &
+python3 ras_value_iteration_sweep.py param_9_2.yaml &
+
+python3 ras_value_iteration_sweep.py param_9_high_perf_1.yaml &
+python3 ras_value_iteration_sweep.py param_9_high_perf_2.yaml &
+
+python3 ras_value_iteration_sweep.py param_9_low_perf_1.yaml &
+python3 ras_value_iteration_sweep.py param_9_low_perf_2.yaml &
+
+python3 ras_value_iteration_sweep.py param_11_high_perf_1.yaml &
+python3 ras_value_iteration_sweep.py param_11_high_perf_2.yaml &
+
+>>>>>>> b2e4f7a9d00e80778405cc5c1bea9b41963151b8
