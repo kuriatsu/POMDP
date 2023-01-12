@@ -40,13 +40,13 @@ class MDP:
         self.ego_state_width = np.array([2, 1.4]).T # min speed=10km/h=2.8m/s, delta_t=1.0s, 1.4=5km/h
 
         # risks state: likelihood 0:norisk, 1:risk ,  
-        self.risk_state_min = np.array([0.0]*len(self.risk_positions)).T
-        self.risk_state_max = np.array([1.0]*len(self.risk_positions)).T
-        self.risk_state_width = np.array([0.25]*len(self.risk_positions)).T
+        self.risk_state_min = np.array([0]*len(self.risk_positions)).T
+        self.risk_state_max = np.array([1]*len(self.risk_positions)).T
+        self.risk_state_width = np.array([1]*len(self.risk_positions)).T
         
         # intervention state: int_time, target
         self.int_state_min = np.array([0, -1]).T
-        self.int_state_max = np.array([6, len(self.risk_positions)-1]).T
+        self.int_state_max = np.array([10, len(self.risk_positions)-1]).T
         self.int_state_width = np.array([self.delta_t, 1]).T
 
         self.state_min = np.r_[self.ego_state_min, self.int_state_min, self.risk_state_min]
@@ -146,9 +146,11 @@ class MDP:
                                      + self.p_delta_t*self.delta_t \
                                      + self.p_int_request*p_int_request_penalty
             
-                        transition = f"T : {action} : {index} : {index_after} : {prob}"
+                        if self.index_value(index, self.int_state_index+1) not in [action, -1]:
+
+                            int_prob_list = self.operator_model.int_prob(self.index_value(index, self.int_state_index))
+                        transition = f"T : {action} : {index} : {index_after} : {self.operator_int_prob}"
                         reward = f"R : {action} : {index} : {index_after} : {action_value}"
-                        observation = f"O : {action} : {index_after} : risk : {prob}"
                         observation = f"O : {action} : {index_after} : risk : {prob}"
         return value
 
@@ -171,35 +173,26 @@ class MDP:
         target_index = int(self.risk_state_index + self.index_value(index, self.int_state_index+1))
 
         for [int_acc, acc_prob] in int_acc_prob_list:
-            if self.index_value(index, self.int_state_index+1) != action and self.index_value(index, self.int_state_index+1) != -1 and int_acc is not None : 
+            if self.index_value(index, self.int_state_index+1) not in [action, -1] and int_acc is not None : 
 
                 # print("transition if target is judged as norisk")
                 transition_prob = self.operator_int_prob * acc_prob
                 buf_state_value_noint = copy.deepcopy(state_value)
-                buf_state_value_noint[target_index] = 1.0 - int_acc 
+                buf_state_value_noint[target_index] = 0.0 
                 _, v, x = self.ego_vehicle_transition(buf_state_value_noint)
                 buf_state_value_noint[self.ego_state_index] = x
                 buf_state_value_noint[self.ego_state_index+1] = v 
                 out_index_list.append([transition_prob, self.to_index(buf_state_value_noint)]) 
+
                 # print("transition if target is judged as risk")
                 transition_prob = (1.0 - self.operator_int_prob) * acc_prob
                 buf_state_value_int = copy.deepcopy(state_value)
-                buf_state_value_int[target_index] = int_acc 
+                buf_state_value_int[target_index] = 1.0 
                 _, v, x = self.ego_vehicle_transition(buf_state_value_int)
                 buf_state_value_int[self.ego_state_index] = x
                 buf_state_value_int[self.ego_state_index+1] = v 
                 out_index_list.append([transition_prob, self.to_index(buf_state_value_int)]) 
 
-            else:
-                # print("transition if no intervention")
-                transition_prob = 1.0 * acc_prob
-                buf_state_value = copy.deepcopy(state_value)
-                _, v, x = self.ego_vehicle_transition(buf_state_value)
-                buf_state_value[self.ego_state_index] = x
-                buf_state_value[self.ego_state_index+1] = v 
-                out_index_list.append([transition_prob, self.to_index(buf_state_value)]) 
-            
-        # print(out_index_list)
         return out_index_list
 
 
