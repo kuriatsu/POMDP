@@ -62,7 +62,7 @@ class OperatorModel:
             acc = self.acc_time_min + self.acc_time_slope*(int_time - self.min_time)
             acc = min(acc, 1.0)
         
-        return [[acc, 1.0]]
+        return acc 
 
     
 if __name__=="__main__":
