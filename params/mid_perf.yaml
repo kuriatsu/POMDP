@@ -5,8 +5,8 @@ ideal_speed: 11.2
 min_speed: 2.8
 ordinary_G: 0.2
 
-p_efficiency: -10
-p_int_request: -1
+p_efficiency: -1000
+p_int_request: 0 
 
 operator_int_prob: 0.5
 min_time: 3

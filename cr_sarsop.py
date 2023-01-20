@@ -31,45 +31,52 @@ class MDP:
 
 
         # POMDPX
-        self.root = ET.Element("pomdpx", attrib={"version":"0.1", "id":"cooperative recognition", "xmlns":"", "xsi":""})
-        ET.SubElement(self.root, "Description")
+        self.root = ET.Element("pomdpx", attrib={"version":"0.1", "id":"cooperative recognition", "xmlns:xsi":"http://www.w3.org/2001/XMLSchema-instance", "xsi:noNamespaceSchemaLocation":"pomdpx.xsd"})
+        description = ET.SubElement(self.root, "Description")
+        description.text = "This is an auto-generated cooperative recognition POMDPX file"
         discount = ET.SubElement(self.root, "Discount")
         discount.text = "0.95"
 
         # State Var
         variable = ET.SubElement(self.root, "Variable")
-        self.s_ego_pose = np.arange(0.0, self.prediction_horizon, 2.0)
-        np.append(self.s_ego_pose, self.s_ego_pose[-1]+2.0)
+        self.s_ego_pose = np.arange(0, self.prediction_horizon+2, 2)
         self.set_state_var(variable, self.s_ego_pose, "ego_pose0", "ego_pose1", "true")
 
-        self.s_ego_speed = np.arange(self.min_speed, self.ideal_speed, 1.4) # min speed=10km/h=2.8m/s, delta_t=1.0s, 1.4=5km/h
-        np.append(self.s_ego_speed, self.s_ego_speed[-1]+1.4) # min speed=10km/h=2.8m/s, delta_t=1.0s, 1.4=5km/h
+        self.s_ego_speed = np.arange(self.min_speed, self.ideal_speed+1.4, 1.4) # min speed=10km/h=2.8m/s, delta_t=1.0s, 1.4=5km/h
         self.set_state_var(variable, self.s_ego_speed, "ego_speed0", "ego_speed1", "true")
         
-        self.s_int_time = np.arange(0.0, 10.0, self.delta_t)
-        np.append(self.s_int_time, self.s_int_time[-1]+self.delta_t)
+        self.s_int_time = np.arange(0.0, 10.0+self.delta_t, self.delta_t)
         self.set_state_var(variable, self.s_int_time, "int_time0", "int_time1", "true")
 
-        self.s_int_target = np.arange(-1, len(self.risk_positions)).T
+        self.s_int_target = np.arange(-1, len(self.risk_positions))
         self.set_state_var(variable, self.s_int_target, "int_target0", "int_target1", "true")
         
         risk_state = [0, 1]
-        self.s_risk_state = np.array([i for i in itertools.product(risk_state, repeat=len(self.risk_positions))]) 
-        print(self.s_risk_state)
         for i in range(len(self.risk_positions)):
             self.set_state_var(variable, risk_state, "risk_"+str(i)+"0", "risk_"+str(i)+"1", "false")
+        self.s_risk_state = np.array([i for i in itertools.product(risk_state, repeat=len(self.risk_positions))]) 
+        print(self.s_risk_state)
 
         # Action Var
-        self.action_int_request =  np.arange(-1, len(self.risk_positions)).T
+        self.action_int_request =  np.arange(-1, len(self.risk_positions))
         self.set_action_var(variable, "ActionVar", self.action_int_request, "action_int_request")
         
         # Obserbation Var
-        self.observation = np.array(["no_int", "int"]).T
+        self.observation = np.array(["int", "no_int", "none"])
         self.set_action_var(variable, "ObsVar", self.observation, "obs_int_behavior")
+
+        # Reward Var
+        ET.SubElement(variable, "RewardVar", attrib={"vname":"reward_int_request"})
+        ET.SubElement(variable, "RewardVar", attrib={"vname":"reward_efficiency"})
+
+        # initial state belief
+        initial_belief = ET.SubElement(self.root, "InitialStateBelief")
+        self.set_initial_state(initial_belief)
 
         # State Transition Function
         state_tran = ET.SubElement(self.root, "StateTransitionFunction")
-        self.set_ego_tran(state_tran)
+        self.set_ego_pose_tran(state_tran)
+        self.set_ego_speed_tran(state_tran)
         self.set_int_time_tran(state_tran)
         self.set_risk_tran(state_tran)
         self.set_target_tran(state_tran)
@@ -90,8 +97,6 @@ class MDP:
         obs_func = ET.SubElement(self.root, "ObsFunction")
         self.set_obs(obs_func)
 
-        initial_belief = ET.SubElement(self.root, "InitialStateBelief")
-        self.set_initial_state(initial_belief)
         
 
     def set_state_var(self, elem, values, prev, curr, obs):
@@ -104,72 +109,78 @@ class MDP:
         enum = ET.SubElement(state, "ValueEnum")
         enum.text = " ".join(np.array(values, dtype="str"))
 
-    def set_ego_tran(self, elem):
-        cond_prob_v = ET.SubElement(elem, "CondProb")
-        var_v = ET.Element("Var")
-        var_v.text = "ego_speed1"
-        parent_v = ET.Element("Parent")
-        parent_v.text = "action_int_request ego_pose0 ego_speed0"
+    def set_ego_speed_tran(self, elem):
+        cond_prob = ET.SubElement(elem, "CondProb")
+        var = ET.Element("Var")
+        var.text = "ego_speed1"
+        parent = ET.Element("Parent")
+        parent.text = "action_int_request ego_pose0 ego_speed0"
         for i in range(len(self.risk_positions)):
-            parent_v.text += " risk_"+str(i)+"0"
-        parameter_v = ET.Element("Parameter", attrib={"type":"TBL"})
-
-        cond_prob_x = ET.SubElement(elem, "CondProb")
-        var_x = ET.Element("Var")
-        var_x.text = "ego_pose1"
-        parent_x = ET.Element("Parent")
-        parent_x.text = "action_int_request ego_pose0 ego_speed0"
-        for i in range(len(self.risk_positions)):
-            parent_x.text += " risk_"+str(i)+"0"
-        parameter_x = ET.Element("Parameter", attrib={"type":"TBL"})
-
+            parent.text += " risk_"+str(i)+"0"
+        parameter = ET.Element("Parameter", attrib={"type":"TBL"})
         
-        for a in self.action_int_request:
+        for action in self.action_int_request:
             for risk_state in self.s_risk_state:
-                entry_v = ET.Element("Entry")
-                instance_v = ET.Element("Instance")
-                instance_v.text = f"{a} - - {' '.join(np.array(risk_state, dtype='str'))} - " 
-                prob_table_v = ET.Element("ProbTable")
-                prob_table_v.text = ""
+                entry = ET.Element("Entry")
+                instance = ET.Element("Instance")
+                instance.text = f"{action} - - {' '.join(np.array(risk_state, dtype='str'))} - " 
+                prob_table = ET.Element("ProbTable")
+                prob_table.text = ""
 
-                entry_x = ET.Element("Entry")
-                instance_x = ET.Element("Instance")
-                instance_x.text = f"{a} - - {' '.join(np.array(risk_state, dtype='str'))} - " 
-                prob_table_x = ET.Element("ProbTable")
-                prob_table_x.text = ""
 
                 for ego_pose in self.s_ego_pose:
                     for ego_speed in self.s_ego_speed:
-                        a, v = self.calc_ego_speed(ego_speed, ego_pose, risk_state, a) 
+                        _, v, _ = self.calc_ego_speed(ego_speed, ego_pose, risk_state, action) 
                         v = min(max(v, min(self.s_ego_speed)), max(self.s_ego_speed))
-                        prob_list_v = np.zeros(len(self.s_ego_speed))
-                        prob_list_v[int((v-self.s_ego_speed[0])//(self.s_ego_speed[1]-self.s_ego_speed[0]))] = 1.0
-                        prob_table_v.text += " ".join(np.array(prob_list_v, dtype="str"))
-                        prob_table_v.text += " "
+                        prob_list = np.zeros(len(self.s_ego_speed))
+                        prob_list[int((v-self.s_ego_speed[0])//(self.s_ego_speed[1]-self.s_ego_speed[0]))] = 1.0
+                        prob_table.text += " ".join(np.array(prob_list, dtype="str"))
+                        prob_table.text += " "
                         
-                        # x = ego_pose + ego_speed * self.delta_t + 0.5 * a * self.delta_t**2
-                        x = ego_pose + ego_speed * self.delta_t
+                entry.append(instance)
+                entry.append(prob_table)
+                parameter.append(entry)
+        cond_prob.append(var)
+        cond_prob.append(parent)
+        cond_prob.append(parameter)
+
+
+    def set_ego_pose_tran(self, elem):
+
+        cond_prob = ET.SubElement(elem, "CondProb")
+        var = ET.Element("Var")
+        var.text = "ego_pose1"
+        parent = ET.Element("Parent")
+        parent.text = "action_int_request ego_pose0 ego_speed0"
+        for i in range(len(self.risk_positions)):
+            parent.text += " risk_"+str(i)+"0"
+        parameter = ET.Element("Parameter", attrib={"type":"TBL"})
+
+        for action in self.action_int_request:
+            for risk_state in self.s_risk_state:
+
+                entry = ET.Element("Entry")
+                instance = ET.Element("Instance")
+                instance.text = f"{action} - - {' '.join(np.array(risk_state, dtype='str'))} - " 
+                prob_table = ET.Element("ProbTable")
+                prob_table.text = ""
+
+                for ego_pose in self.s_ego_pose:
+                    for ego_speed in self.s_ego_speed:
+                        _, _, x = self.calc_ego_speed(ego_speed, ego_pose, risk_state, action) 
                         x = min(max(x, min(self.s_ego_pose)), max(self.s_ego_pose))
-                        prob_list_x = np.zeros(len(self.s_ego_pose))
-                        prob_list_x[int((x-self.s_ego_pose[0])//(self.s_ego_pose[1]-self.s_ego_pose[0]))] = 1.0
-                        prob_table_x.text += " ".join(np.array(prob_list_x, dtype="str"))
-                        prob_table_x.text += " "
+                        prob_list = np.zeros(len(self.s_ego_pose))
+                        prob_list[int((x-self.s_ego_pose[0])//(self.s_ego_pose[1]-self.s_ego_pose[0]))] = 1.0
+                        prob_table.text += " ".join(np.array(prob_list, dtype="str"))
+                        prob_table.text += " "
 
-                entry_x.append(instance_x)
-                entry_v.append(instance_v)
-                entry_x.append(prob_table_x)
-                entry_v.append(prob_table_v)
-
-            parameter_x.append(entry_x)
-            parameter_v.append(entry_v)
-
-        cond_prob_x.append(var_x)
-        cond_prob_x.append(parent_x)
-        cond_prob_x.append(parameter_x)
-        cond_prob_v.append(var_v)
-        cond_prob_v.append(parent_v)
-        cond_prob_v.append(parameter_v)
-
+                entry.append(instance)
+                entry.append(prob_table)
+                parameter.append(entry)
+        cond_prob.append(var)
+        cond_prob.append(parent)
+        cond_prob.append(parameter)
+    
     
     def calc_ego_speed(self, ego_speed, ego_pose, risk_state, action):
         """move ego vehile (mainly calcurate acceleration)
@@ -227,7 +238,10 @@ class MDP:
         elif v >= self.ideal_speed:
             v = self.ideal_speed
             a = 0.0
-        return a, v 
+
+        x = ego_pose + ego_speed * self.delta_t + 0.5 * a * self.delta_t**2
+        # x = ego_pose + ego_speed * self.delta_t
+        return a, v, x 
 
 
     def set_risk_tran(self, elem):
@@ -255,130 +269,148 @@ class MDP:
         
     def set_int_time_tran(self, elem):
         cond_prob = ET.SubElement(elem, "CondProb")
-        var = ET.Element("Var")
+        var = ET.SubElement(cond_prob, "Var")
         var.text = "int_time1"
         parent = ET.SubElement(cond_prob, "Parent")
-        parent.text = "action_int_request int_target1 int_time0"
+        parent.text = "action_int_request int_target0 int_time0"
         parameter = ET.SubElement(cond_prob, "Parameter", attrib={"type":"TBL"})
 
         entry = ET.Element("Entry")
         instance = ET.Element("Instance")
-        instance.text = f"-1 * * 0" 
+        instance.text = f"-1 * * 0.0" 
         prob_table = ET.Element("ProbTable")
         prob_table.text = "1.0"
         entry.append(instance)
         entry.append(prob_table)
         parameter.append(entry)
 
-        for a in range(len(self.risk_positions)):
-            for t in self.action_int_request:
+        for a in self.action_int_request:
+            if a == -1: continue
+            for t in self.s_int_target:
                 entry = ET.Element("Entry")
-                instance = ET.Element("Instance")
-                instance.text = f"{a} {t} - -" 
-                prob_list = []
-                for time in self.s_int_time:
-                    buf = [0.0]*len(self.s_int_time)
-                    buf[int(min(time+1, max(self.s_int_time))//(self.s_int_time[1]-self.s_int_time[0]))] = 1.0
-                    prob_list += buf 
-                prob_table = ET.Element("ProbTable")
-                prob_table.text = " ".join([str(_) for _ in prob_list])
+                instance = ET.SubElement(entry, "Instance")
+                if a != t:
+                    instance.text = f"{a} {t} * 0.0 " 
+                    prob_list = []
+                    prob_table = ET.SubElement(entry, "ProbTable")
+                    prob_table.text = "1.0"
+                else:
+                    instance.text = f"{a} {t} - - " 
+                    prob_list = []
+                    for time in self.s_int_time:
+                        buf = [0.0]*len(self.s_int_time)
+                        buf[int(min(time+1, max(self.s_int_time))//(self.s_int_time[1]-self.s_int_time[0]))] = 1.0
+                        prob_list += buf 
+                    prob_table = ET.SubElement(entry, "ProbTable")
+                    prob_table.text = " ".join([str(_) for _ in prob_list])
 
-                entry.append(instance)
-                entry.append(prob_table)
                 parameter.append(entry)
 
 
     def set_target_tran(self, elem):
         cond_prob = ET.SubElement(elem, "CondProb")
-        var = ET.Element("Var")
+        var = ET.SubElement(cond_prob, "Var")
         var.text = "int_target1"
-        parent = ET.Element("Parent")
-        parent.text = "action_int_request"
-        parameter = ET.Element("Parameter", attrib={"type":"TBL"})
+        parent = ET.SubElement(cond_prob, "Parent")
+        parent.text = "action_int_request int_target0"
+        parameter = ET.SubElement(cond_prob, "Parameter", attrib={"type":"TBL"})
 
-        entry = ET.Element("Entry")
-        instance = ET.Element("Instance")
-        instance.text = f" - - " 
-        prob_table = ET.Element("ProbTable")
-        prob_table.text = "identity"
+        for a in self.action_int_request:
+            entry = ET.Element("Entry")
+            instance = ET.SubElement(entry, "Instance")
+            instance.text = f" {a} * {a} " 
+            prob_table = ET.SubElement(entry, "ProbTable")
+            prob_table.text = "1.0"
             
-        entry.append(instance)
-        entry.append(prob_table)
-        parameter.append(entry)
-        cond_prob.append(var)
-        cond_prob.append(parent)
-        cond_prob.append(parameter)
+            parameter.append(entry)
+
 
     def set_reward(self, elem):
-        func = ET.SubElement(elem, "Func")
-        var = ET.Element("Var")
-        var.text = "reward"
-        parent = ET.Element("Parent")
-        parent.text = "ego_pose0 ego_speed0" + " ".join([f"risk_{_}0" for _ in range(len(self.risk_positions))])
-        parameter = ET.Element("Parameter", attrib={"type":"TBL"})
+        func_eff = ET.SubElement(elem, "Func")
+        var_eff = ET.SubElement(func_eff, "Var")
+        var_eff.text = "reward_efficiency"
+        parent_eff = ET.SubElement(func_eff, "Parent")
+        parent_eff.text = "ego_pose0 ego_pose1 ego_speed0 " + " ".join([f"risk_{_}0" for _ in range(len(self.risk_positions))])
+        parameter_eff = ET.SubElement(func_eff, "Parameter", attrib={"type":"TBL"})
 
         # driving comfort
-        for risks in itertools.product([0, 1], repeat=len(self.risk_positions)):
-            for idx, ego_position in enumerate(self.risk_positions):
-                entry = ET.Element("Entry")
-                instance = ET.Element("Instance")
-                instance.text = f"{ego_position} - " + " ".join([str(_) for _ in risks])
-                prob_table = ET.Element("ProbTable")
-                values = []
+        for risks in self.s_risk_state:
+            for pose_prev in self.s_ego_pose:
                 for speed in self.s_ego_speed:
-                    values.append(speed/max(self.s_ego_speed) * risks[idx])
-                prob_table.text = " ".join([str(_) for _ in values])
+                    for action in self.action_int_request:
 
-                entry.append(instance)
-                entry.append(prob_table)
-                parameter.append(entry)
-        func.append(var)
-        func.append(parent)
-        func.append(parameter)
-        elem.append(func)
+                        _, _, pose_curr = self.calc_ego_speed(speed, pose_prev, risks, action) 
+                        pose_curr = int((pose_curr-min(self.s_ego_pose))//(self.s_ego_pose[1]-self.s_ego_pose[0]))
+                        value = None
+
+                        for idx, risk_position in enumerate(self.risk_positions):
+                            if pose_prev <= risk_position <= pose_curr:
+                                value = self.p_efficiency * speed/max(self.s_ego_speed) * risks[idx]
+
+                        if value is not None and value < 0.0:
+                            entry = ET.Element("Entry")
+                            instance = ET.Element("Instance")
+                            instance.text = f"{pose_prev} {pose_curr} {speed} " + " ".join([str(_) for _ in risks])
+                            prob_table = ET.Element("ValueTable")
+                            prob_table.text = str(value) 
+
+                            entry.append(instance)
+                            entry.append(prob_table)
+                            parameter_eff.append(entry)
+
 
         # intervention request
-        func = ET.Element(elem)
-        var = ET.Element("Var")
-        var.text = "reward_int_request"
-        parent = ET.Element("Parent")
-        parent.text = "action_int_request"
-        parameter = ET.Element("Parameter", attrib={"type":"TBL"})
+        func_req = ET.SubElement(elem, "Func")
+        var_req = ET.SubElement(func_req, "Var")
+        var_req.text = "reward_int_request"
+        parent_req = ET.SubElement(func_req, "Parent")
+        parent_req.text = "action_int_request"
+        parameter_req = ET.SubElement(func_req, "Parameter", attrib={"type":"TBL"})
         for a in self.action_int_request:
             if a == -1: continue
             entry = ET.Element("Entry")
             instance = ET.Element("Instance")
             instance.text = f"{a}"
-            prob_table = ET.Element("ProbTable")
-            prob_table.text = "1"
+            prob_table = ET.Element("ValueTable")
+            prob_table.text = f"{self.p_int_request}"
             entry.append(instance)
             entry.append(prob_table)
-            parameter.append(entry)
+            parameter_req.append(entry)
 
-        func.append(var)
-        func.append(parent)
-        func.append(parameter)
-        
 
     def set_obs(self, elem):
         cond_prob = ET.SubElement(elem, "CondProb")
-        var = ET.Element("Var")
+        var = ET.SubElement(cond_prob, "Var")
         var.text = "obs_int_behavior"
-        parent = ET.Element("Parent")
-        parent.text = "action_int_request int_time1" + " ".join([f"risk_{_}1" for _ in range(len(self.risk_positions))])
-        parameter = ET.Element("Parameter", attrib={"type":"TBL"})
+        parent = ET.SubElement(cond_prob, "Parent")
+        parent.text = "action_int_request int_time1 " + " ".join([f"risk_{_}1" for _ in range(len(self.risk_positions))])
+        parameter = ET.SubElement(cond_prob, "Parameter", attrib={"type":"TBL"})
+        
+        # if action = -1, observation is none
+        entry = ET.Element("Entry")
+        instance = ET.SubElement(entry, "Instance")
+        instance.text = f"-1 * " + "* "*len(self.risk_positions) + " none "
+        prob_table = ET.SubElement(entry, "ProbTable")
+        prob_table.text = "1.0"
+        parameter.append(entry)
+
         for a in self.action_int_request:
+            if a == -1:
+                continue
+
             for int_time in self.s_int_time:
                 for risks in itertools.product([0, 1], repeat=len(self.risk_positions)):
                     entry = ET.Element("Entry")
                     instance = ET.Element("Instance")
-                    instance.text = f"{a} {int_time}"  + " ".join([str(_) for _ in risks]) + " -"
+                    instance.text = f"{a} {int_time} " + " ".join([str(_) for _ in risks]) + " - "
                     acc = self.operator_model.int_acc(int_time)
                     prob_table = ET.Element("ProbTable")
-                    if risks[a] == 1:
-                        prob_table.text = f"{1.0 - acc} {acc}"
+                    if acc is None:
+                        prob_table.text = f"0.0 0.0 1.0"
+                    elif risks[a] == 1:
+                        prob_table.text = f"{1.0 - acc} {acc} 0.0"
                     elif risks[a] == 0:
-                        prob_table.text = f"{acc} {1.0 - acc}"
+                        prob_table.text = f"{acc} {1.0 - acc} 0.0"
                     entry.append(instance)
                     entry.append(prob_table)
                     parameter.append(entry)
@@ -450,7 +482,7 @@ class MDP:
             parameter = ET.SubElement(cond_prob, "Parameter", attrib={"type":"TBL"})
             entry = ET.SubElement(parameter, "Entry")
             instance = ET.SubElement(entry, "Instance")
-            instance.text = "-"
+            instance.text = " - "
             prob_table = ET.SubElement(entry, "ProbTable")
             risk = 0.5 
             prob_table.text = f"{risk} {1.0-risk}"
@@ -465,7 +497,7 @@ def trial_until_sat():
     dp = MDP(param)
     tree = ET.ElementTree(element=dp.root)
     ET.indent(tree, space="    ", level=0)
-    tree.write("out.pomdpx")
+    tree.write("out.pomdpx", encoding="UTF-8", xml_declaration=True)
     
 if __name__ == "__main__":
     trial_until_sat()
