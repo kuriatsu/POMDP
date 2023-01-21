@@ -130,7 +130,7 @@ class MDP:
 
                 for ego_pose in self.s_ego_pose:
                     for ego_speed in self.s_ego_speed:
-                        _, v, _ = self.calc_ego_speed(ego_speed, ego_pose, risk_state, action) 
+                        _, v, _, _ = self.calc_ego_speed(ego_speed, ego_pose, risk_state, action) 
                         v = min(max(v, min(self.s_ego_speed)), max(self.s_ego_speed))
                         prob_list = np.zeros(len(self.s_ego_speed))
                         prob_list[int((v-self.s_ego_speed[0])//(self.s_ego_speed[1]-self.s_ego_speed[0]))] = 1.0
@@ -167,7 +167,7 @@ class MDP:
 
                 for ego_pose in self.s_ego_pose:
                     for ego_speed in self.s_ego_speed:
-                        _, _, x = self.calc_ego_speed(ego_speed, ego_pose, risk_state, action) 
+                        _, _, x, _ = self.calc_ego_speed(ego_speed, ego_pose, risk_state, action) 
                         x = min(max(x, min(self.s_ego_pose)), max(self.s_ego_pose))
                         prob_list = np.zeros(len(self.s_ego_pose))
                         prob_list[int((x-self.s_ego_pose[0])//(self.s_ego_pose[1]-self.s_ego_pose[0]))] = 1.0
@@ -231,6 +231,7 @@ class MDP:
 
         # clip to min speed or max speed
         a = min(acc_list)
+        decel_target = acc_list.index(a)
         v = ego_speed + a*self.delta_t
         if v <= self.min_speed:
             v = self.min_speed
@@ -241,7 +242,9 @@ class MDP:
 
         x = ego_pose + ego_speed * self.delta_t + 0.5 * a * self.delta_t**2
         # x = ego_pose + ego_speed * self.delta_t
-        return a, v, x 
+        x = int((x-min(self.s_ego_pose))//(self.s_ego_pose[1]-self.s_ego_pose[0]))
+        v = int((v-min(self.s_ego_speed))//(self.s_ego_speed[1]-self.s_ego_speed[0]))
+        return a, v, x, decel_target
 
 
     def set_risk_tran(self, elem):
@@ -334,29 +337,29 @@ class MDP:
         parameter_eff = ET.SubElement(func_eff, "Parameter", attrib={"type":"TBL"})
 
         # driving comfort
-        for risks in self.s_risk_state:
-            for pose_prev in self.s_ego_pose:
-                for speed in self.s_ego_speed:
+        for pose_prev in self.s_ego_pose:
+            for speed_prev in self.s_ego_speed:
+                buf_eval_speed = []
+                for risks in self.s_risk_state:
                     for action in self.action_int_request:
 
-                        _, _, pose_curr = self.calc_ego_speed(speed, pose_prev, risks, action) 
-                        pose_curr = int((pose_curr-min(self.s_ego_pose))//(self.s_ego_pose[1]-self.s_ego_pose[0]))
-                        value = None
+                        _, speed_curr, pose_curr, target = self.calc_ego_speed(speed, pose_prev, risks, action) 
+                        buf_eval_speed.append([speed_curr, target])
 
-                        for idx, risk_position in enumerate(self.risk_positions):
-                            if pose_prev <= risk_position <= pose_curr:
-                                value = self.p_efficiency * speed/max(self.s_ego_speed) * risks[idx]
+                for idx, risk_position in enumerate(self.risk_positions):
+                    if pose_prev <= risk_position <= pose_curr:
+                        value = self.p_efficiency * speed/max(self.s_ego_speed) * risks[idx]
 
-                        if value is not None and value < 0.0:
-                            entry = ET.Element("Entry")
-                            instance = ET.Element("Instance")
-                            instance.text = f"{pose_prev} {pose_curr} {speed} " + " ".join([str(_) for _ in risks])
-                            prob_table = ET.Element("ValueTable")
-                            prob_table.text = str(value) 
+                if value is not None and value < 0.0:
+                    entry = ET.Element("Entry")
+                    instance = ET.Element("Instance")
+                    instance.text = f"{pose_prev} {pose_curr} {speed} " + " ".join([str(_) for _ in risks])
+                    prob_table = ET.Element("ValueTable")
+                    prob_table.text = str(value) 
 
-                            entry.append(instance)
-                            entry.append(prob_table)
-                            parameter_eff.append(entry)
+                    entry.append(instance)
+                    entry.append(prob_table)
+                    parameter_eff.append(entry)
 
 
         # intervention request
