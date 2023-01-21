@@ -242,8 +242,8 @@ class MDP:
 
         x = ego_pose + ego_speed * self.delta_t + 0.5 * a * self.delta_t**2
         # x = ego_pose + ego_speed * self.delta_t
-        x = int((x-min(self.s_ego_pose))//(self.s_ego_pose[1]-self.s_ego_pose[0]))
-        v = int((v-min(self.s_ego_speed))//(self.s_ego_speed[1]-self.s_ego_speed[0]))
+        # x = int((x-min(self.s_ego_pose))//(self.s_ego_pose[1]-self.s_ego_pose[0]))
+        # v = int((v-min(self.s_ego_speed))//(self.s_ego_speed[1]-self.s_ego_speed[0]))
         return a, v, x, decel_target
 
 
@@ -333,7 +333,7 @@ class MDP:
         var_eff = ET.SubElement(func_eff, "Var")
         var_eff.text = "reward_efficiency"
         parent_eff = ET.SubElement(func_eff, "Parent")
-        parent_eff.text = "ego_pose0 ego_pose1 ego_speed0 " + " ".join([f"risk_{_}0" for _ in range(len(self.risk_positions))])
+        parent_eff.text = "ego_pose0 ego_speed0 ego_speed1 " + " ".join([f"risk_{_}1" for _ in range(len(self.risk_positions))])
         parameter_eff = ET.SubElement(func_eff, "Parameter", attrib={"type":"TBL"})
 
         # driving comfort
@@ -341,25 +341,27 @@ class MDP:
             for speed_prev in self.s_ego_speed:
                 buf_eval_speed = []
                 for risks in self.s_risk_state:
-                    for action in self.action_int_request:
+                    action = -1
+                    _, speed_curr, pose_curr, target = self.calc_ego_speed(speed_prev, pose_prev, risks, action) 
+                    speed_curr = self.s_ego_speed[int((speed_curr-min(self.s_ego_speed))//(self.s_ego_speed[1]-self.s_ego_speed[0]))]
+                    buf_eval_speed.append(speed_curr)
 
-                        _, speed_curr, pose_curr, target = self.calc_ego_speed(speed, pose_prev, risks, action) 
-                        buf_eval_speed.append([speed_curr, target])
+                hist_instance = []
+                for correct_speed_curr, risks in zip(buf_eval_speed, self.s_risk_state):
+                    for speed_curr in buf_eval_speed:
+                        if correct_speed_curr != speed_curr:
+                            entry = ET.Element("Entry")
+                            instance = ET.Element("Instance")
+                            instance.text = f"{pose_prev} {speed_prev} {speed_curr} " + " ".join([str(_) for _ in risks])
+                            prob_table = ET.Element("ValueTable")
+                            prob_table.text = str(self.p_efficiency) 
 
-                for idx, risk_position in enumerate(self.risk_positions):
-                    if pose_prev <= risk_position <= pose_curr:
-                        value = self.p_efficiency * speed/max(self.s_ego_speed) * risks[idx]
+                            if instance.text in hist_instance: continue
 
-                if value is not None and value < 0.0:
-                    entry = ET.Element("Entry")
-                    instance = ET.Element("Instance")
-                    instance.text = f"{pose_prev} {pose_curr} {speed} " + " ".join([str(_) for _ in risks])
-                    prob_table = ET.Element("ValueTable")
-                    prob_table.text = str(value) 
-
-                    entry.append(instance)
-                    entry.append(prob_table)
-                    parameter_eff.append(entry)
+                            entry.append(instance)
+                            hist_instance.append(instance.text)
+                            entry.append(prob_table)
+                            parameter_eff.append(entry)
 
 
         # intervention request
