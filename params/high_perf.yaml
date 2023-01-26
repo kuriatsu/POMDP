@@ -5,11 +5,11 @@ ideal_speed: 11.2
 min_speed: 2.8
 ordinary_G: 0.2
 
-p_omission: -100
-p_false_recognition: -100
+p_omission: -1000
+p_false_recognition: -50
 p_efficiency: -10
 p_comfort: -1
-p_int_request: -1 
+p_int_request: -1
 
 operator_int_prob: 0.5
 min_time: 2

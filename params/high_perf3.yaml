@@ -9,14 +9,14 @@ p_omission: -1000
 p_false_recognition: -50
 p_efficiency: -10
 p_comfort: -1
-p_int_request: -1 
+p_int_request: -1
 
 operator_int_prob: 0.5
-min_time: 5
+min_time: 2
 min_time_var: 0.5
-acc_time_min: 0.5
+acc_time_min: 0.75
 acc_time_var: 0.2
-acc_time_slope: 0.1
+acc_time_slope: 0.5
 
 init_ego_pose : 0.0
 init_ego_speed : 11.2
@@ -24,9 +24,9 @@ init_int_target : -1
 init_int_time : 0
 
 risk_positions: [80, 120]
-init_risk : [0.5, 0.5]
-init_recognition : [1, 1]
+init_risk : [0.1, 0.9]
+init_recognition : [0, 1]
+
 
 # desctiption
 # basic situation with decent operator performance
-

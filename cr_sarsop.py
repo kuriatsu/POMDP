@@ -149,7 +149,7 @@ class MDP:
                         _, v, _, _ = self.calc_ego_speed(ego_speed, ego_pose, recognition_state, action) 
                         v = min(max(v, min(self.s_ego_speed)), max(self.s_ego_speed))
                         prob_list = np.zeros(len(self.s_ego_speed))
-                        prob_list[int((v-self.s_ego_speed[0])//(self.s_ego_speed[1]-self.s_ego_speed[0]))] = 1.0
+                        prob_list[self.get_index(self.s_ego_speed, v)] = 1.0
                         prob_table.text += " ".join(np.array(prob_list, dtype="str"))
                         prob_table.text += " "
                         
@@ -160,6 +160,16 @@ class MDP:
         cond_prob.append(parent)
         cond_prob.append(parameter)
 
+
+    def get_index(self, list, value):
+        min_d = 1e1000 
+        min_index = None
+        for i, l in enumerate(list):
+            d = abs(l-value)
+            if d < min_d:
+                min_d = d
+                min_index = i
+        return min_index
 
     def set_ego_pose_tran(self, elem):
 
@@ -186,7 +196,7 @@ class MDP:
                         _, _, x, _ = self.calc_ego_speed(ego_speed, ego_pose, recognition_state, action) 
                         x = min(max(x, min(self.s_ego_pose)), max(self.s_ego_pose))
                         prob_list = np.zeros(len(self.s_ego_pose))
-                        prob_list[int((x-self.s_ego_pose[0])//(self.s_ego_pose[1]-self.s_ego_pose[0]))] = 1.0
+                        prob_list[self.get_index(self.s_ego_pose, x)] = 1.0
                         prob_table.text += " ".join(np.array(prob_list, dtype="str"))
                         prob_table.text += " "
 
@@ -487,35 +497,58 @@ class MDP:
         parent = ET.SubElement(cond_prob, "Parent")
         parent.text = "action_int_request int_time1 " + " ".join([f"risk_{_}1" for _ in range(len(self.risk_positions))])
         parameter = ET.SubElement(cond_prob, "Parameter", attrib={"type":"TBL"})
-        
-        # if action = -1, observation is none
-        entry = ET.Element("Entry")
+
+        entry = ET.SubElement(parameter, "Entry")
         instance = ET.SubElement(entry, "Instance")
-        instance.text = f"-1 * " + "* "*len(self.risk_positions) + " none "
+        instance.text = f"* * " + "* "*len(self.risk_positions) + " none "
         prob_table = ET.SubElement(entry, "ProbTable")
         prob_table.text = "1.0"
-        parameter.append(entry)
-
-        for a in self.action_int_request:
-            if a == -1:
-                continue
-
-            for int_time in self.s_int_time:
+        
+        for int_time in self.s_int_time:
+            acc = self.operator_model.int_acc(int_time)
+            if acc is None: continue
+            for a in self.action_int_request:
                 for risks in itertools.product([0, 1], repeat=len(self.risk_positions)):
-                    entry = ET.Element("Entry")
-                    instance = ET.Element("Instance")
+                    entry = ET.SubElement(parameter, "Entry")
+                    instance = ET.SubElement(entry, "Instance")
                     instance.text = f"{a} {int_time} " + " ".join([str(_) for _ in risks]) + " - "
-                    acc = self.operator_model.int_acc(int_time)
-                    prob_table = ET.Element("ProbTable")
-                    if acc is None:
-                        prob_table.text = f"0.0 0.0 1.0"
-                    elif risks[a] == 1:
+                    prob_table = ET.SubElement(entry, "ProbTable")
+                    if risks[a] == 1:
                         prob_table.text = f"{1.0 - acc} {acc} 0.0"
                     elif risks[a] == 0:
                         prob_table.text = f"{acc} {1.0 - acc} 0.0"
-                    entry.append(instance)
-                    entry.append(prob_table)
-                    parameter.append(entry)
+
+
+    def set_obs_bak(self, elem):
+        cond_prob = ET.SubElement(elem, "CondProb")
+        var = ET.SubElement(cond_prob, "Var")
+        var.text = "obs_int_behavior"
+        parent = ET.SubElement(cond_prob, "Parent")
+        parent.text = "action_int_request int_time1 int_target1 " + " ".join([f"risk_{_}1" for _ in range(len(self.risk_positions))])
+        parameter = ET.SubElement(cond_prob, "Parameter", attrib={"type":"TBL"})
+
+        entry = ET.SubElement(parameter, "Entry")
+        instance = ET.SubElement(entry, "Instance")
+        instance.text = f"* * * " + "* "*len(self.risk_positions) + "none"
+        prob_table = ET.SubElement(entry, "ProbTable")
+        prob_table.text = "1.0"
+        
+        for int_time in self.s_int_time:
+            acc = self.operator_model.int_acc(int_time)
+            if acc is None: continue
+            for a in self.action_int_request:
+                for int_target in self.s_int_target:
+                    if int_target in [-1, a]: continue
+                    for risks in itertools.product([0, 1], repeat=len(self.risk_positions)):
+                        entry = ET.SubElement(parameter, "Entry")
+                        instance = ET.SubElement(entry, "Instance")
+                        instance.text = f"{a} {int_time} {int_target} " + " ".join([str(_) for _ in risks]) + " - "
+                        acc = self.operator_model.int_acc(int_time)
+                        prob_table = ET.SubElement(entry, "ProbTable")
+                        if risks[int_target] == 1:
+                            prob_table.text = f"{1.0 - acc} {acc} 0.0"
+                        elif risks[int_target] == 0:
+                            prob_table.text = f"{acc} {1.0 - acc} 0.0"
 
 
     def set_initial_state(self, elem):
