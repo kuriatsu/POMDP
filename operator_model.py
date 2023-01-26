@@ -72,13 +72,12 @@ if __name__=="__main__":
     # acc_time_min = 0.5
     # acc_time_var = 0.1
     # acc_time_slope = 0.2
-    int_time_list = [0, 1, 2, 3, 4, 5, 6]
+    int_time_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    sns.set(context='paper', style='whitegrid')
     param_list = [
-            "default_deceleration_model/param_1.yaml",
-            # "param_3_1.yaml",
-            # "param_4_1.yaml",
-            "result_high_perf/param_1.yaml",
-            "param_1_low_perf.yaml",
+            "params/low_perf.yaml",
+            "params/mid_perf.yaml",
+            "params/high_perf.yaml",
             ]
     fig, axes = plt.subplots(1, len(param_list))
     for i, param in enumerate(param_list):
@@ -113,3 +112,37 @@ if __name__=="__main__":
         axes[i].set_xlabel("intervention time [s]", fontsize=14)
         axes[i].set_ylabel("intervention accuracy", fontsize=14)
     plt.show()
+
+    title_list = [r"$\theta_{\mathrm{int}}=\mathrm{Low}$", r"$\theta_{\mathrm{int}}=\mathrm{Mid}$", r"$\theta_{\mathrm{int}}=\mathrm{High}$"]
+    perf_color_list = ["blue", "green", "red"]
+    fig, axes = plt.subplots()
+    for i, param in enumerate(param_list):
+
+        with open(param) as f:
+            param = yaml.safe_load(f)
+
+        operator_model = OperatorModel(
+            param["min_time"],
+            param["min_time_var"],
+            param["acc_time_min"],
+            param["acc_time_var"],
+            param["acc_time_slope"],
+            int_time_list,
+            )
+        operator_model.acc_list = np.arange(0.0, 1.25, 0.25).tolist()
+        operator_model.init_performance_model()
+
+        acc_list = []
+        for int_time in int_time_list:
+            acc_list.append(operator_model.int_acc(int_time))
+            if acc_list[-1] is None:
+                acc_list[-1] = 0.5
+
+        plt.plot(int_time_list, acc_list, c=perf_color_list[i], label=title_list[i])
+        axes.set_ylim((0.0, 1.0))
+        axes.set_xlabel("request time [s]", fontsize=14)
+        axes.set_ylabel(r"$\mathrm{P}(o=risk|risk_i=risk)$", fontsize=14)
+        axes.legend()
+    plt.show()
+
+

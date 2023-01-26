@@ -1,4 +1,7 @@
 *.pkl
 *.png
 *.svg
+*.dot
+*.pomdpx
+*.policy
 __pycache__

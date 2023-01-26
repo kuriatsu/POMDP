@@ -240,8 +240,8 @@ class MDP:
             a = 0.0
             deceleration_distance = (ego_speed**2 - self.min_speed**2)/(2*9.8*self.ordinary_G) + self.safety_margin 
             # keep speed, 20=discretization eps
-            # if dist > deceleration_distance+20:
-            if dist > deceleration_distance:
+            if dist > deceleration_distance+2:
+            # if dist > deceleration_distance:
                 continue
 
             # deceleration to the target
@@ -418,9 +418,9 @@ class MDP:
                 for recognition_state in self.s_recognition_state:
                     _, speed_curr, pose_curr, target = self.calc_ego_speed(speed_prev, pose_prev, recognition_state, -1) 
                     speed_curr = min(max(speed_curr, min(self.s_ego_speed)), max(self.s_ego_speed))
-                    speed_curr = self.s_ego_speed[int((speed_curr-min(self.s_ego_speed))//(self.s_ego_speed[1]-self.s_ego_speed[0]))]
+                    speed_curr = self.s_ego_speed[self.get_index(self.s_ego_speed, speed_curr)]
                     pose_curr = min(max(pose_curr, min(self.s_ego_pose)), max(self.s_ego_pose))
-                    pose_curr = self.s_ego_pose[int((pose_curr-min(self.s_ego_pose))//(self.s_ego_pose[1]-self.s_ego_pose[0]))]
+                    pose_curr = self.s_ego_pose[self.get_index(self.s_ego_pose, pose_curr)]
                     for i, risk_position in enumerate(self.risk_positions):
                         if pose_prev <= risk_position < pose_curr: 
 
